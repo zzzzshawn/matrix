@@ -1,0 +1,296 @@
+.dmx-root {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  /* One base loop at speed=1; --dmx-speed from JS scales inversely with the speed prop */
+  --dmx-cycle: 1500ms;
+}
+
+.dmx-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+}
+
+.dmx-dot {
+  border-radius: 999px;
+  display: block;
+  background: currentColor;
+  opacity: 0.24;
+  transform-origin: center;
+  transform: none;
+  will-change: opacity;
+}
+
+.dmx-muted .dmx-dot {
+  opacity: 0.14;
+}
+
+/* Inactive off-cells (Base also sets inline opacity/animation:none so keyframes cannot win). */
+.dmx-dot.dmx-inactive {
+  opacity: 0 !important;
+  animation: none !important;
+  visibility: hidden;
+  pointer-events: none;
+  will-change: auto;
+}
+
+.dmx-ripple {
+  animation: dmx-ripple calc(var(--dmx-cycle) * var(--dmx-speed, 1)) cubic-bezier(0.42, 0, 0.58, 1)
+    infinite;
+  animation-delay: calc(var(--dmx-ripple-ring, 0) * 0.2333 * var(--dmx-cycle) * var(--dmx-speed, 1));
+  will-change: opacity;
+}
+
+.dmx-ripple-echo {
+  animation: dmx-ripple-echo calc(var(--dmx-cycle) * var(--dmx-speed, 1)) ease-in-out infinite;
+  animation-delay: calc(
+    (var(--dmx-ripple-ring, 0) * 0.14 + var(--dmx-ripple-parity, 0) * 0.03) *
+      var(--dmx-cycle) *
+      var(--dmx-speed, 1)
+  );
+  will-change: opacity;
+}
+
+.dmx-center-origin-ripple {
+  animation: dmx-center-origin-ripple calc(var(--dmx-cycle) * var(--dmx-speed, 1)) ease-in-out infinite;
+  animation-delay: calc(
+    var(--dmx-center-ripple-ring, 0) * 0.16 * var(--dmx-cycle) * var(--dmx-speed, 1)
+  );
+  will-change: opacity;
+}
+
+.dmx-collapse {
+  animation: dmx-collapse calc(var(--dmx-cycle) * 0.2 * var(--dmx-speed, 1)) ease-in forwards;
+  animation-delay: calc(
+    (4 - var(--dmx-manhattan, 0)) * 0.032 * var(--dmx-cycle) * var(--dmx-speed, 1)
+  );
+}
+
+.dmx-hover-ripple {
+  animation: dmx-hover-ripple calc(var(--dmx-cycle) * var(--dmx-speed, 1)) ease-in-out infinite;
+  animation-delay: calc(var(--dmx-distance, 0) * 0.127 * var(--dmx-cycle) * var(--dmx-speed, 1));
+}
+
+.dmx-path {
+  animation: dmx-ripple calc(var(--dmx-cycle) * var(--dmx-speed, 1)) cubic-bezier(0.42, 0, 0.58, 1)
+    infinite;
+  animation-delay: calc(var(--dmx-path, 0) * 0.2333 * var(--dmx-cycle) * var(--dmx-speed, 1));
+  will-change: opacity;
+}
+
+.dmx-diagonal-alt-sweep {
+  animation: dmx-diagonal-alt-sweep calc(var(--dmx-cycle) * var(--dmx-speed, 1)) linear infinite;
+  animation-delay: calc(
+    (var(--dmx-path, 0) * 0.2 + var(--dmx-diagonal-parity, 0) * 0.5) *
+      var(--dmx-cycle) *
+      var(--dmx-speed, 1)
+  );
+  will-change: opacity;
+}
+
+.dmx-spiral-snake {
+  animation: dmx-spiral-snake calc(var(--dmx-cycle) * var(--dmx-speed, 1)) linear infinite;
+  animation-delay: calc(var(--dmx-spiral-order, 0) * 0.04 * var(--dmx-cycle) * var(--dmx-speed, 1));
+  will-change: opacity;
+}
+
+.dmx-diagonal-snake {
+  animation: dmx-diagonal-snake calc(var(--dmx-cycle) * var(--dmx-speed, 1)) linear infinite;
+  animation-delay: calc(
+    var(--dmx-diagonal-snake-order, 0) * 0.04 * var(--dmx-cycle) * var(--dmx-speed, 1)
+  );
+  will-change: opacity;
+}
+
+.dmx-outer-snake {
+  animation: dmx-ring-snake calc(var(--dmx-cycle) * var(--dmx-speed, 1)) linear infinite;
+  animation-delay: calc(var(--dmx-outer-order, 0) * 0.0625 * var(--dmx-cycle) * var(--dmx-speed, 1));
+  will-change: opacity;
+}
+
+.dmx-middle-snake {
+  animation: dmx-ring-snake calc(var(--dmx-cycle) * var(--dmx-speed, 1)) linear infinite;
+  animation-delay: calc(var(--dmx-middle-order, 0) * 0.125 * var(--dmx-cycle) * var(--dmx-speed, 1));
+  will-change: opacity;
+}
+
+@keyframes dmx-ripple {
+  0%,
+  100% {
+    opacity: 0.16;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes dmx-ripple-echo {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+
+  28% {
+    opacity: 0.98;
+  }
+
+  56% {
+    opacity: 0.32;
+  }
+
+  78% {
+    opacity: 0.78;
+  }
+}
+
+@keyframes dmx-center-origin-ripple {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+
+  34% {
+    opacity: 1;
+  }
+
+  60% {
+    opacity: 0.24;
+  }
+}
+
+@keyframes dmx-collapse {
+  0% {
+    opacity: 0.95;
+  }
+
+  100% {
+    opacity: 0.06;
+  }
+}
+
+@keyframes dmx-hover-ripple {
+  0% {
+    opacity: 0.08;
+  }
+
+  45% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.16;
+  }
+}
+
+@keyframes dmx-diagonal-alt-sweep {
+  0%,
+  100% {
+    opacity: 0.08;
+  }
+
+  14% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 0.12;
+  }
+}
+
+@keyframes dmx-spiral-snake {
+  0%,
+  100% {
+    opacity: 0.08;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  16% {
+    opacity: 0.66;
+  }
+
+  24% {
+    opacity: 0.44;
+  }
+
+  32% {
+    opacity: 0.24;
+  }
+
+  40% {
+    opacity: 0.12;
+  }
+}
+
+@keyframes dmx-diagonal-snake {
+  0%,
+  100% {
+    opacity: 0.08;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  16% {
+    opacity: 0.66;
+  }
+
+  24% {
+    opacity: 0.44;
+  }
+
+  32% {
+    opacity: 0.24;
+  }
+
+  40% {
+    opacity: 0.12;
+  }
+}
+
+@keyframes dmx-ring-snake {
+  0%,
+  100% {
+    opacity: 0.08;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  20% {
+    opacity: 0.62;
+  }
+
+  30% {
+    opacity: 0.36;
+  }
+
+  40% {
+    opacity: 0.14;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dmx-dot,
+  .dmx-ripple,
+  .dmx-ripple-echo,
+  .dmx-center-origin-ripple,
+  .dmx-collapse,
+  .dmx-hover-ripple,
+  .dmx-path,
+  .dmx-diagonal-alt-sweep,
+  .dmx-spiral-snake,
+  .dmx-diagonal-snake,
+  .dmx-outer-snake,
+  .dmx-middle-snake {
+    animation: none !important;
+    transition: none !important;
+  }
+}

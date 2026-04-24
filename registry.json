@@ -1,0 +1,439 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "dotmatrix-loaders",
+  "homepage": "https://your-docs-domain.com",
+  "items": [
+    {
+      "name": "diagonal-trbl-sweep-matrix",
+      "type": "registry:ui",
+      "title": "Diagonal TR–BL",
+      "description": "Same ripple family as the icon, with a wave that sweeps from the top-right toward the bottom-left.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/diagonal-trbl-sweep-matrix.json"
+    },
+    {
+      "name": "row-wave-matrix",
+      "type": "registry:ui",
+      "title": "Row Wave",
+      "description": "Clockwise snake route: starts bottom-left up column 1, jumps to column 3 down, then column 2 up, and continues the same cycle to the right.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/row-wave-matrix.json"
+    },
+    {
+      "name": "spiral-snake-matrix",
+      "type": "registry:ui",
+      "title": "Spiral Snake",
+      "description": "A 4-dot tail spirals clockwise from the outer border toward the center of the 5x5 grid.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/spiral-snake-matrix.json"
+    },
+    {
+      "name": "triple-snake-matrix",
+      "type": "registry:ui",
+      "title": "Triple Snake",
+      "description": "Outer ring snake moves clockwise, middle ring snake moves anticlockwise, and the center dot stays inactive.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/triple-snake-matrix.json"
+    },
+    {
+      "name": "diagonal-snake-matrix",
+      "type": "registry:ui",
+      "title": "Diagonal Snake",
+      "description": "Snake-style trail that traverses the 5x5 grid on alternating diagonals.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/diagonal-snake-matrix.json"
+    },
+    {
+      "name": "column-snake-matrix",
+      "type": "registry:ui",
+      "title": "Column Snake",
+      "description": "Five simultaneous snakes: columns 1/3/5 move up while columns 2/4 move down.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/column-snake-matrix.json"
+    },
+    {
+      "name": "tetris-stack-matrix",
+      "type": "registry:ui",
+      "title": "Tetris Stack",
+      "description": "Tetromino-like frames drop and stack in a 5x5 matrix, then flash a row-clear beat.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/tetris-stack-matrix.json"
+    },
+    {
+      "name": "column-stagger-blink-matrix",
+      "type": "registry:ui",
+      "title": "Column Stagger Blink",
+      "description": "Each column stacks upward on a stagger (Tetris-style), the full grid blinks twice, then columns drain downward with the same stagger.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/column-stagger-blink-matrix.json"
+    },
+    {
+      "name": "braille-pattern-matrix",
+      "type": "registry:ui",
+      "title": "Braille Pattern",
+      "description": "Two synced 2×3 cells (Unicode dot order) step through clear motifs: rails, full grid, three rows, checker, horseshoes, and alternating columns.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/braille-pattern-matrix.json"
+    },
+    {
+      "name": "phosphor-sweep-matrix",
+      "type": "registry:ui",
+      "title": "Phosphor Sweep",
+      "description": "A CRT-style horizontal scanline moves down the matrix; swept rows leave a soft phosphor trail with a slight column-wise warp.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/phosphor-sweep-matrix.json"
+    },
+    {
+      "name": "ripple-echo-matrix",
+      "type": "registry:ui",
+      "title": "Ripple Echo",
+      "description": "Concentric diamond ripple with a soft secondary echo pulse per ring.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/ripple-echo-matrix.json"
+    },
+    {
+      "name": "center-origin-ripple-matrix",
+      "type": "registry:ui",
+      "title": "Center Origin Ripple",
+      "description": "Ripple starts at cell (2,2) and expands outward in concentric rings.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/center-origin-ripple-matrix.json"
+    },
+    {
+      "name": "digital-counter-matrix",
+      "type": "registry:ui",
+      "title": "Digital Counter",
+      "description": "Single fan blade rotating around a center hub for a clean, readable loop.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/digital-counter-matrix.json"
+    },
+    {
+      "name": "kaleidoscope-matrix",
+      "type": "registry:ui",
+      "title": "Kaleidoscope",
+      "description": "A symmetric kaleidoscope bloom cycling through clean radial motifs.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/kaleidoscope-matrix.json"
+    },
+    {
+      "name": "dna-helix-matrix",
+      "type": "registry:ui",
+      "title": "DNA Helix",
+      "description": "Two mirrored strands with periodic bridges pulse like a compact DNA helix.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dna-helix-matrix.json"
+    },
+    {
+      "name": "dna-helix-compact-matrix",
+      "type": "registry:ui",
+      "title": "DNA Helix Compact",
+      "description": "A narrower helix variant that stays in the center band while preserving strand/rung rhythm.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dna-helix-compact-matrix.json"
+    },
+    {
+      "name": "dna-half-helix-matrix",
+      "type": "registry:ui",
+      "title": "DNA Half Helix",
+      "description": "Single-strand helix variant that shows one side of the DNA wave.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dna-half-helix-matrix.json"
+    },
+    {
+      "name": "audio-bars-matrix",
+      "type": "registry:ui",
+      "title": "Audio Bars",
+      "description": "Equalizer-style vertical bars that pulse like live music levels.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/audio-bars-matrix.json"
+    },
+    {
+      "name": "infinity-loop-matrix",
+      "type": "registry:ui",
+      "title": "Infinity Loop",
+      "description": "Dual counter-rotating heads trace a figure-eight with a soft crossover pulse at center.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/infinity-loop-matrix.json"
+    },
+    {
+      "name": "mobius-strip-matrix",
+      "type": "registry:ui",
+      "title": "Mobius Strip",
+      "description": "A bright head and tail run around the outer ring; a dimmer second train stays half a lap behind, with inner corner flashes for the twist.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/mobius-strip-matrix.json"
+    },
+    {
+      "name": "circular-column-snake-matrix",
+      "type": "registry:ui",
+      "title": "Circular Diagonal Half Helix",
+      "description": "A circular-masked half-helix that travels diagonally from top-left to bottom-right with a bright strand and soft adjacent trail.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-column-snake-matrix.json"
+    },
+    {
+      "name": "circular-triple-snake-matrix",
+      "type": "registry:ui",
+      "title": "Circular Tri-Orbit",
+      "description": "Three luminous heads orbit the circular ring at equal offsets, creating a triad chase that never overlaps into the old snake rhythm.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-triple-snake-matrix.json"
+    },
+    {
+      "name": "circular-mobius-strip-matrix",
+      "type": "registry:ui",
+      "title": "Circular Plasma Weave",
+      "description": "A plasma-like diagonal sweep and pulsing core weave through the circular mask for a distinctly different motion signature.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-mobius-strip-matrix.json"
+    },
+    {
+      "name": "circular-radar-sweep-matrix",
+      "type": "registry:ui",
+      "title": "Circular Radar Sweep",
+      "description": "A rotating radar arm scans the circular grid with a bright beam front, soft wake, and faint perimeter ring echo.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-radar-sweep-matrix.json"
+    },
+    {
+      "name": "circular-pinwheel-matrix",
+      "type": "registry:ui",
+      "title": "Circular Pinwheel",
+      "description": "Four rotating pinwheel blades spin through the circular matrix with a glowing center and soft trailing halo.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-pinwheel-matrix.json"
+    },
+    {
+      "name": "circular-phase-orbit-matrix",
+      "type": "registry:ui",
+      "title": "Circular Phase Orbit",
+      "description": "An off-center orbiting energy point traces a phase-shifted loop, creating a drifting orbital glow inside the circular matrix.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-phase-orbit-matrix.json"
+    },
+    {
+      "name": "circular-gate-flip-matrix",
+      "type": "registry:ui",
+      "title": "Circular Gate Flip",
+      "description": "A scanning gate flips between vertical and horizontal sweeps, producing a crisp alternating shutter rhythm in the circular grid.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-gate-flip-matrix.json"
+    },
+    {
+      "name": "circular-heartbeat-matrix",
+      "type": "registry:ui",
+      "title": "Circular Heartbeat",
+      "description": "Pulse bursts from the center with a dual-beat cadence, sending soft concentric pressure waves across the circular matrix.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-heartbeat-matrix.json"
+    },
+    {
+      "name": "circular-constellation-matrix",
+      "type": "registry:ui",
+      "title": "Circular Constellation",
+      "description": "A cardinal beacon pattern: N/E/S/W sectors pulse in sequence with a dim opposite echo, creating a clear directional rhythm in the circular mask.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-constellation-matrix.json"
+    },
+    {
+      "name": "circular-binary-bloom-matrix",
+      "type": "registry:ui",
+      "title": "Circular Binary Bloom",
+      "description": "Binary-style opacity tiers pulse in modular steps so only a few cells peak at once while others stay low, producing a crisp coded bloom.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-binary-bloom-matrix.json"
+    },
+    {
+      "name": "circular-quadrant-breathe-matrix",
+      "type": "registry:ui",
+      "title": "Circular Quadrant Breathe",
+      "description": "A rotating crescent moon silhouette: bright lunar body, soft rim, and faint directional halo moving around the circular mask.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-quadrant-breathe-matrix.json"
+    },
+    {
+      "name": "circular-arc-cascade-matrix",
+      "type": "registry:ui",
+      "title": "Circular Arc Cascade",
+      "description": "A stepped 8-direction beacon beam sweeps around the circle with a dim opposite echo and diagonal spoke accents.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-arc-cascade-matrix.json"
+    },
+    {
+      "name": "circular-dna-twin-helix-matrix",
+      "type": "registry:ui",
+      "title": "Circular DNA Twin Helix",
+      "description": "A circular-masked twin-helix: mirrored side strands weave inward and outward with intermittent interior bridge pulses.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-dna-twin-helix-matrix.json"
+    },
+    {
+      "name": "circular-dna-rung-shift-matrix",
+      "type": "registry:ui",
+      "title": "Circular DNA Rung Shift",
+      "description": "A shifting DNA ladder where a bright horizontal rung steps row-by-row while side anchors sway and leave soft ghost echoes.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-dna-rung-shift-matrix.json"
+    },
+    {
+      "name": "circular-braille-cluster-matrix",
+      "type": "registry:ui",
+      "title": "Circular Braille Cluster",
+      "description": "Braille-inspired grouped dot motifs cycle through rails, bridges, and cross forms inside the circular mask with crisp tiered opacity.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-braille-cluster-matrix.json"
+    },
+    {
+      "name": "circular-braille-scanline-matrix",
+      "type": "registry:ui",
+      "title": "Circular Braille Scanline",
+      "description": "A braille rail scanline sweeps row-by-row between left and right cells, with near-column accents and soft trail falloff.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-braille-scanline-matrix.json"
+    },
+    {
+      "name": "circular-braille-checker-shift-matrix",
+      "type": "registry:ui",
+      "title": "Circular Braille Checker Shift",
+      "description": "Braille-biased checker phases alternate in stepped shifts, keeping rails pronounced while the center cross supports readability.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-braille-checker-shift-matrix.json"
+    },
+    {
+      "name": "circular-braille-pulse-pair-matrix",
+      "type": "registry:ui",
+      "title": "Circular Braille Pulse Pair",
+      "description": "Mirrored braille dot pairs pulse from top and bottom toward the center, with a connective center-column accent.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-braille-pulse-pair-matrix.json"
+    },
+    {
+      "name": "circular-braille-orbit-cells-matrix",
+      "type": "registry:ui",
+      "title": "Circular Braille Orbit Cells",
+      "description": "A bright braille cell head orbits the inner ring with a dim tail while rail columns remain softly active.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-braille-orbit-cells-matrix.json"
+    },
+    {
+      "name": "circular-braille-glyph-cycle-matrix",
+      "type": "registry:ui",
+      "title": "Circular Braille Glyph Cycle",
+      "description": "Distinct braille-like glyphs cycle in sequence with previous-frame ghosting for a crisp readable symbol transition.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/circular-braille-glyph-cycle-matrix.json"
+    },
+    {
+      "name": "triangle-center-spokes-matrix",
+      "type": "registry:ui",
+      "title": "Triangle Center Spokes",
+      "description": "A triangle-masked matrix where three spoke lines originate at the center and travel outward to each triangle edge.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/triangle-center-spokes-matrix.json"
+    },
+    {
+      "name": "triangle-altitude-pulse-matrix",
+      "type": "registry:ui",
+      "title": "Triangle Altitude Pulse",
+      "description": "A soft altitude wave travels between apex and base while the center column remains gently present for shape readability.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/triangle-altitude-pulse-matrix.json"
+    },
+    {
+      "name": "triangle-corner-bounce-matrix",
+      "type": "registry:ui",
+      "title": "Triangle Corner Bounce",
+      "description": "A single head bounces between triangle corners along the perimeter path with a short fading tail.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/triangle-corner-bounce-matrix.json"
+    },
+    {
+      "name": "triangle-vertex-chase-matrix",
+      "type": "registry:ui",
+      "title": "Triangle Vertex Chase",
+      "description": "Three staggered heads chase around the triangle perimeter, leaving short fading tails while all dots stay fixed in place.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/triangle-vertex-chase-matrix.json"
+    },
+    {
+      "name": "triangle-row-scan-matrix",
+      "type": "registry:ui",
+      "title": "Triangle Row Scan",
+      "description": "A reflected scanline sweeps from apex to base and back, animating only opacity bands across triangle rows.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/triangle-row-scan-matrix.json"
+    },
+    {
+      "name": "triangle-perimeter-wave-matrix",
+      "type": "registry:ui",
+      "title": "Triangle Perimeter Wave",
+      "description": "A smooth wave of opacity runs around the triangle outline while the center stays softly present.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/triangle-perimeter-wave-matrix.json"
+    },
+    {
+      "name": "triangle-apex-beacon-matrix",
+      "type": "registry:ui",
+      "title": "Triangle Apex Beacon",
+      "description": "A rhythmic beacon at the apex ripples downward through rows with staggered phase, opacity-only.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/triangle-apex-beacon-matrix.json"
+    },
+    {
+      "name": "triangle-bilateral-twinkle-matrix",
+      "type": "registry:ui",
+      "title": "Triangle Bilateral Twinkle",
+      "description": "Left and right halves of the triangle twinkle out of phase with row-wise stagger for a soft shimmer.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/triangle-bilateral-twinkle-matrix.json"
+    }
+  ]
+}

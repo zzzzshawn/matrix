@@ -1,0 +1,117 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+
+import { DotMatrixBase } from "../base/dot-matrix-base";
+import { MATRIX_SIZE } from "../core/patterns";
+import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
+import type { DotAnimationResolver, DotMatrixCommonProps } from "../types";
+
+export type ColumnStaggerBlinkMatrixProps = DotMatrixCommonProps;
+
+const ROWS = MATRIX_SIZE;
+const COLS = MATRIX_SIZE;
+
+/** Steps 0..FILL_LAST: column `c` gains one row from the bottom each tick, delayed by `c` (col 0 full at `ROWS`, last col at `ROWS + COLS - 1`). */
+const FILL_LAST = ROWS + COLS - 1;
+
+const BLINK_STEPS = 4;
+const BLINK_OPACITIES = [0.38, 1, 0.38, 1] as const;
+
+const DRAIN_LAST = FILL_LAST;
+
+/** fillTick 0..FILL_LAST → drainTick 0..DRAIN_LAST → + blink in between */
+const SEQUENCE_LEN = FILL_LAST + 1 + BLINK_STEPS + DRAIN_LAST + 1;
+
+const BASE_OPACITY = 0.08;
+const SETTLED_OPACITY = 0.52;
+const CAP_OPACITY = 1;
+
+function fillHeight(col: number, fillTick: number): number {
+  return Math.max(0, Math.min(ROWS, fillTick - col));
+}
+
+function drainHeight(col: number, drainTick: number): number {
+  return Math.max(0, Math.min(ROWS, ROWS - Math.max(0, drainTick - col)));
+}
+
+export function ColumnStaggerBlinkMatrix({
+  speed = 1,
+  pattern = "full",
+  animated = true,
+  hoverAnimated = false,
+  ...rest
+}: ColumnStaggerBlinkMatrixProps) {
+  const reducedMotion = usePrefersReducedMotion();
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    if (reducedMotion || !animated || SEQUENCE_LEN === 0) {
+      setStep(0);
+      return;
+    }
+
+    const safeSpeed = speed > 0 ? speed : 1;
+    const cycleMs = 3200 / safeSpeed;
+    const stepMs = Math.max(48, Math.round(cycleMs / SEQUENCE_LEN));
+    const timer = window.setInterval(() => {
+      setStep((prev) => (prev + 1) % SEQUENCE_LEN);
+    }, stepMs);
+
+    return () => window.clearInterval(timer);
+  }, [animated, reducedMotion, speed]);
+
+  const resolver = useMemo<DotAnimationResolver>(() => {
+    return ({ isActive, row, col, phase }) => {
+      if (!isActive) {
+        return { className: "dmx-inactive" };
+      }
+
+      if (reducedMotion || phase === "idle") {
+        return { style: { opacity: BASE_OPACITY } };
+      }
+
+      let height = 0;
+      let blinkOpacity: number | null = null;
+
+      if (step <= FILL_LAST) {
+        height = fillHeight(col, step);
+      } else if (step < FILL_LAST + 1 + BLINK_STEPS) {
+        height = ROWS;
+        blinkOpacity = BLINK_OPACITIES[step - (FILL_LAST + 1)] ?? 1;
+      } else {
+        const drainTick = step - (FILL_LAST + 1 + BLINK_STEPS);
+        height = drainHeight(col, drainTick);
+      }
+
+      const bottomRow = ROWS - 1;
+      const topLitRow = ROWS - height;
+      const isLit = height > 0 && row >= topLitRow && row <= bottomRow;
+      if (!isLit) {
+        return { style: { opacity: BASE_OPACITY } };
+      }
+
+      if (blinkOpacity !== null) {
+        return { style: { opacity: blinkOpacity } };
+      }
+
+      const isCap = row === topLitRow && height > 0 && height < ROWS;
+      return {
+        style: { opacity: isCap ? CAP_OPACITY : SETTLED_OPACITY }
+      };
+    };
+  }, [reducedMotion, step]);
+
+  return (
+    <DotMatrixBase
+      {...rest}
+      speed={speed}
+      pattern={pattern}
+      animated={animated}
+      hoverAnimated={hoverAnimated}
+      phase={animated && !reducedMotion ? "loadingRipple" : "idle"}
+      reducedMotion={reducedMotion}
+      animationResolver={resolver}
+    />
+  );
+}
