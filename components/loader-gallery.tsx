@@ -44,6 +44,7 @@ import {
   SpiralSnakeMatrix,
   TetrisStackMatrix,
   TriangleAltitudePulseMatrix,
+  TriangleBrailleBeatMatrix,
   TriangleCenterSpokesMatrix,
   TriangleCornerBounceMatrix,
   TriangleRowScanMatrix,
@@ -110,7 +111,8 @@ const componentMap = {
   "triangle-altitude-pulse-matrix": TriangleAltitudePulseMatrix,
   "triangle-corner-bounce-matrix": TriangleCornerBounceMatrix,
   "triangle-vertex-chase-matrix": TriangleVertexChaseMatrix,
-  "triangle-row-scan-matrix": TriangleRowScanMatrix
+  "triangle-row-scan-matrix": TriangleRowScanMatrix,
+  "triangle-braille-beat-matrix": TriangleBrailleBeatMatrix
 };
 
 const previewSpeed = 1.35;
@@ -160,7 +162,8 @@ const previewPropsMap: Record<string, DotMatrixCommonProps> = {
   "triangle-altitude-pulse-matrix": { size: 24, dotSize: 5, pattern: "full", animated: true, speed: 1.5 },
   "triangle-corner-bounce-matrix": { size: 24, dotSize: 5, pattern: "full", animated: true, speed: 1.45 },
   "triangle-vertex-chase-matrix": { size: 24, dotSize: 5, pattern: "full", animated: true, speed: 1.5 },
-  "triangle-row-scan-matrix": { size: 24, dotSize: 5, pattern: "full", animated: true, speed: 1.8 }
+  "triangle-row-scan-matrix": { size: 24, dotSize: 5, pattern: "full", animated: true, speed: 1.8 },
+  "triangle-braille-beat-matrix": { size: 24, dotSize: 5, pattern: "full", animated: true, speed: 2.2 }
 };
 
 export function LoaderGallery({ items }: LoaderGalleryProps) {

@@ -142,6 +142,8 @@ export { TriangleVertexChaseMatrix } from "./loaders/triangle-vertex-chase-matri
 export type { TriangleVertexChaseMatrixProps } from "./loaders/triangle-vertex-chase-matrix";
 export { TriangleRowScanMatrix } from "./loaders/triangle-row-scan-matrix";
 export type { TriangleRowScanMatrixProps } from "./loaders/triangle-row-scan-matrix";
+export { TriangleBrailleBeatMatrix } from "./loaders/triangle-braille-beat-matrix";
+export type { TriangleBrailleBeatMatrixProps } from "./loaders/triangle-braille-beat-matrix";
 
 export {
   CROSS_INDEXES,

@@ -405,30 +405,12 @@
     "url": "/r/triangle-row-scan-matrix.json"
   },
   {
-    "name": "triangle-perimeter-wave-matrix",
+    "name": "triangle-braille-beat-matrix",
     "type": "registry:ui",
-    "title": "Triangle Perimeter Wave",
-    "description": "A smooth wave of opacity runs around the triangle outline while the center stays softly present.",
+    "title": "Triangle Braille Beat",
+    "description": "Triangle-masked braille dots fill down the left rail, then the right, then blink full and empty.",
     "dependencies": [],
     "registryDependencies": [],
-    "url": "/r/triangle-perimeter-wave-matrix.json"
-  },
-  {
-    "name": "triangle-apex-beacon-matrix",
-    "type": "registry:ui",
-    "title": "Triangle Apex Beacon",
-    "description": "A rhythmic beacon at the apex ripples downward through rows with staggered phase, opacity-only.",
-    "dependencies": [],
-    "registryDependencies": [],
-    "url": "/r/triangle-apex-beacon-matrix.json"
-  },
-  {
-    "name": "triangle-bilateral-twinkle-matrix",
-    "type": "registry:ui",
-    "title": "Triangle Bilateral Twinkle",
-    "description": "Left and right halves of the triangle twinkle out of phase with row-wise stagger for a soft shimmer.",
-    "dependencies": [],
-    "registryDependencies": [],
-    "url": "/r/triangle-bilateral-twinkle-matrix.json"
+    "url": "/r/triangle-braille-beat-matrix.json"
   }
 ]

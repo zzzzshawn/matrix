@@ -444,6 +444,16 @@ export const loaderRegistry: LoaderRegistryEntry[] = [
     fileName: "triangle-row-scan-matrix.tsx",
     dependencies: [],
     motionOptional: false
+  },
+  {
+    slug: "triangle-braille-beat-matrix",
+    title: "Triangle Braille Beat",
+    description:
+      "Triangle-masked braille dots fill down the left rail, then the right, then blink full and empty.",
+    componentName: "TriangleBrailleBeatMatrix",
+    fileName: "triangle-braille-beat-matrix.tsx",
+    dependencies: [],
+    motionOptional: false
   }
 ];
 
