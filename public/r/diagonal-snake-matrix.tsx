@@ -2,10 +2,10 @@
 
 import type { CSSProperties } from "react";
 
-import { DotMatrixBase } from "../base/dot-matrix-base";
-import { diagonalSnakeNormFromIndex, diagonalSnakeOrderValue } from "../core/grid-paths";
-import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
-import type { DotAnimationResolver, DotMatrixCommonProps } from "../types";
+import { DotMatrixBase } from "./dotmatrix-core";
+import { diagonalSnakeNormFromIndex, diagonalSnakeOrderValue } from "./dotmatrix-core";
+import { usePrefersReducedMotion } from "./dotmatrix-hooks";
+import type { DotAnimationResolver, DotMatrixCommonProps } from "./dotmatrix-core";
 
 export type DiagonalSnakeMatrixProps = DotMatrixCommonProps;
 

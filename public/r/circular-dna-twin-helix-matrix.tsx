@@ -2,10 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { DotMatrixBase } from "../base/dot-matrix-base";
-import { isWithinCircularMask } from "../core/circle-mask";
-import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
-import type { DotAnimationResolver, DotMatrixCommonProps } from "../types";
+import { DotMatrixBase } from "./dotmatrix-core";
+import { isWithinCircularMask } from "./dotmatrix-core";
+import { usePrefersReducedMotion } from "./dotmatrix-hooks";
+import type { DotAnimationResolver, DotMatrixCommonProps } from "./dotmatrix-core";
 
 export type CircularDnaTwinHelixMatrixProps = DotMatrixCommonProps;
 

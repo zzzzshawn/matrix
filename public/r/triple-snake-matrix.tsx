@@ -2,15 +2,15 @@
 
 import type { CSSProperties } from "react";
 
-import { DotMatrixBase } from "../base/dot-matrix-base";
+import { DotMatrixBase } from "./dotmatrix-core";
 import {
   middleRingAntiClockwiseNormFromIndex,
   middleRingAntiClockwiseOrderValue,
   outerRingClockwiseNormFromIndex,
   outerRingClockwiseOrderValue
-} from "../core/grid-paths";
-import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
-import type { DotAnimationResolver, DotMatrixCommonProps } from "../types";
+} from "./dotmatrix-core";
+import { usePrefersReducedMotion } from "./dotmatrix-hooks";
+import type { DotAnimationResolver, DotMatrixCommonProps } from "./dotmatrix-core";
 
 export type TripleSnakeMatrixProps = DotMatrixCommonProps;
 

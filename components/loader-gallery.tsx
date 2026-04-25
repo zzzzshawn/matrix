@@ -62,8 +62,18 @@ interface LoaderCard {
   sourceCode: string;
 }
 
+interface ManualSetupSources {
+  coreFilePath: string;
+  coreSource: string;
+  hooksFilePath: string;
+  hooksSource: string;
+  cssFilePath: string;
+  cssSource: string;
+}
+
 interface LoaderGalleryProps {
   items: LoaderCard[];
+  manualSetup: ManualSetupSources;
 }
 
 const componentMap = {
@@ -166,9 +176,10 @@ const previewPropsMap: Record<string, DotMatrixCommonProps> = {
   "triangle-braille-beat-matrix": { size: 24, dotSize: 5, pattern: "full", animated: true, speed: 2.2 }
 };
 
-export function LoaderGallery({ items }: LoaderGalleryProps) {
+export function LoaderGallery({ items, manualSetup }: LoaderGalleryProps) {
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [origin, setOrigin] = useState("https://your-docs-domain.com");
+  const [copiedToken, setCopiedToken] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -204,6 +215,22 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
 
   const installUrl = selected ? `${origin}/r/${selected.slug}.json` : "";
   const installCommand = `npx shadcn@latest add ${installUrl}`;
+  const cssImportLine = `@import "@/styles/dotmatrix-loader.css";`;
+
+  const copySnippet = async (token: string, content: string) => {
+    if (typeof navigator === "undefined" || !navigator.clipboard) {
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopiedToken(token);
+      window.setTimeout(() => {
+        setCopiedToken((prev) => (prev === token ? null : prev));
+      }, 1400);
+    } catch {
+      // Ignore copy failures in unsupported environments.
+    }
+  };
 
   return (
     <main className="relative mx-auto min-h-[100dvh] w-full max-w-[1400px] px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
@@ -294,18 +321,85 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
                 <h3 className="text-sm font-semibold uppercase tracking-[0.14em] text-zinc-200">
                   Manual Usage
                 </h3>
+                <p className="text-sm text-zinc-400">
+                  One-time setup: create shared runtime files once, then paste any loader component.
+                </p>
+
+                <div className="grid gap-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-xs uppercase tracking-[0.12em] text-zinc-500">{manualSetup.coreFilePath}</p>
+                    <button
+                      type="button"
+                      onClick={() => copySnippet("setup-core", manualSetup.coreSource)}
+                      className="inline-flex min-h-8 items-center justify-center rounded-lg border border-white/10 bg-black/30 px-3 text-xs text-zinc-300 transition hover:bg-white/10"
+                    >
+                      {copiedToken === "setup-core" ? "Copied" : "Copy"}
+                    </button>
+                  </div>
+                  <pre className="max-h-[140px] overflow-auto rounded-xl border border-white/10 bg-black/30 p-4 text-xs text-zinc-100">
+                    <code>{manualSetup.coreSource}</code>
+                  </pre>
+                </div>
+
+                <div className="grid gap-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-xs uppercase tracking-[0.12em] text-zinc-500">{manualSetup.hooksFilePath}</p>
+                    <button
+                      type="button"
+                      onClick={() => copySnippet("setup-hooks", manualSetup.hooksSource)}
+                      className="inline-flex min-h-8 items-center justify-center rounded-lg border border-white/10 bg-black/30 px-3 text-xs text-zinc-300 transition hover:bg-white/10"
+                    >
+                      {copiedToken === "setup-hooks" ? "Copied" : "Copy"}
+                    </button>
+                  </div>
+                  <pre className="max-h-[140px] overflow-auto rounded-xl border border-white/10 bg-black/30 p-4 text-xs text-zinc-100">
+                    <code>{manualSetup.hooksSource}</code>
+                  </pre>
+                </div>
+
+                <div className="grid gap-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-xs uppercase tracking-[0.12em] text-zinc-500">{manualSetup.cssFilePath}</p>
+                    <button
+                      type="button"
+                      onClick={() => copySnippet("setup-css", manualSetup.cssSource)}
+                      className="inline-flex min-h-8 items-center justify-center rounded-lg border border-white/10 bg-black/30 px-3 text-xs text-zinc-300 transition hover:bg-white/10"
+                    >
+                      {copiedToken === "setup-css" ? "Copied" : "Copy"}
+                    </button>
+                  </div>
+                  <pre className="max-h-[120px] overflow-auto rounded-xl border border-white/10 bg-black/30 p-4 text-xs text-zinc-100">
+                    <code>{manualSetup.cssSource}</code>
+                  </pre>
+                  <pre className="overflow-x-auto rounded-xl border border-white/10 bg-black/30 p-4 text-xs text-zinc-100">
+                    <code>{cssImportLine}</code>
+                  </pre>
+                </div>
+
+                <div className="grid gap-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-xs uppercase tracking-[0.12em] text-zinc-500">
+                      components/ui/{selected.slug}.tsx
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => copySnippet("loader-source", selected.sourceCode)}
+                      className="inline-flex min-h-8 items-center justify-center rounded-lg border border-white/10 bg-black/30 px-3 text-xs text-zinc-300 transition hover:bg-white/10"
+                    >
+                      {copiedToken === "loader-source" ? "Copied" : "Copy"}
+                    </button>
+                  </div>
+                  <pre className="max-h-[260px] overflow-auto rounded-xl border border-white/10 bg-black/30 p-4 text-xs text-zinc-100">
+                    <code>{selected.sourceCode}</code>
+                  </pre>
+                </div>
+
                 <pre className="overflow-x-auto rounded-xl border border-white/10 bg-black/30 p-4 text-xs text-zinc-100">
                   <code>{`import { ${selected.componentName} } from "@/components/ui/${selected.slug}";
 
 export function Example() {
   return <${selected.componentName} />;
 }`}</code>
-                </pre>
-                <p className="text-xs uppercase tracking-[0.12em] text-zinc-500">
-                  Source snippet for copy/paste
-                </p>
-                <pre className="max-h-[300px] overflow-auto rounded-xl border border-white/10 bg-black/30 p-4 text-xs text-zinc-100">
-                  <code>{selected.sourceCode}</code>
                 </pre>
               </section>
             </div>

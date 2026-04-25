@@ -11,61 +11,22 @@ interface RegistryFile {
 
 const docsRoot = process.cwd();
 const loadersRoot = path.join(docsRoot, "loaders");
+const manualRoot = path.join(loadersRoot, "manual");
 const publicRegistryDir = path.join(docsRoot, "public", "r");
 
-const sharedSourceFiles: Array<{ filePath: string; targetPath: string; type: RegistryFile["type"] }> = [
+const sharedSourceFiles: Array<{ absolutePath: string; targetPath: string; type: RegistryFile["type"] }> = [
   {
-    filePath: "base/dot-matrix-base.tsx",
-    targetPath: "lib/dotmatrix/base/dot-matrix-base.tsx",
+    absolutePath: path.join(manualRoot, "dotmatrix-core.tsx"),
+    targetPath: "components/ui/dotmatrix-core.tsx",
     type: "registry:lib"
   },
   {
-    filePath: "core/cx.ts",
-    targetPath: "lib/dotmatrix/core/cx.ts",
+    absolutePath: path.join(manualRoot, "dotmatrix-hooks.ts"),
+    targetPath: "components/ui/dotmatrix-hooks.ts",
     type: "registry:lib"
   },
   {
-    filePath: "core/patterns.ts",
-    targetPath: "lib/dotmatrix/core/patterns.ts",
-    type: "registry:lib"
-  },
-  {
-    filePath: "core/grid-paths.ts",
-    targetPath: "lib/dotmatrix/core/grid-paths.ts",
-    type: "registry:lib"
-  },
-  {
-    filePath: "core/math.ts",
-    targetPath: "lib/dotmatrix/core/math.ts",
-    type: "registry:lib"
-  },
-  {
-    filePath: "core/circle-mask.ts",
-    targetPath: "lib/dotmatrix/core/circle-mask.ts",
-    type: "registry:lib"
-  },
-  {
-    filePath: "core/path-wave-factory.tsx",
-    targetPath: "lib/dotmatrix/core/path-wave-factory.tsx",
-    type: "registry:lib"
-  },
-  {
-    filePath: "core/phases.ts",
-    targetPath: "lib/dotmatrix/core/phases.ts",
-    type: "registry:lib"
-  },
-  {
-    filePath: "hooks/use-prefers-reduced-motion.ts",
-    targetPath: "lib/dotmatrix/hooks/use-prefers-reduced-motion.ts",
-    type: "registry:lib"
-  },
-  {
-    filePath: "types.ts",
-    targetPath: "lib/dotmatrix/types.ts",
-    type: "registry:lib"
-  },
-  {
-    filePath: "styles.css",
+    absolutePath: path.join(loadersRoot, "styles.css"),
     targetPath: "styles/dotmatrix-loader.css",
     type: "registry:style"
   }
@@ -75,6 +36,24 @@ async function readSource(relativePath: string): Promise<string> {
   return readFile(path.join(loadersRoot, relativePath), "utf-8");
 }
 
+async function readAbsolute(filePath: string): Promise<string> {
+  return readFile(filePath, "utf-8");
+}
+
+const importRewrites: ReadonlyArray<{ from: string; to: string }> = [
+  { from: "../base/dot-matrix-base", to: "./dotmatrix-core" },
+  { from: "../core/circle-mask", to: "./dotmatrix-core" },
+  { from: "../core/cx", to: "./dotmatrix-core" },
+  { from: "../core/grid-paths", to: "./dotmatrix-core" },
+  { from: "../core/hydration-inline-style", to: "./dotmatrix-core" },
+  { from: "../core/path-wave-factory", to: "./dotmatrix-core" },
+  { from: "../core/patterns", to: "./dotmatrix-core" },
+  { from: "../types", to: "./dotmatrix-core" },
+  { from: "../hooks/use-cycle-phase", to: "./dotmatrix-hooks" },
+  { from: "../hooks/use-prefers-reduced-motion", to: "./dotmatrix-hooks" },
+  { from: "../core/phases", to: "./dotmatrix-hooks" }
+];
+
 async function build() {
   await rm(publicRegistryDir, { recursive: true, force: true });
   await mkdir(publicRegistryDir, { recursive: true });
@@ -83,7 +62,10 @@ async function build() {
     loaderRegistry.map(async (loader) => {
       const files: RegistryFile[] = [];
 
-      const componentSource = await readSource(path.join("loaders", loader.fileName));
+      const componentSource = importRewrites.reduce(
+        (current, { from, to }) => current.replaceAll(`"${from}"`, `"${to}"`),
+        await readSource(path.join("loaders", loader.fileName))
+      );
       files.push({
         path: `components/ui/${loader.fileName}`,
         type: "registry:ui",
@@ -94,7 +76,7 @@ async function build() {
         files.push({
           path: sharedFile.targetPath,
           type: sharedFile.type,
-          content: await readSource(sharedFile.filePath)
+          content: await readAbsolute(sharedFile.absolutePath)
         });
       }
 

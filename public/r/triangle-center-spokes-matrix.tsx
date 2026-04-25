@@ -3,9 +3,10 @@
 import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
 
-import { cx } from "../core/cx";
-import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
-import type { DotMatrixCommonProps } from "../types";
+import { cx } from "./dotmatrix-core";
+import { styleOpacity, stylePx } from "./dotmatrix-core";
+import { usePrefersReducedMotion } from "./dotmatrix-hooks";
+import type { DotMatrixCommonProps } from "./dotmatrix-core";
 
 export type TriangleCenterSpokesMatrixProps = DotMatrixCommonProps;
 
@@ -84,8 +85,8 @@ export function TriangleCenterSpokesMatrix({
 
   const gap = Math.max(1, Math.floor((size - dotSize * MATRIX_SIZE) / (MATRIX_SIZE - 1)));
   const rootStyle = {
-    width: size,
-    height: size,
+    width: stylePx(size),
+    height: stylePx(size),
     color
   } as CSSProperties;
 
@@ -130,9 +131,9 @@ export function TriangleCenterSpokesMatrix({
               aria-hidden="true"
               className={cx("dmx-dot", !isActive && "dmx-inactive", dotClassName)}
               style={{
-                width: dotSize,
-                height: dotSize,
-                opacity
+                width: stylePx(dotSize),
+                height: stylePx(dotSize),
+                opacity: styleOpacity(opacity)
               }}
             />
           );

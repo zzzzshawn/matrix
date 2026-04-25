@@ -2,10 +2,10 @@
 
 import { useMemo } from "react";
 
-import { DotMatrixBase } from "../base/dot-matrix-base";
-import { useCyclePhase } from "../hooks/use-cycle-phase";
-import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
-import type { DotAnimationResolver, DotMatrixCommonProps } from "../types";
+import { DotMatrixBase } from "./dotmatrix-core";
+import { useCyclePhase } from "./dotmatrix-hooks";
+import { usePrefersReducedMotion } from "./dotmatrix-hooks";
+import type { DotAnimationResolver, DotMatrixCommonProps } from "./dotmatrix-core";
 
 export type DnaHelixMatrixProps = DotMatrixCommonProps;
 

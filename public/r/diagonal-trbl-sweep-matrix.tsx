@@ -2,11 +2,11 @@
 
 import type { CSSProperties } from "react";
 
-import { DotMatrixBase } from "../base/dot-matrix-base";
-import { trBlPathNormFromIndex } from "../core/grid-paths";
-import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
-import type { DotAnimationResolver } from "../types";
-import type { DotMatrixCommonProps } from "../types";
+import { DotMatrixBase } from "./dotmatrix-core";
+import { trBlPathNormFromIndex } from "./dotmatrix-core";
+import { usePrefersReducedMotion } from "./dotmatrix-hooks";
+import type { DotAnimationResolver } from "./dotmatrix-core";
+import type { DotMatrixCommonProps } from "./dotmatrix-core";
 
 export type DiagonalTrBlSweepMatrixProps = DotMatrixCommonProps;
 
