@@ -323,14 +323,14 @@ const HeroInstallCommand = memo(function HeroInstallCommand() {
   return (
     <div className="flex items-center gap-2">
       <div className="w-max rounded-lg bg-surface-soft p-1">
-        <div className="flex min-w-0 max-w-full items-center gap-1 rounded-sm bg-bg py-1 px-3">
+        <div className="flex min-w-0 max-w-full items-center gap-1 rounded-sm bg-bg py-2 px-3">
           <p className="min-w-0 text-[10px] leading-normal text-fg sm:text-base">
             {HERO_SHADCN_INSTALL_COMMAND}
           </p>
         </div>
       </div>
       <div className="w-max rounded-lg bg-surface-soft p-1">
-        <div className="flex min-w-0 max-w-full items-center gap-1 rounded-sm bg-bg p-1.5 sm:p-[7px]">
+        <div className="flex min-w-0 max-w-full items-center gap-1 rounded-sm bg-bg p-2 sm:p-[10px]">
           <button
             type="button"
             onClick={() => void copyHeroInstallCommand()}
@@ -338,9 +338,9 @@ const HeroInstallCommand = memo(function HeroInstallCommand() {
             className="inline-flex min-w-0 items-center justify-center text-fg-strong transition-colors duration-150 ease-out hover:opacity-90"
           >
             {heroInstallCopied ? (
-              <CheckIcon className="size-3 sm:size-[18px]" />
+              <CheckIcon className="size-4 sm:size-[18px]" />
             ) : (
-              <CopyClipboardIcon className="size-3 sm:size-[18px]" />
+              <CopyClipboardIcon className="size-4 sm:size-[18px]" />
             )}
           </button>
         </div>
@@ -457,7 +457,7 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
                         priority
                       />
                     </span>{" "}
-                    matrix loaders for React
+                    matrix loaders for every app.
                   </span>
                 </h1>
                 <div className="flex w-max shrink-0 flex-col items-end gap-1 sm:gap-2 text-xs sm:text-2xl pt-1">
@@ -473,8 +473,8 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
                 </div>
               </div>
               <p className=" max-w-[65ch] text-pretty tracking-tight text-sm leading-relaxed  sm:text-2xl">
-                Dot Matrix is a component library of dot matrix loaders. Browse the gallery, then open a card for
-                the shadcn add command and source files.
+                40+ free and open-source loaders, built with React, TypeScript, Tailwind CSS, and shadcn.
+                Install one, copy the code, and make it yours.
               </p>
             </div>
             <HeroInstallCommand />
