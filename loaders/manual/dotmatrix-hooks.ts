@@ -73,9 +73,9 @@ const listeners = new Set<FrameListener>();
 let rafId: number | null = null;
 
 function emit(now: number) {
-  for (const listener of listeners) {
+  listeners.forEach((listener) => {
     listener(now);
-  }
+  });
 }
 
 function tick(now: number) {
@@ -174,8 +174,8 @@ export function useDotMatrixPhases({
   const hoverGen = useRef(0);
 
   const clearTimers = useCallback(() => {
-    for (const id of timeouts.current) {
-      window.clearTimeout(id);
+    for (let i = 0; i < timeouts.current.length; i += 1) {
+      window.clearTimeout(timeouts.current[i]!);
     }
     timeouts.current = [];
   }, []);

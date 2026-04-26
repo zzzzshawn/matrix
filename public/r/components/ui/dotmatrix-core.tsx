@@ -53,7 +53,7 @@ export function cx(...values: Array<string | undefined | null | false>): string 
 
 export const MATRIX_SIZE = 5;
 const CENTER = Math.floor(MATRIX_SIZE / 2);
-const RANGE = [...Array(MATRIX_SIZE).keys()];
+const RANGE = Array.from({ length: MATRIX_SIZE }, (_, index) => index);
 const MAX_RADIUS = Math.hypot(CENTER, CENTER);
 
 export const FULL_INDEXES = RANGE.flatMap((row) => RANGE.map((col) => rowMajorIndex(row, col)));
