@@ -452,9 +452,9 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
                         alt=""
                         width={200}
                         height={200}
-                        unoptimized
                         className="size-full select-none"
                         draggable={false}
+                        priority
                       />
                     </span>{" "}
                     matrix loaders for React
