@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "dotmatrix-loaders",
+  "name": "@dotmatrix",
   "homepage": "https://dotmatrix.zzzzshawn.cloud",
   "items": [
     {

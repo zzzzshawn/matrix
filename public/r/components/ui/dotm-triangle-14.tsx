@@ -86,7 +86,7 @@ export function DotmTriangle14({
   const cycleActive = !reducedMotion && matrixPhase !== "idle";
   const cyclePhase = useCyclePhase({
     active: cycleActive,
-    cycleMsBase: 1800,
+    cycleMsBase: 1500,
     speed
   });
 

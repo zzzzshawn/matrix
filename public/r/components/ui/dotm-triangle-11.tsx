@@ -13,7 +13,7 @@ export type DotmTriangle11Props = DotMatrixCommonProps;
 
 const MATRIX_SIZE = 7;
 
-const BASE_OPACITY = 0.08;
+const BASE_OPACITY = 0.13;
 const MID_OPACITY = 0.36;
 const HIGH_OPACITY = 0.96;
 

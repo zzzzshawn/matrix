@@ -19,3 +19,4 @@ Single Next.js app: loader components live in `loaders/`, app routes in `app/`, 
 ## Registry publishing
 
 - Set `REGISTRY_HOMEPAGE` when building to override the homepage in registry metadata (default is `https://dotmatrix.zzzzshawn.cloud`).
+- To be listed in shadcn's official registry directory, you must also edit files in a fork of `shadcn-ui/ui` (not this repo): `apps/v4/registry/directory.json` and `apps/v4/public/r/registries.json`.

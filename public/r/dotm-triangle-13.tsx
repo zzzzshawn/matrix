@@ -12,7 +12,7 @@ import type { DotMatrixCommonProps } from "@/components/ui/dotmatrix-core";
 export type DotmTriangle13Props = DotMatrixCommonProps;
 
 const MATRIX_SIZE = 7;
-const BASE_OPACITY = 0.06;
+const BASE_OPACITY = 0.13;
 const HIGH_OPACITY = 0.95;
 
 const TRIANGLE_CELLS = new Set([
@@ -113,7 +113,7 @@ export function DotmTriangle13({
   const cycleActive = !reducedMotion && matrixPhase !== "idle";
   const cyclePhase = useCyclePhase({
     active: cycleActive,
-    cycleMsBase: 1800,
+    cycleMsBase: 1500,
     speed
   });
 

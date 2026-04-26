@@ -18,6 +18,7 @@ import {
   GeistPixelLine
 } from "geist/font/pixel";
 import type { ReactNode } from "react";
+import Link from "next/link";
 
 import { HomeLink } from "@/components/home-link";
 import { SiteMarkIcon } from "@/components/site-mark-icon";
@@ -99,9 +100,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         className={`${GeistPixelCircle.className} ${fontVariables} font-medium antialiased`}
         cz-shortcut-listen="true"
       >
-        <div className="fixed left-4 top-4 z-20 flex items-center justify-center gap-2 rounded-[10px] bg-[#dfdfdf] p-0.5 before:absolute before:left-1/2 before:top-1/2 before:z-0 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-[''] will-change-transform transition-transform duration-200 ease [@media(hover:hover)_and_(pointer:fine)]:hover:rotate-4 [@media(hover:hover)_and_(pointer:fine)]:hover:-translate-y-1 [@media(hover:hover)_and_(pointer:fine)]:hover:scale-[1.03] motion-reduce:will-change-auto motion-reduce:transition-none motion-reduce:[@media(hover:hover)_and_(pointer:fine)]:hover:rotate-0 motion-reduce:[@media(hover:hover)_and_(pointer:fine)]:hover:translate-y-0 motion-reduce:[@media(hover:hover)_and_(pointer:fine)]:hover:scale-100">
+        <Link
+          href="/"
+          aria-label="Home"
+          className="fixed left-4 top-4 z-20 inline-flex items-center justify-center gap-2 rounded-[10px] bg-[#dfdfdf] p-0.5 before:absolute before:left-1/2 before:top-1/2 before:z-0 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-[''] will-change-transform transition-transform duration-200 ease focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-(--focus-ring) [@media(hover:hover)_and_(pointer:fine)]:hover:rotate-4 [@media(hover:hover)_and_(pointer:fine)]:hover:-translate-y-1 [@media(hover:hover)_and_(pointer:fine)]:hover:scale-[1.03] motion-reduce:will-change-auto motion-reduce:transition-none motion-reduce:[@media(hover:hover)_and_(pointer:fine)]:hover:rotate-0 motion-reduce:[@media(hover:hover)_and_(pointer:fine)]:hover:translate-y-0 motion-reduce:[@media(hover:hover)_and_(pointer:fine)]:hover:scale-100"
+        >
           <SiteMarkIcon className="relative z-10 size-8.5 shrink-0 select-none pointer-events-none" />
-        </div>
+        </Link>
         <div className="fixed right-4 top-4 z-20 flex items-center gap-2">
           <HomeLink />
           <ThemeToggle />

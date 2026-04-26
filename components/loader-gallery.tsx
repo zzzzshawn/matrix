@@ -502,7 +502,7 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
                     matrix loaders for every app.
                   </span>
                 </h1>
-                <div className="flex w-max shrink-0 flex-col items-end gap-1 sm:gap-2 text-xs sm:text-2xl pt-1">
+                <div className="flex w-max shrink-0 flex-col items-end gap-1 sm:gap-2 text-xs sm:text-2xl pt-1.5 sm:pt-4">
                   <Link href="/getting-started/introduction" className={heroNavLinkClassName}>
                     Introduction
                   </Link>

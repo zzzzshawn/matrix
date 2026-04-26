@@ -14,6 +14,7 @@ const loadersRoot = path.join(docsRoot, "loaders");
 const manualRoot = path.join(loadersRoot, "manual");
 const publicRegistryDir = path.join(docsRoot, "public", "r");
 const fallbackHomepage = "https://dotmatrix.zzzzshawn.cloud";
+const registryName = "@dotmatrix";
 
 const sharedSourceFiles: Array<{ absolutePath: string; targetPath: string; type: RegistryFile["type"] }> = [
   {
@@ -146,7 +147,7 @@ async function build() {
 
   const registry = {
     $schema: "https://ui.shadcn.com/schema/registry.json",
-    name: "dotmatrix-loaders",
+    name: registryName,
     homepage: process.env.REGISTRY_HOMEPAGE ?? fallbackHomepage,
     items: registryItems
   };

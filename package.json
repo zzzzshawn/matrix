@@ -1,6 +1,7 @@
 {
   "name": "dot-matrix",
   "version": "0.0.0",
+  "license": "MIT",
   "private": true,
   "engines": {
     "node": ">=20.9.0"
