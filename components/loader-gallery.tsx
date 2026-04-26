@@ -446,14 +446,14 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
                 <h1 className="theme-text-strong text-balance text-3xl tracking-tight sm:text-8xl">
                   <span className="block">
                     Dot{" "}
-                    <span className=" inline-block -mx-0.5 sm:-ml-1 sm:-mr-3 rotate-5 p-1 bg-[#dfdfdf] rounded-[20px] size-[0.9em] translate-y-1 sm:translate-y-3" aria-hidden="true">
+                    <span className=" inline-block -mx-0.5 sm:-ml-1 sm:-mr-3 rotate-5 p-0.5 sm:p-1 bg-[#dfdfdf] rounded-md sm:rounded-[20px] size-[0.95em] translate-y-1 sm:translate-y-3" aria-hidden="true">
                       <Image
                         src="/icon.svg"
                         alt=""
-                        width={190}
-                        height={190}
+                        width={200}
+                        height={200}
                         unoptimized
-                        className=" select-none"
+                        className="size-full select-none"
                         draggable={false}
                       />
                     </span>{" "}
