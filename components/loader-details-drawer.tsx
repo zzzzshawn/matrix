@@ -15,6 +15,7 @@ import { GeistPixelCircle } from "geist/font/pixel";
 import { GeistSans } from "geist/font/sans";
 import Link from "next/link";
 import {
+  memo,
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -43,7 +44,44 @@ const CLOSE_CROSS_CHASE_ORDER: Record<number, number> = {
   4: 8
 };
 
-function FloatingCloseCrossDots() {
+const MemoLoaderPropsReference = memo(LoaderPropsReference);
+
+const ExampleUsageDotRail = memo(function ExampleUsageDotRail() {
+  return (
+    <div className="flex items-center gap-1 overflow-hidden">
+      {Array.from({ length: 150 }).map((_, i) => (
+        <div key={i} className="size-0.5 shrink-0 rounded-full bg-dot-faint" />
+      ))}
+    </div>
+  );
+});
+
+const DrawerPreviewPane = memo(function DrawerPreviewPane({
+  selected,
+  preview
+}: {
+  selected: LoaderCard | null;
+  preview: ReactNode;
+}) {
+  if (!selected) {
+    return null;
+  }
+
+  return (
+    <section className="flex h-full min-h-0 flex-col rounded-lg">
+      <h2
+        className={`${GeistPixelCircle.className} theme-text-strong shrink-0 px-4 pt-4 text-left text-base font-semibold tracking-tight`}
+      >
+        {selected.title}
+      </h2>
+      <div className="flex min-h-0 flex-1 items-center justify-center px-4 pb-4">
+        {preview}
+      </div>
+    </section>
+  );
+});
+
+const FloatingCloseCrossDots = memo(function FloatingCloseCrossDots() {
   const reducedMotion = usePrefersReducedMotion();
   const stepMs = 70;
 
@@ -70,9 +108,9 @@ function FloatingCloseCrossDots() {
       })}
     </span>
   );
-}
+});
 
-function MeasuredCliManualDotRail({
+const MeasuredCliManualDotRail = memo(function MeasuredCliManualDotRail({
   activeTab,
   onTabChange
 }: {
@@ -168,7 +206,7 @@ function MeasuredCliManualDotRail({
       </div>
     </div>
   );
-}
+});
 
 export interface LoaderCard {
   slug: string;
@@ -322,7 +360,7 @@ export function ColorAndLook() {
     setPackageManager("pnpm");
   }, [selected?.slug]);
 
-  const copySnippet = async (token: string, content: string) => {
+  const copySnippet = useCallback(async (token: string, content: string) => {
     if (typeof navigator === "undefined" || !navigator.clipboard) {
       return;
     }
@@ -336,54 +374,49 @@ export function ColorAndLook() {
     } catch {
       // Ignore copy failures in unsupported environments.
     }
-  };
+  }, []);
 
-  const exampleUsageDotRail = (
-    <div className="flex items-center gap-1 overflow-hidden">
-      {Array.from({ length: 150 }).map((_, i) => (
-        <div key={i} className="size-0.5 shrink-0 rounded-full bg-dot-faint" />
-      ))}
-    </div>
-  );
-
-  const exampleUsageCardList = (
-    <div className="grid gap-3">
-      <p className="theme-text-strong text-base font-semibold tracking-tight">Example usage</p>
-      {propExampleCards.map((card) => {
-        const active = activeExamplePreviewId === card.id;
-        return (
-          <TitledCodeCopyCard
-            key={card.id}
-            title={card.title}
-            titleEnd={
-              <button
-                type="button"
-                onClick={() => onExamplePreview(card.id)}
-                className={[
-                  "theme-text shrink-0 rounded-md border px-2 py-0.5 text-[11px] font-medium tabular-nums transition",
-                  "focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-(--focus-ring)",
-                  active
-                    ? "border-border bg-shell-overlay"
-                    : "border-transparent bg-code-bg hover:text-link-hover"
-                ].join(" ")}
-                aria-pressed={active}
-              >
-                Preview
-              </button>
-            }
-            code={card.code}
-            highlightLang="tsx"
-            copied={copiedToken === card.copyToken}
-            onCopy={() => copySnippet(card.copyToken, card.code)}
-            copyAriaLabel={`Copy ${card.title} example`}
-            codeBlockClassName={HIDE_CODE_SCROLLBARS}
-            codeScrollClassName={DIALOG_CODE_SCROLL_CLASS}
-            titleClassName="theme-text min-w-0 text-left text-xs font-medium normal-case tracking-normal"
-            showCodeLineNumbers={false}
-          />
-        );
-      })}
-    </div>
+  const exampleUsageCardList = useMemo(
+    () => (
+      <div className="grid gap-3">
+        <p className="theme-text-strong text-base font-semibold tracking-tight">Example usage</p>
+        {propExampleCards.map((card) => {
+          const active = activeExamplePreviewId === card.id;
+          return (
+            <TitledCodeCopyCard
+              key={card.id}
+              title={card.title}
+              titleEnd={
+                <button
+                  type="button"
+                  onClick={() => onExamplePreview(card.id)}
+                  className={[
+                    "theme-text shrink-0 rounded-md border px-2 py-0.5 text-[11px] font-medium tabular-nums transition",
+                    "focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-(--focus-ring)",
+                    active
+                      ? "border-border bg-shell-overlay"
+                      : "border-transparent bg-code-bg hover:text-link-hover"
+                  ].join(" ")}
+                  aria-pressed={active}
+                >
+                  Preview
+                </button>
+              }
+              code={card.code}
+              highlightLang="tsx"
+              copied={copiedToken === card.copyToken}
+              onCopy={() => copySnippet(card.copyToken, card.code)}
+              copyAriaLabel={`Copy ${card.title} example`}
+              codeBlockClassName={HIDE_CODE_SCROLLBARS}
+              codeScrollClassName={DIALOG_CODE_SCROLL_CLASS}
+              titleClassName="theme-text min-w-0 text-left text-xs font-medium normal-case tracking-normal"
+              showCodeLineNumbers={false}
+            />
+          );
+        })}
+      </div>
+    ),
+    [activeExamplePreviewId, copiedToken, copySnippet, onExamplePreview, propExampleCards]
   );
 
   return (
@@ -394,18 +427,7 @@ export function ColorAndLook() {
           <Dialog.Popup
             className={`${GeistSans.className} absolute inset-y-2 left-2 hidden h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] w-[calc(50%-0.75rem)] flex-col overflow-y-auto overflow-x-hidden overscroll-y-contain rounded-lg bg-surface transition-transform duration-190 ease-[cubic-bezier(.215, .61, .355, 1)] data-starting-style:-translate-x-full data-ending-style:-translate-x-full md:flex`}
           >
-            {selected ? (
-              <section className="flex h-full min-h-0 flex-col rounded-lg">
-                <h2
-                  className={`${GeistPixelCircle.className} theme-text-strong shrink-0 px-4 pt-4 text-left text-base font-semibold tracking-tight`}
-                >
-                  {selected.title}
-                </h2>
-                <div className="flex min-h-0 flex-1 items-center justify-center px-4 pb-4">
-                  {preview}
-                </div>
-              </section>
-            ) : null}
+            <DrawerPreviewPane selected={selected} preview={preview} />
           </Dialog.Popup>
           <Dialog.Popup
             className={`${GeistSans.className} absolute inset-y-2 left-2 right-2 flex h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] min-h-0 w-auto flex-col overflow-hidden rounded-lg bg-surface transition-transform duration-190 ease-[cubic-bezier(.215, .61, .355, 1)] data-starting-style:translate-x-full data-ending-style:translate-x-full md:left-auto md:right-2 md:w-[calc(50%-0.75rem)] `}
@@ -457,9 +479,9 @@ export function ColorAndLook() {
                         codeScrollClassName={DIALOG_CODE_SCROLL_CLASS}
                       />
 
-                      {exampleUsageDotRail}
+                      <ExampleUsageDotRail />
                       {exampleUsageCardList}
-                      <LoaderPropsReference slug={selected.slug} sourceCode={selected.sourceCode} />
+                      <MemoLoaderPropsReference slug={selected.slug} sourceCode={selected.sourceCode} />
                     </div>
                   ) : (
                     <div className="flex min-h-0 flex-col gap-4">
@@ -492,7 +514,7 @@ export function ColorAndLook() {
                         copyAriaLabel="Copy loader source"
                       />
                       {exampleUsageCardList}
-                      <LoaderPropsReference slug={selected.slug} sourceCode={selected.sourceCode} />
+                      <MemoLoaderPropsReference slug={selected.slug} sourceCode={selected.sourceCode} />
                     </div>
                   )}
                 </section>

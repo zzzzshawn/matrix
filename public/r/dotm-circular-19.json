@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-circular-19",
   "type": "registry:ui",
-  "title": "Circular Braille Orbit Cells",
+  "title": "Orbit Cell",
   "description": "A bright braille cell head orbits the inner ring with a dim tail while rail columns remain softly active.",
   "dependencies": [],
   "registryDependencies": [],

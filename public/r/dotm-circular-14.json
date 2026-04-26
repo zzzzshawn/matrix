@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-circular-14",
   "type": "registry:ui",
-  "title": "Circular DNA Rung Shift",
+  "title": "Rung Shift",
   "description": "A shifting DNA ladder where a bright horizontal rung steps row-by-row while side anchors sway and leave soft ghost echoes.",
   "dependencies": [],
   "registryDependencies": [],

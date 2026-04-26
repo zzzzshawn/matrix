@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface UseSteppedCycleOptions {
   active: boolean;
@@ -11,16 +11,14 @@ interface UseSteppedCycleOptions {
   idleStep?: number;
 }
 
-type Listener = () => void;
+type FrameListener = (now: number) => void;
 
-const listeners = new Set<Listener>();
+const listeners = new Set<FrameListener>();
 let rafId: number | null = null;
-let snapshotNow = 0;
 
 function emit(now: number) {
-  snapshotNow = now;
   for (const listener of listeners) {
-    listener();
+    listener(now);
   }
 }
 
@@ -33,7 +31,7 @@ function tick(now: number) {
   }
 }
 
-function subscribe(listener: Listener) {
+function subscribeFrame(listener: FrameListener) {
   listeners.add(listener);
   if (rafId === null) {
     rafId = window.requestAnimationFrame(tick);
@@ -45,19 +43,6 @@ function subscribe(listener: Listener) {
       rafId = null;
     }
   };
-}
-
-function getSnapshot() {
-  return snapshotNow;
-}
-
-function getServerSnapshot() {
-  return 0;
-}
-
-function useRafNow(active: boolean): number {
-  const now = useSyncExternalStore(active ? subscribe : () => () => {}, getSnapshot, getServerSnapshot);
-  return active ? now : 0;
 }
 
 /**
@@ -78,21 +63,37 @@ export function useSteppedCycle({
   const stepMs = Math.max(minStepMs, rawStepMs);
   const cycleMs = stepMs * safeSteps;
 
-  const now = useRafNow(active);
+  const [step, setStep] = useState(() => (active ? 0 : idleStep));
   const startMsRef = useRef<number>(0);
-  const wasActiveRef = useRef(false);
+  const activeRef = useRef(false);
+  const currentStepRef = useRef(idleStep);
 
-  if (!active) {
-    wasActiveRef.current = false;
-    return idleStep;
-  }
+  useEffect(() => {
+    if (!active) {
+      activeRef.current = false;
+      currentStepRef.current = idleStep;
+      setStep(idleStep);
+      return;
+    }
 
-  if (!wasActiveRef.current) {
-    startMsRef.current = now;
-    wasActiveRef.current = true;
-  }
+    const updateStep = (now: number) => {
+      if (!activeRef.current) {
+        startMsRef.current = now;
+        activeRef.current = true;
+      }
 
-  const elapsed = Math.max(0, now - startMsRef.current);
-  const step = Math.floor((elapsed % cycleMs) / stepMs);
-  return step % safeSteps;
+      const elapsed = Math.max(0, now - startMsRef.current);
+      const nextStep = Math.floor((elapsed % cycleMs) / stepMs) % safeSteps;
+      if (nextStep !== currentStepRef.current) {
+        currentStepRef.current = nextStep;
+        setStep(nextStep);
+      }
+    };
+
+    // Sync immediately so the hook has a current step before the next paint.
+    updateStep(performance.now());
+    return subscribeFrame(updateStep);
+  }, [active, cycleMs, idleStep, safeSteps, stepMs]);
+
+  return active ? step : idleStep;
 }

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-18",
   "type": "registry:ui",
-  "title": "Audio Bars",
+  "title": "Sound Bars",
   "description": "Equalizer-style vertical bars that pulse like live music levels.",
   "dependencies": [],
   "registryDependencies": [],

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-3",
   "type": "registry:ui",
-  "title": "Spiral Snake",
+  "title": "Core Spiral",
   "description": "A 4-dot tail spirals clockwise from the outer border toward the center of the 5x5 grid.",
   "dependencies": [],
   "registryDependencies": [],

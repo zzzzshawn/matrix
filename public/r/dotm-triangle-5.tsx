@@ -1,12 +1,12 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useEffect, useState } from "react";
 
 import { cx } from "./dotmatrix-core";
 import { useDotMatrixPhases } from "./dotmatrix-hooks";
 import { styleOpacity, stylePx } from "./dotmatrix-core";
 import { usePrefersReducedMotion } from "./dotmatrix-hooks";
+import { useSteppedCycle } from "./dotmatrix-hooks";
 import type { DotMatrixCommonProps } from "./dotmatrix-core";
 
 export type DotmTriangle5Props = DotMatrixCommonProps;
@@ -56,23 +56,13 @@ export function DotmTriangle5({
     hoverAnimated: Boolean(hoverAnimated && !reducedMotion),
     speed
   });
-  const [step, setStep] = useState(0);
-
-  useEffect(() => {
-    if (reducedMotion || matrixPhase === "idle") {
-      setStep(0);
-      return;
-    }
-
-    const safeSpeed = speed > 0 ? speed : 1;
-    const cycleMs = 1700 / safeSpeed;
-    const stepMs = Math.max(20, Math.round(cycleMs / STEP_COUNT));
-    const timer = window.setInterval(() => {
-      setStep((prev) => (prev + 1) % STEP_COUNT);
-    }, stepMs);
-
-    return () => window.clearInterval(timer);
-  }, [matrixPhase, reducedMotion, speed]);
+  const step = useSteppedCycle({
+    active: !reducedMotion && matrixPhase !== "idle",
+    cycleMsBase: 1700,
+    steps: STEP_COUNT,
+    speed,
+    minStepMs: 20
+  });
 
   const frame = reducedMotion || matrixPhase === "idle" ? 0 : step;
   const progress = frame / STEP_COUNT;

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-8",
   "type": "registry:ui",
-  "title": "Column Stagger Blink",
+  "title": "Strobe Stack",
   "description": "Each column stacks upward on a stagger (Tetris-style), the full grid blinks twice, then columns drain downward with the same stagger.",
   "dependencies": [],
   "registryDependencies": [],

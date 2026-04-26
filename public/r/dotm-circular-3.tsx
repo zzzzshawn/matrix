@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { DotMatrixBase } from "./dotmatrix-core";
 import { useDotMatrixPhases } from "./dotmatrix-hooks";
 import { isWithinCircularMask } from "./dotmatrix-core";
 import { rowMajorIndex } from "./dotmatrix-core";
 import { usePrefersReducedMotion } from "./dotmatrix-hooks";
+import { useSteppedCycle } from "./dotmatrix-hooks";
 import type { DotAnimationResolver, DotMatrixCommonProps } from "./dotmatrix-core";
 
 export type DotmCircular3Props = DotMatrixCommonProps;
@@ -46,23 +47,14 @@ export function DotmCircular3({
     hoverAnimated: Boolean(hoverAnimated && !reducedMotion),
     speed
   });
-  const [headStep, setHeadStep] = useState(0);
-
-  useEffect(() => {
-    if (reducedMotion || matrixPhase === "idle") {
-      setHeadStep(6);
-      return;
-    }
-
-    const safeSpeed = speed > 0 ? speed : 1;
-    const cycleMs = 1650 / safeSpeed;
-    const stepMs = Math.max(20, Math.round(cycleMs / STEP_COUNT));
-    const timer = window.setInterval(() => {
-      setHeadStep((prev) => (prev + 1) % STEP_COUNT);
-    }, stepMs);
-
-    return () => window.clearInterval(timer);
-  }, [matrixPhase, reducedMotion, speed]);
+  const headStep = useSteppedCycle({
+    active: !reducedMotion && matrixPhase !== "idle",
+    cycleMsBase: 1650,
+    steps: STEP_COUNT,
+    speed,
+    minStepMs: 20,
+    idleStep: 6
+  });
 
   const resolver = useMemo<DotAnimationResolver>(() => {
     return ({ index, row, col, phase }) => {

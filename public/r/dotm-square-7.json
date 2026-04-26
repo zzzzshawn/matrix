@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-7",
   "type": "registry:ui",
-  "title": "Tetris Stack",
+  "title": "Block Drop",
   "description": "Tetromino-like frames drop and stack in a 5x5 matrix, then flash a row-clear beat.",
   "dependencies": [],
   "registryDependencies": [],

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-15",
   "type": "registry:ui",
-  "title": "DNA Helix",
+  "title": "Helix Glow",
   "description": "Two mirrored strands with periodic bridges pulse like a compact DNA helix.",
   "dependencies": [],
   "registryDependencies": [],

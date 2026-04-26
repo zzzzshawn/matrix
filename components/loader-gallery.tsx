@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   LoaderDetailsDrawer,
@@ -200,20 +200,60 @@ const EXAMPLE_EX_OPACITY_FOR_TRIANGLE: Partial<DotMatrixCommonProps> = {
   speed: 1.4
 };
 
-export function LoaderGallery({ items }: LoaderGalleryProps) {
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
-  const [activeExampleId, setActiveExampleId] = useState<ExamplePreviewId | null>(null);
+interface LoaderGridCardProps {
+  item: LoaderCard;
+  onSelect: (slug: string) => void;
+}
+
+const LoaderGridCard = memo(function LoaderGridCard({ item, onSelect }: LoaderGridCardProps) {
+  const Component = componentMap[item.slug as keyof typeof componentMap] ?? DotMatrixIcon;
+  const previewProps = previewPropsMap[item.slug] ?? previewPropsMap["dotm-square-1"];
+  const handleSelect = useCallback(() => {
+    onSelect(item.slug);
+  }, [onSelect, item.slug]);
+
+  return (
+    <button
+      type="button"
+      onClick={handleSelect}
+      className="aspect-square cursor-pointer relative group"
+    >
+      <div
+        style={{
+          maskImage: "var(--loader-mask-a)"
+        }}
+        className="absolute  inset-0 size-full shadow-(--loader-card-frame-shadow) transition-shadow duration-50 ease-out group-hover:shadow-(--loader-card-frame-shadow-hover)"
+      />
+      <div
+        style={{
+          maskImage: "var(--loader-mask-b)"
+        }}
+        className="absolute  inset-0 z-10 size-full shadow-(--loader-card-frame-shadow) transition-shadow duration-50 ease-out group-hover:shadow-(--loader-card-frame-shadow-hover)"
+      />
+      <div
+        style={{
+          maskImage: "var(--loader-mask-c)",
+          boxShadow: "var(--loader-card-inner-shadow)"
+        }}
+        className="absolute  inset-3 z-10 transition-shadow duration-50 ease-out"
+      />
+
+      <div className="theme-text-strong pointer-events-none absolute inset-x-2 bottom-2 z-20 rounded-md px-2 py-1 text-center text-[11px] font-medium tracking-wide">
+        {item.title}
+      </div>
+
+      <div className="relative flex h-full flex-col">
+        <div className="flex flex-1 items-center justify-center ">
+          <Component {...previewProps} />
+        </div>
+      </div>
+    </button>
+  );
+});
+
+const HeroInstallCommand = memo(function HeroInstallCommand() {
   const [heroInstallCopied, setHeroInstallCopied] = useState(false);
   const heroCopyResetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const selected = useMemo(
-    () => items.find((item) => item.slug === selectedSlug) ?? null,
-    [items, selectedSlug]
-  );
-
-  const toggleExamplePreview = useCallback((id: ExamplePreviewId) => {
-    setActiveExampleId((p) => (p === id ? null : id));
-  }, []);
 
   const copyHeroInstallCommand = useCallback(async () => {
     if (typeof navigator === "undefined" || !navigator.clipboard?.writeText) {
@@ -235,16 +275,61 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
   }, []);
 
   useEffect(() => {
-    setActiveExampleId(null);
-  }, [selected?.slug]);
-
-  useEffect(() => {
     return () => {
       if (heroCopyResetRef.current) {
         clearTimeout(heroCopyResetRef.current);
       }
     };
   }, []);
+
+  return (
+    <div className="flex items-center gap-2">
+      <div className="w-max rounded-lg bg-surface-soft p-1">
+        <div className="flex min-w-0 max-w-full items-center gap-1 rounded-sm bg-bg py-1 px-3">
+          <p className="min-w-0 text-[10px] leading-normal text-fg sm:text-base">
+            {HERO_SHADCN_INSTALL_COMMAND}
+          </p>
+        </div>
+      </div>
+      <div className="w-max rounded-lg bg-surface-soft p-1">
+        <div className="flex min-w-0 max-w-full items-center gap-1 rounded-sm bg-bg p-1.5 sm:p-[7px]">
+          <button
+            type="button"
+            onClick={() => void copyHeroInstallCommand()}
+            aria-label={heroInstallCopied ? "Copied" : "Copy install command"}
+            className="inline-flex min-w-0 items-center justify-center text-fg-strong transition-colors duration-150 ease-out hover:opacity-90"
+          >
+            {heroInstallCopied ? (
+              <CheckIcon className="size-3 sm:size-[18px]" />
+            ) : (
+              <CopyClipboardIcon className="size-3 sm:size-[18px]" />
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+export function LoaderGallery({ items }: LoaderGalleryProps) {
+  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const [activeExampleId, setActiveExampleId] = useState<ExamplePreviewId | null>(null);
+  const handleSelectSlug = useCallback((slug: string) => {
+    setSelectedSlug(slug);
+  }, []);
+
+  const selected = useMemo(
+    () => items.find((item) => item.slug === selectedSlug) ?? null,
+    [items, selectedSlug]
+  );
+
+  const toggleExamplePreview = useCallback((id: ExamplePreviewId) => {
+    setActiveExampleId((p) => (p === id ? null : id));
+  }, []);
+
+  useEffect(() => {
+    setActiveExampleId(null);
+  }, [selected?.slug]);
 
   const selectedPreview = useMemo(() => {
     if (!selected) {
@@ -339,32 +424,7 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
                 the shadcn add command and source files.
               </p>
             </div>
-            <div className="flex items-center gap-2">
-
-              <div className="w-max rounded-lg bg-surface-soft p-1">
-                <div className="flex min-w-0 max-w-full items-center gap-1 rounded-sm bg-bg py-1 px-3">
-                  <p className="min-w-0 text-[10px] leading-normal text-fg sm:text-base">
-                    {HERO_SHADCN_INSTALL_COMMAND}
-                  </p>
-                </div>
-              </div>
-              <div className="w-max rounded-lg bg-surface-soft p-1">
-                <div className="flex min-w-0 max-w-full items-center gap-1 rounded-sm bg-bg p-1.5 sm:p-[7px]">
-                  <button
-                    type="button"
-                    onClick={() => void copyHeroInstallCommand()}
-                    aria-label={heroInstallCopied ? "Copied" : "Copy install command"}
-                    className="inline-flex min-w-0 items-center justify-center text-fg-strong transition-colors duration-150 ease-out hover:opacity-90"
-                  >
-                    {heroInstallCopied ? (
-                      <CheckIcon className="size-3 sm:size-[18px]" />
-                    ) : (
-                      <CopyClipboardIcon className="size-3 sm:size-[18px]" />
-                    )}
-                  </button>
-                </div>
-              </div>
-            </div>
+            <HeroInstallCommand />
           </div>
         </div>
       </section>
@@ -373,46 +433,9 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
         id="loader-grid"
         className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-6 md:grid-cols-4 xl:grid-cols-5"
       >
-        {items.map((item) => {
-          const Component = componentMap[item.slug as keyof typeof componentMap] ?? DotMatrixIcon;
-          const previewProps = previewPropsMap[item.slug] ?? previewPropsMap["dotm-square-1"];
-
-          return (
-            <button
-              key={item.slug}
-              type="button"
-              onClick={() => setSelectedSlug(item.slug)}
-              className="aspect-square cursor-pointer relative group"
-            >
-              <div
-                style={{
-                  maskImage: "var(--loader-mask-a)"
-                }}
-                className="absolute  inset-0 size-full shadow-(--loader-card-frame-shadow) transition-shadow duration-50 ease-out group-hover:shadow-(--loader-card-frame-shadow-hover)"></div>
-              <div
-                style={{
-                  maskImage: "var(--loader-mask-b)"
-                }}
-                className="absolute  inset-0 z-10 size-full shadow-(--loader-card-frame-shadow) transition-shadow duration-50 ease-out group-hover:shadow-(--loader-card-frame-shadow-hover)"></div>
-              <div
-                style={{
-                  maskImage: "var(--loader-mask-c)",
-                  boxShadow: "var(--loader-card-inner-shadow)"
-                }}
-                className="absolute  inset-3 z-10 transition-shadow duration-50 ease-out"></div>
-
-              <div className="theme-text-strong pointer-events-none absolute inset-x-2 bottom-2 z-20 rounded-md px-2 py-1 text-center text-[11px] font-medium tracking-wide">
-                {item.title}
-              </div>
-
-              <div className="relative flex h-full flex-col">
-                <div className="flex flex-1 items-center justify-center ">
-                  <Component {...previewProps} />
-                </div>
-              </div>
-            </button>
-          );
-        })}
+        {items.map((item) => (
+          <LoaderGridCard key={item.slug} item={item} onSelect={handleSelectSlug} />
+        ))}
       </section>
 
       <LoaderDetailsDrawer

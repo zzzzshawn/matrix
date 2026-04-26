@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-16",
   "type": "registry:ui",
-  "title": "DNA Helix Compact",
+  "title": "Helix Core",
   "description": "A narrower helix variant that stays in the center band while preserving strand/rung rhythm.",
   "dependencies": [],
   "registryDependencies": [],

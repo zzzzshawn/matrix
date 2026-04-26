@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-triangle-4",
   "type": "registry:ui",
-  "title": "Triangle Vertex Chase",
+  "title": "Vertex Chase",
   "description": "Three staggered heads chase around the triangle perimeter, leaving short fading tails while all dots stay fixed in place.",
   "dependencies": [],
   "registryDependencies": [],

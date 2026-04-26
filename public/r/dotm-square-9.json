@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-9",
   "type": "registry:ui",
-  "title": "Braille Pattern",
+  "title": "Glyph Pulse",
   "description": "Two synced 2×3 cells (Unicode dot order) step through clear motifs: rails, full grid, three rows, checker, horseshoes, and alternating columns.",
   "dependencies": [],
   "registryDependencies": [],

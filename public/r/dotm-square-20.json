@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-20",
   "type": "registry:ui",
-  "title": "Mobius Strip",
+  "title": "Mobius Run",
   "description": "A bright head and tail run around the outer ring; a dimmer second train stays half a lap behind, with inner corner flashes for the twist.",
   "dependencies": [],
   "registryDependencies": [],

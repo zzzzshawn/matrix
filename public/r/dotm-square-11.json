@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-11",
   "type": "registry:ui",
-  "title": "Ripple Echo",
+  "title": "Echo Ring",
   "description": "Concentric diamond ripple with a soft secondary echo pulse per ring.",
   "dependencies": [],
   "registryDependencies": [],

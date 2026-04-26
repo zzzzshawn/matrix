@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useMemo, type CSSProperties } from "react";
 
 import { DotMatrixBase } from "../base/dot-matrix-base";
 import { useDotMatrixPhases } from "../core/phases";
@@ -25,23 +25,25 @@ export function DotmSquare6({
     speed
   });
 
-  const animationResolver: DotAnimationResolver = ({ isActive, row, col, phase }) => {
-    if (!isActive) {
-      return { className: "dmx-inactive" };
-    }
+  const animationResolver = useMemo<DotAnimationResolver>(() => {
+    return ({ isActive, row, col, phase }) => {
+      if (!isActive) {
+        return { className: "dmx-inactive" };
+      }
 
-    const goesUp = col % 2 === 0;
-    const position = goesUp ? COLUMN_HEIGHT - 1 - row : row;
+      const goesUp = col % 2 === 0;
+      const position = goesUp ? COLUMN_HEIGHT - 1 - row : row;
 
-    if (reducedMotion || phase === "idle") {
-      return { style: { opacity: 0.22 + (position / (COLUMN_HEIGHT - 1)) * 0.66 } };
-    }
+      if (reducedMotion || phase === "idle") {
+        return { style: { opacity: 0.22 + (position / (COLUMN_HEIGHT - 1)) * 0.66 } };
+      }
 
-    return {
-      className: "dmx-square6-col-snake",
-      style: { "--dmx-col-pos": position } as CSSProperties
+      return {
+        className: "dmx-square6-col-snake",
+        style: { "--dmx-col-pos": position } as CSSProperties
+      };
     };
-  };
+  }, [reducedMotion]);
 
   return (
     <DotMatrixBase

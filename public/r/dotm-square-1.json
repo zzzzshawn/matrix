@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-1",
   "type": "registry:ui",
-  "title": "Diagonal TR–BL",
+  "title": "Neon Drift",
   "description": "Same ripple family as the icon, with a wave that sweeps from the top-right toward the bottom-left.",
   "dependencies": [],
   "registryDependencies": [],

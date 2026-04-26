@@ -81,22 +81,28 @@ export function DotmSquare2({
     return visits;
   }, [route, routeLen]);
 
-  const animationResolver: DotAnimationResolver = ({ isActive, index }) => {
-    if (!isActive) {
-      return { className: "dmx-inactive" };
-    }
-
-    const visits = visitsByIndex.get(index) ?? [];
-    let opacity = BASE_OPACITY;
-    for (const step of visits) {
-      const distance = (head - step + routeLen) % routeLen;
-      if (distance >= 0 && distance < SNAKE_TAIL.length) {
-        opacity = Math.max(opacity, SNAKE_TAIL[distance]!);
+  const animationResolver = useMemo<DotAnimationResolver>(() => {
+    return ({ isActive, index }) => {
+      if (!isActive) {
+        return { className: "dmx-inactive" };
       }
-    }
 
-    return { style: { opacity } };
-  };
+      if (routeLen <= 0) {
+        return { style: { opacity: BASE_OPACITY } };
+      }
+
+      const visits = visitsByIndex.get(index) ?? [];
+      let opacity = BASE_OPACITY;
+      for (const stepIndex of visits) {
+        const distance = (head - stepIndex + routeLen) % routeLen;
+        if (distance >= 0 && distance < SNAKE_TAIL.length) {
+          opacity = Math.max(opacity, SNAKE_TAIL[distance]!);
+        }
+      }
+
+      return { style: { opacity } };
+    };
+  }, [head, routeLen, visitsByIndex]);
 
   return (
     <DotMatrixBase

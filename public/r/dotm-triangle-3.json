@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-triangle-3",
   "type": "registry:ui",
-  "title": "Triangle Corner Bounce",
+  "title": "Corner Bounce",
   "description": "A single head bounces between triangle corners along the perimeter path with a short fading tail.",
   "dependencies": [],
   "registryDependencies": [],

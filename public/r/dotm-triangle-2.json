@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-triangle-2",
   "type": "registry:ui",
-  "title": "Triangle Altitude Pulse",
+  "title": "Altitude Wave",
   "description": "A soft altitude wave travels between apex and base while the center column remains gently present for shape readability.",
   "dependencies": [],
   "registryDependencies": [],

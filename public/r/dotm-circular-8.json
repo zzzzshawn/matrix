@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-circular-8",
   "type": "registry:ui",
-  "title": "Circular Heartbeat",
+  "title": "Heart Pulse",
   "description": "Pulse bursts from the center with a dual-beat cadence, sending soft concentric pressure waves across the circular matrix.",
   "dependencies": [],
   "registryDependencies": [],

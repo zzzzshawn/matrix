@@ -56,6 +56,7 @@ const importRewrites: ReadonlyArray<{ from: string; to: string }> = [
   { from: "../core/patterns", to: "./dotmatrix-core" },
   { from: "../types", to: "./dotmatrix-core" },
   { from: "../hooks/use-cycle-phase", to: "./dotmatrix-hooks" },
+  { from: "../hooks/use-stepped-cycle", to: "./dotmatrix-hooks" },
   { from: "../hooks/use-prefers-reduced-motion", to: "./dotmatrix-hooks" },
   { from: "../core/phases", to: "./dotmatrix-hooks" }
 ];

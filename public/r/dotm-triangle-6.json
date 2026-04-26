@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-triangle-6",
   "type": "registry:ui",
-  "title": "Triangle Braille Beat",
+  "title": "Braille Beat",
   "description": "Triangle-masked braille dots fill down the left rail, then the right, then blink full and empty.",
   "dependencies": [],
   "registryDependencies": [],

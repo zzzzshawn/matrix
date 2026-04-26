@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-triangle-1",
   "type": "registry:ui",
-  "title": "Triangle Center Spokes",
+  "title": "Core Spokes",
   "description": "A triangle-masked matrix where three spoke lines originate at the center and travel outward to each triangle edge.",
   "dependencies": [],
   "registryDependencies": [],

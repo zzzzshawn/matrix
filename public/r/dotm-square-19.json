@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-19",
   "type": "registry:ui",
-  "title": "Infinity Loop",
+  "title": "Infinity Run",
   "description": "Dual counter-rotating heads trace a figure-eight with a soft crossover pulse at center.",
   "dependencies": [],
   "registryDependencies": [],

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-triangle-5",
   "type": "registry:ui",
-  "title": "Triangle Row Scan",
+  "title": "Row Sweep",
   "description": "A reflected scanline sweeps from apex to base and back, animating only opacity bands across triangle rows.",
   "dependencies": [],
   "registryDependencies": [],

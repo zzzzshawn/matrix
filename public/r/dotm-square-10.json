@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-10",
   "type": "registry:ui",
-  "title": "Phosphor Sweep",
+  "title": "CRT Glide",
   "description": "A CRT-style horizontal scanline moves down the matrix; swept rows leave a soft phosphor trail with a slight column-wise warp.",
   "dependencies": [],
   "registryDependencies": [],

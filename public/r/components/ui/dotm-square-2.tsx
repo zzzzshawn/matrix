@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { DotMatrixBase } from "./dotmatrix-core";
 import { useDotMatrixPhases } from "./dotmatrix-hooks";
 import { rowMajorIndex } from "./dotmatrix-core";
 import { usePrefersReducedMotion } from "./dotmatrix-hooks";
+import { useSteppedCycle } from "./dotmatrix-hooks";
 import type { DotAnimationResolver, DotMatrixCommonProps } from "./dotmatrix-core";
 
 export type DotmSquare2Props = DotMatrixCommonProps;
@@ -61,7 +62,13 @@ export function DotmSquare2({
   });
   const route = useMemo(() => buildRowCyclePath(), []);
   const routeLen = route.length;
-  const [head, setHead] = useState(0);
+  const head = useSteppedCycle({
+    active: !reducedMotion && matrixPhase !== "idle" && routeLen > 0,
+    cycleMsBase: 1500,
+    steps: routeLen,
+    speed,
+    minStepMs: 24
+  });
 
   const visitsByIndex = useMemo(() => {
     const visits = new Map<number, number[]>();
@@ -74,38 +81,28 @@ export function DotmSquare2({
     return visits;
   }, [route, routeLen]);
 
-  useEffect(() => {
-    if (reducedMotion || matrixPhase === "idle" || routeLen === 0) {
-      setHead(0);
-      return;
-    }
-
-    const safeSpeed = speed > 0 ? speed : 1;
-    const cycleMs = 1500 / safeSpeed;
-    const stepMs = Math.max(24, Math.round(cycleMs / routeLen));
-    const timer = window.setInterval(() => {
-      setHead((prev) => (prev + 1) % routeLen);
-    }, stepMs);
-
-    return () => window.clearInterval(timer);
-  }, [matrixPhase, reducedMotion, routeLen, speed]);
-
-  const animationResolver: DotAnimationResolver = ({ isActive, index }) => {
-    if (!isActive) {
-      return { className: "dmx-inactive" };
-    }
-
-    const visits = visitsByIndex.get(index) ?? [];
-    let opacity = BASE_OPACITY;
-    for (const step of visits) {
-      const distance = (head - step + routeLen) % routeLen;
-      if (distance >= 0 && distance < SNAKE_TAIL.length) {
-        opacity = Math.max(opacity, SNAKE_TAIL[distance]!);
+  const animationResolver = useMemo<DotAnimationResolver>(() => {
+    return ({ isActive, index }) => {
+      if (!isActive) {
+        return { className: "dmx-inactive" };
       }
-    }
 
-    return { style: { opacity } };
-  };
+      if (routeLen <= 0) {
+        return { style: { opacity: BASE_OPACITY } };
+      }
+
+      const visits = visitsByIndex.get(index) ?? [];
+      let opacity = BASE_OPACITY;
+      for (const stepIndex of visits) {
+        const distance = (head - stepIndex + routeLen) % routeLen;
+        if (distance >= 0 && distance < SNAKE_TAIL.length) {
+          opacity = Math.max(opacity, SNAKE_TAIL[distance]!);
+        }
+      }
+
+      return { style: { opacity } };
+    };
+  }, [head, routeLen, visitsByIndex]);
 
   return (
     <DotMatrixBase

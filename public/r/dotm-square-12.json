@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-12",
   "type": "registry:ui",
-  "title": "Center Origin Ripple",
+  "title": "Origin Wave",
   "description": "Ripple starts at cell (2,2) and expands outward in concentric rings.",
   "dependencies": [],
   "registryDependencies": [],

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-2",
   "type": "registry:ui",
-  "title": "Row Wave",
+  "title": "Pulse Ladder",
   "description": "Clockwise snake route: starts bottom-left up column 1, jumps to column 3 down, then column 2 up, and continues the same cycle to the right.",
   "dependencies": [],
   "registryDependencies": [],

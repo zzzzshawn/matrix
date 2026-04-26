@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-4",
   "type": "registry:ui",
-  "title": "Triple Snake",
+  "title": "Twin Orbit",
   "description": "Outer ring snake moves clockwise, middle ring snake moves anticlockwise, and the center dot stays inactive.",
   "dependencies": [],
   "registryDependencies": [],

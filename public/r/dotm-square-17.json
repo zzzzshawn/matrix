@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-square-17",
   "type": "registry:ui",
-  "title": "DNA Half Helix",
+  "title": "Half Helix",
   "description": "Single-strand helix variant that shows one side of the DNA wave.",
   "dependencies": [],
   "registryDependencies": [],

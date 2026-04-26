@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-circular-10",
   "type": "registry:ui",
-  "title": "Circular Binary Bloom",
+  "title": "Binary Bloom",
   "description": "Binary-style opacity tiers pulse in modular steps so only a few cells peak at once while others stay low, producing a crisp coded bloom.",
   "dependencies": [],
   "registryDependencies": [],

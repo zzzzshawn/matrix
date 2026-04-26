@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dotm-circular-7",
   "type": "registry:ui",
-  "title": "Circular Gate Flip",
+  "title": "Gate Shift",
   "description": "A scanning gate flips between vertical and horizontal sweeps, producing a crisp alternating shutter rhythm in the circular grid.",
   "dependencies": [],
   "registryDependencies": [],
