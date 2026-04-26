@@ -20,9 +20,9 @@ import {
 import type { ReactNode } from "react";
 
 import { HomeLink } from "@/components/home-link";
+import { SiteMarkIcon } from "@/components/site-mark-icon";
 import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
-import Image from "next/image";
 
 const fontVariables = [
   GeistSans.variable,
@@ -100,15 +100,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         cz-shortcut-listen="true"
       >
         <div className="fixed left-4 top-4 z-20 flex items-center justify-center gap-2 rounded-[10px] bg-[#dfdfdf] p-0.5 before:absolute before:left-1/2 before:top-1/2 before:z-0 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-[''] will-change-transform transition-transform duration-200 ease [@media(hover:hover)_and_(pointer:fine)]:hover:rotate-4 [@media(hover:hover)_and_(pointer:fine)]:hover:-translate-y-1 [@media(hover:hover)_and_(pointer:fine)]:hover:scale-[1.03] motion-reduce:will-change-auto motion-reduce:transition-none motion-reduce:[@media(hover:hover)_and_(pointer:fine)]:hover:rotate-0 motion-reduce:[@media(hover:hover)_and_(pointer:fine)]:hover:translate-y-0 motion-reduce:[@media(hover:hover)_and_(pointer:fine)]:hover:scale-100">
-          <Image
-            src="/icon.svg"
-            alt=""
-            width={200}
-            height={200}
-            className="relative z-10 size-8.5 select-none pointer-events-none"
-            draggable={false}
-            priority
-          />
+          <SiteMarkIcon className="relative z-10 size-8.5 shrink-0 select-none pointer-events-none" />
         </div>
         <div className="fixed right-4 top-4 z-20 flex items-center gap-2">
           <HomeLink />

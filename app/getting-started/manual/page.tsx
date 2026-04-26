@@ -8,7 +8,7 @@ export default async function ManualGettingStartedPage() {
 
   return (
     <main className="mx-auto min-h-dvh w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
-      <section className="theme-page-shell grid gap-6 rounded-2xl py-6 sm:p-6">
+      <section className="theme-page-shell grid gap-6 rounded-2xl py-10 sm:p-6">
         <header className="grid gap-3">
           <p className="theme-text-muted text-xs">Getting Started</p>
           <h1 className="theme-text-strong text-2xl tracking-tight sm:text-3xl">Manual Setup Guide</h1>

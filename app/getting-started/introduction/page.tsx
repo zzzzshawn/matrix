@@ -5,7 +5,7 @@ export const dynamic = "force-static";
 export default function IntroductionPage() {
   return (
     <main className="mx-auto min-h-dvh w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
-      <section className="theme-page-shell grid gap-8 rounded-2xl py-6 sm:p-6">
+      <section className="theme-page-shell grid gap-8 rounded-2xl py-10 sm:p-6">
         <header className="grid gap-3">
           <p className="theme-text-muted text-xs">Introduction</p>
           <h1 className="theme-text-strong text-2xl tracking-tight sm:text-3xl">Dot Matrix: dot matrix loaders that feel intentional</h1>
