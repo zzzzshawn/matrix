@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import {
   LoaderDetailsDrawer,
   type ExamplePreviewId,
@@ -179,7 +180,7 @@ const EXAMPLE_SNIPPET_PROPS: Record<ExamplePreviewId, Partial<DotMatrixCommonPro
     minSize: 48
   },
   "ex-look": {
-    color: "hsl(220 90% 60%)",
+    color: "var(--color-dotmatrix)",
     speed: 0.8,
     muted: true,
     animated: true
@@ -281,11 +282,34 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
         <div className="mt-4 grid gap-6 lg:grid-cols-[1.4fr_auto] lg:items-end">
           <div className="flex flex-col gap-8">
             <div className="space-y-4">
-              <h1 className="text-balance text-3xl tracking-tight text-zinc-100 sm:text-9xl">
-                Dot matrix{" "}
-                {" "}
-                loaders for React
-              </h1>
+              <div className="flex  justify-baseline gap-4">
+
+                <h1 className="theme-text-strong text-balance text-3xl tracking-tight sm:text-9xl">
+                  Dot matrix{" "}
+                  {" "}
+                  loaders for React
+                </h1>
+                <div className="theme-text-dim flex w-max shrink-0 flex-col items-end gap-2 text-xs sm:text-2xl">
+                  <Link
+                    href="/getting-started/introduction"
+                    className="theme-link"
+                  >
+                    Introduction
+                  </Link>
+                  <Link
+                    href="/getting-started/usage"
+                    className="theme-link"
+                  >
+                    Usage
+                  </Link>
+                  <Link
+                    href="/getting-started/manual"
+                    className="theme-link"
+                  >
+                    Manual setup
+                  </Link>
+                </div>
+              </div>
               <p className=" max-w-[65ch] text-pretty tracking-tight text-sm leading-relaxed  sm:text-2xl">
                 This site is a gallery of dotmatrix-style loading components. Open a card for the shadcn add
                 command and source files.
@@ -313,21 +337,24 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
             >
               <div
                 style={{
-                  maskImage: 'linear-gradient(45deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0) 65%)'
+                  maskImage: "var(--loader-mask-a)",
+                  boxShadow: "var(--loader-card-frame-shadow)"
                 }}
-                className="absolute inset-0 size-full shadow-[0_0_5px_0.5px_#ffffff80_inset] group-hover:shadow-[0_0_15px_0.5px_#ffffffcc_inset] transition-shadow duration-50 ease-out"></div>
+                className="absolute inset-0 size-full transition-shadow duration-50 ease-out group-hover:[box-shadow:var(--loader-card-frame-shadow-hover)]"></div>
               <div
                 style={{
-                  maskImage: 'linear-gradient(135deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0) 65%)'
+                  maskImage: "var(--loader-mask-b)",
+                  boxShadow: "var(--loader-card-frame-shadow)"
                 }}
-                className="absolute inset-0 size-full z-10 shadow-[0_0_5px_0.5px_#ffffff80_inset] group-hover:shadow-[0_0_15px_0.5px_#ffffffcc_inset] transition-shadow duration-50 ease-out"></div>
+                className="absolute inset-0 z-10 size-full transition-shadow duration-50 ease-out group-hover:[box-shadow:var(--loader-card-frame-shadow-hover)]"></div>
               <div
                 style={{
-                  maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0) 90%)'
+                  maskImage: "var(--loader-mask-c)",
+                  boxShadow: "var(--loader-card-inner-shadow)"
                 }}
-                className="absolute inset-3 z-10 shadow-[0_0_0px_0.5px_#ffffff60_inset]  transition-shadow duration-50 ease-out"></div>
+                className="absolute inset-3 z-10 transition-shadow duration-50 ease-out"></div>
 
-              <div className="pointer-events-none absolute inset-x-2 bottom-2 z-20 rounded-md px-2 py-1 text-center text-[11px] font-medium tracking-wide text-zinc-100">
+              <div className="theme-text-strong pointer-events-none absolute inset-x-2 bottom-2 z-20 rounded-md px-2 py-1 text-center text-[11px] font-medium tracking-wide">
                 {item.title}
               </div>
 

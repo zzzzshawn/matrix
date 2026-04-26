@@ -10,6 +10,7 @@ import {
 } from "geist/font/pixel";
 import type { ReactNode } from "react";
 
+import { ThemeToggle } from "@/components/theme-toggle";
 import "@/loaders/styles.css";
 import "./globals.css";
 
@@ -23,6 +24,19 @@ const fontVariables = [
   GeistPixelLine.variable
 ].join(" ");
 
+const themeInitScript = `(() => {
+  try {
+    const key = "dotmatrix-theme";
+    const stored = localStorage.getItem(key);
+    if (stored === "light" || stored === "dark") {
+      document.documentElement.dataset.theme = stored;
+      document.documentElement.style.colorScheme = stored;
+    }
+  } catch {
+    // Ignore storage errors in restricted contexts.
+  }
+})();`;
+
 export const metadata: Metadata = {
   title: "Dotmatrix Loader Library",
   description: "Dotmatrix-style loading animations with shadcn registry support."
@@ -30,11 +44,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className="dark" data-diffkit-extension="1">
+    <html lang="en" data-diffkit-extension="1">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body
         className={`${GeistPixelCircle.className} ${fontVariables} font-medium antialiased`}
         cz-shortcut-listen="true"
       >
+        <ThemeToggle />
         {children}
       </body>
     </html>

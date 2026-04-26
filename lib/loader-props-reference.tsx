@@ -159,22 +159,12 @@ function loaderKindFromSlug(slug: string): LoaderKind {
   return "square";
 }
 
-function kindSummary(kind: LoaderKind): string {
-  if (kind === "triangle") {
-    return "7×7 mask; only the props below are read (no `...rest`). A wider `DotMatrixCommon` type does not pass unknown fields through.";
-  }
-  if (kind === "circular") {
-    return "All `dotm-circular-*` use `{...rest}` then set `pattern=\"full\"` — that is the only `DotMatrixCommon` field not taken from your props. `opacity*` / `cellPadding` / `boxSize` / `minSize` / `size` / `color` / `muted` / `dotClassName` / `className` / `ariaLabel` are forwarded in the spread; `speed` / `animated` / `hoverAnimated` are always the named arguments.";
-  }
-  return "5×5 `DotMatrixBase`; the props below are the ones you pass, including `pattern` and layout.";
-}
-
 const pill = [
-  "inline max-w-full rounded-md bg-[#171717] px-2 py-0.5",
-  "font-mono text-[11px] leading-snug text-amber-100 [overflow-wrap:anywhere]"
+  "inline max-w-full rounded-md bg-[var(--color-surface-muted)] px-2 py-0.5",
+  "font-mono text-[11px] leading-snug theme-text [overflow-wrap:anywhere]"
 ].join(" ");
 
-const label = "w-[2.5rem] shrink-0 select-none text-[12px] font-medium text-zinc-300";
+const label = "theme-text-muted w-[2.5rem] shrink-0 select-none text-[12px] font-medium";
 
 function inlineCodeDesc(text: string): ReactNode {
   const parts = text.split(/`([^`]+)`/g);
@@ -182,7 +172,7 @@ function inlineCodeDesc(text: string): ReactNode {
     <>
       {parts.map((part, i) =>
         i % 2 === 1 ? (
-          <code key={i} className="font-mono text-zinc-200/95">
+          <code key={i} className="theme-text font-mono">
             {part}
           </code>
         ) : (
@@ -196,31 +186,72 @@ function inlineCodeDesc(text: string): ReactNode {
 const exampleUsageDotRail = (
   <div className="flex items-center gap-1 overflow-hidden">
     {Array.from({ length: 150 }).map((_, i) => (
-      <div key={i} className="size-0.5 shrink-0 rounded-full bg-white/10" />
+      <div key={i} className="size-0.5 shrink-0 rounded-full bg-(--color-dot-faint)" />
     ))}
   </div>
 );
 
-export function LoaderPropsReference({ slug }: { slug: string }) {
+function extractExplicitPropNames(sourceCode?: string): { names: Set<string>; hasRestSpread: boolean } | null {
+  if (!sourceCode) {
+    return null;
+  }
+
+  const fnMatch = sourceCode.match(/export\s+function\s+\w+\s*\(\s*\{([\s\S]*?)\}\s*:\s*[\w<>{}\[\]\s|&?,.]+?\)/);
+  if (!fnMatch) {
+    return null;
+  }
+
+  const rawParams = fnMatch[1];
+  if (!rawParams) {
+    return null;
+  }
+
+  const names = new Set<string>();
+  let hasRestSpread = false;
+
+  for (const piece of rawParams.split(",")) {
+    const trimmed = piece.trim();
+    if (!trimmed) {
+      continue;
+    }
+    if (trimmed.startsWith("...")) {
+      hasRestSpread = true;
+      continue;
+    }
+    const nameMatch = trimmed.match(/^([A-Za-z_]\w*)\s*(?:=|$)/);
+    if (nameMatch?.[1]) {
+      names.add(nameMatch[1]);
+    }
+  }
+
+  return { names, hasRestSpread };
+}
+
+export function LoaderPropsReference({ slug, sourceCode }: { slug: string; sourceCode?: string }) {
   const kind = loaderKindFromSlug(slug);
-  const rows = PROP_ROWS.filter((r) => r.kinds.includes(kind));
+  const baseRows = PROP_ROWS.filter((r) => r.kinds.includes(kind));
+  const extracted = extractExplicitPropNames(sourceCode);
+  const rows =
+    extracted && !extracted.hasRestSpread
+      ? baseRows.filter((row) => extracted.names.has(row.name))
+      : baseRows;
 
   return (
     <>
       {exampleUsageDotRail}
       <div className="grid gap-4">
         <div className="grid gap-1.5">
-          <p className="text-base font-semibold tracking-tight text-white">Component props</p>
+          <p className="theme-text-strong text-base font-semibold tracking-tight">Component props</p>
         </div>
         <div className="grid gap-6">
           {rows.map((row) => {
             const def = resolveDefault(row, kind);
             return (
               <div key={row.name} className="grid gap-2.5">
-                <div className="rounded-lg flex items-center bg-[#171717] px-3 py-2 w-max">
-                  <span className="font-mono text-[12px] text-white">{row.name}</span>
+                <div className="flex w-max items-center rounded-lg bg-(--color-surface-muted) px-3 py-2">
+                  <span className="theme-text-strong font-mono text-[12px]">{row.name}</span>
                 </div>
-                <p className="text-[14px]  text-zinc-100 max-w-2xl text-pretty">{inlineCodeDesc(row.description)}</p>
+                <p className="theme-text max-w-2xl text-pretty text-[14px]">{inlineCodeDesc(row.description)}</p>
                 <div className="grid gap-2 pl-0.5">
                   <div className="flex flex-col gap-1.5 min-[400px]:flex-row min-[400px]:items-start min-[400px]:gap-3">
                     <span className={label}>type:</span>

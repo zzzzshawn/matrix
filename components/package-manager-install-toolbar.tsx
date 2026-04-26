@@ -2,7 +2,13 @@
 
 import { ShikiCodeView } from "@/components/shiki-code-view";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useCallback, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ReactNode
+} from "react";
 import type { BundledLanguage } from "shiki/bundle/web";
 
 export type ShadcnPackageManager = "npm" | "yarn" | "bun" | "pnpm";
@@ -272,7 +278,7 @@ function MeasuredPackageManagerDotRail({
               role="tab"
               aria-selected={active}
               onClick={() => onValueChange(pm)}
-              className={`inline-flex items-center gap-1 rounded-md px-1 text-xs font-medium transition sm:text-[12px] ${active ? "text-white" : "text-zinc-500 hover:text-zinc-400"
+              className={`inline-flex items-center gap-1 rounded-md px-1 text-xs font-medium transition sm:text-[12px] ${active ? "theme-text-strong" : "theme-text-dim hover:text-(--color-fg-muted)"
                 }`}
             >
               <PackageManagerTabIcon manager={pm} />
@@ -295,7 +301,7 @@ function MeasuredPackageManagerDotRail({
             return (
               <span
                 key={i}
-                className={`absolute top-1/2 size-[2px] -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors duration-200 ease-out ${lit ? "bg-zinc-100" : "bg-zinc-600"
+                className={`absolute top-1/2 size-[2px] -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors duration-200 ease-out ${lit ? "bg-(--color-dot-on)" : "bg-(--color-dot-off)"
                   }`}
                 style={{ left: `${t * 100}%` }}
               />
@@ -324,7 +330,17 @@ export interface PackageManagerInstallCardCopyProps {
   highlightLang?: BundledLanguage;
   /** Gutter for 1-based line indices. Install commands default to false via {@link PackageManagerInstallCard}. */
   showCodeLineNumbers?: boolean;
+  /**
+   * Max height when the code area is collapsed (Tailwind classes only).
+   * Overflow uses a bottom fade + Expand; ignored when expanded to {@link CODE_EXPAND_MAX_HEIGHT_CLASS}.
+   */
+  codeCollapsedMaxHeightClassName?: string;
 }
+
+/** Expanded code region cap (scrollable); paired with collapse UX in {@link CodeBlockWithCopy}. */
+export const CODE_EXPAND_MAX_HEIGHT_CLASS = "max-h-[80dvh]" as const;
+
+const CODE_COLLAPSED_MAX_DEFAULT = "max-h-[min(220px,40dvh)]";
 
 export type PackageManagerInstallCardProps = PackageManagerInstallToolbarProps &
   PackageManagerInstallCardCopyProps & {
@@ -334,7 +350,10 @@ export type PackageManagerInstallCardProps = PackageManagerInstallToolbarProps &
     shellClassName?: string;
     /** Extra classes on the `<pre>` wrapping the command. */
     codeBlockClassName?: string;
-    /** When set, command block scrolls inside this region (e.g. `max-h-[60dvh] overflow-y-auto`). */
+    /**
+     * Extra classes on the scrollable code shell (e.g. scrollbar hiding, `min-h-0`).
+     * Max height and overflow are handled internally when content overflows (preview + Expand, then cap at 80dvh).
+     */
     codeScrollClassName?: string;
   };
 
@@ -343,7 +362,10 @@ export type TitledCodeCopyCardProps = PackageManagerInstallCardCopyProps & {
   code: string;
   shellClassName?: string;
   codeBlockClassName?: string;
-  /** When set, code scrolls inside this region so the copy control stays visible (e.g. `max-h-[260px] overflow-y-auto overflow-x-auto`). */
+  /**
+   * Extra classes on the scrollable code shell (scrollbar hiding, `min-h-0`, etc.).
+   * Collapse / expand and vertical max heights are handled internally.
+   */
   codeScrollClassName?: string;
   /** Merged onto the wrapper around the code block (e.g. `flex flex-1 min-h-0 flex-col` to fill remaining card height). */
   codeWrapperClassName?: string;
@@ -363,7 +385,8 @@ function CodeBlockWithCopy({
   codeScrollClassName,
   wrapperClassName,
   highlightLang,
-  showCodeLineNumbers = true
+  showCodeLineNumbers = true,
+  codeCollapsedMaxHeightClassName = CODE_COLLAPSED_MAX_DEFAULT
 }: PackageManagerInstallCardCopyProps & {
   code: string;
   codeBlockClassName?: string;
@@ -371,6 +394,35 @@ function CodeBlockWithCopy({
   wrapperClassName?: string;
 }) {
   const shouldReduceMotion = useReducedMotion();
+  const [codeExpanded, setCodeExpanded] = useState(false);
+  const [hasVerticalOverflow, setHasVerticalOverflow] = useState(false);
+  const scrollShellRef = useRef<HTMLDivElement>(null);
+
+  const updateOverflow = useCallback(() => {
+    const el = scrollShellRef.current;
+    if (!el || codeExpanded) {
+      return;
+    }
+    setHasVerticalOverflow(el.scrollHeight > el.clientHeight + 1);
+  }, [codeExpanded]);
+
+  useLayoutEffect(() => {
+    updateOverflow();
+  }, [updateOverflow, code, highlightLang]);
+
+  useLayoutEffect(() => {
+    const el = scrollShellRef.current;
+    if (!el) {
+      return;
+    }
+    const ro = new ResizeObserver(() => {
+      updateOverflow();
+    });
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+    };
+  }, [updateOverflow]);
 
   const codeEl = (
     <code
@@ -396,17 +448,53 @@ function CodeBlockWithCopy({
   const rowClass = [
     "flex gap-2 rounded-md p-2 sm:p-2.5 text-[12px]",
     highlightLang
-      ? "bg-[#101010] text-zinc-200"
-      : "bg-black/50 leading-relaxed text-zinc-200",
+      ? "bg-(--color-code-bg) theme-text"
+      : "bg-(--color-shell) leading-relaxed theme-text",
     codeScrollClassName ? "min-h-0 items-stretch overflow-hidden" : "items-start overflow-x-auto",
     codeBlockClassName
   ]
     .filter(Boolean)
     .join(" ");
 
+  const fadeToClass = highlightLang ? "to-(--color-code-bg)" : "to-(--color-shell)";
+
   const scrollOrPlain = codeScrollClassName ? (
-    <div className={["min-h-0 min-w-0 flex-1", codeScrollClassName].filter(Boolean).join(" ")}>
+    <div
+      ref={scrollShellRef}
+      className={[
+        "relative min-h-0 min-w-0 flex-1",
+        codeScrollClassName,
+        codeExpanded
+          ? [CODE_EXPAND_MAX_HEIGHT_CLASS, "overflow-y-auto overflow-x-auto"].join(" ")
+          : [codeCollapsedMaxHeightClassName, "overflow-hidden"].join(" ")
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
       {highlightLang ? highlightedBody : codeEl}
+      {!codeExpanded && hasVerticalOverflow ? (
+        <>
+          <div
+            className={[
+              "pointer-events-none absolute inset-x-0 bottom-0 h-[80%] bg-linear-to-b from-transparent",
+              fadeToClass
+            ].join(" ")}
+            aria-hidden
+          />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-start p-2">
+            <button
+              type="button"
+              aria-label="Expand code"
+              onClick={() => {
+                setCodeExpanded(true);
+              }}
+              className="pointer-events-auto rounded-md bg-(--color-surface-raised) px-2 py-1 text-xs font-medium theme-text backdrop-blur-[2px] transition-colors hover:bg-(--color-surface-muted)"
+            >
+              Expand
+            </button>
+          </div>
+        </>
+      ) : null}
     </div>
   ) : highlightLang ? (
     highlightedBody
@@ -427,7 +515,7 @@ function CodeBlockWithCopy({
           aria-label={copied ? copyAriaLabelCopied : copyAriaLabel}
           onClick={onCopy}
           className={[
-            "relative inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-lg text-white transition-colors duration-150 ease-out",
+            "relative inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-lg theme-text-strong transition-colors duration-150 ease-out",
             codeScrollClassName ? "self-start" : ""
           ]
             .filter(Boolean)
@@ -470,6 +558,7 @@ export function TitledCodeCopyCard({
   shellClassName,
   codeBlockClassName,
   codeScrollClassName,
+  codeCollapsedMaxHeightClassName,
   codeWrapperClassName,
   titleClassName,
   titleEnd,
@@ -482,18 +571,18 @@ export function TitledCodeCopyCard({
 }: TitledCodeCopyCardProps) {
   const headingClass =
     titleClassName ??
-    "text-xs text-zinc-200";
+    "theme-text text-xs";
 
   return (
     <div
       className={[
-        "overflow-hidden bg-[#141414] rounded-lg",
+        "overflow-hidden rounded-lg bg-(--color-surface-soft)",
         shellClassName
       ]
         .filter(Boolean)
         .join(" ")}
     >
-      <div className="flex shrink-0 min-w-0 items-center justify-between gap-2 bg-[#141414] rounded-t-lg py-1.5 pt-2.5 pl-3 pr-2.5">
+      <div className="flex min-w-0 shrink-0 items-center justify-between gap-2 rounded-t-lg bg-(--color-surface-soft) py-1.5 pt-2.5 pl-3 pr-2.5">
         <h3 className={["min-w-0 flex-1 truncate", headingClass].filter(Boolean).join(" ")}>{title}</h3>
         {titleEnd}
       </div>
@@ -505,6 +594,7 @@ export function TitledCodeCopyCard({
         copyAriaLabelCopied={copyAriaLabelCopied}
         codeBlockClassName={codeBlockClassName}
         codeScrollClassName={codeScrollClassName}
+        codeCollapsedMaxHeightClassName={codeCollapsedMaxHeightClassName}
         wrapperClassName={codeWrapperClassName}
         highlightLang={highlightLang}
         showCodeLineNumbers={showCodeLineNumbers}
@@ -522,7 +612,7 @@ export function PackageManagerInstallToolbar({
   return (
     <div
       className={[
-        "flex items-center bg-[#141414] rounded-t-lg gap-1 py-1.5 pt-2.5  px-3 ",
+        "flex items-center gap-1 rounded-t-lg bg-(--color-surface-soft) px-3 py-1.5 pt-2.5",
         className
       ]
         .filter(Boolean)
@@ -542,6 +632,7 @@ export function PackageManagerInstallCard({
   shellClassName,
   codeBlockClassName,
   codeScrollClassName,
+  codeCollapsedMaxHeightClassName,
   copied,
   onCopy,
   copyAriaLabel = "Copy install command",
@@ -553,7 +644,7 @@ export function PackageManagerInstallCard({
   return (
     <div
       className={[
-        "overflow-hidden bg-[#141414] rounded-lg",
+        "overflow-hidden rounded-lg bg-(--color-surface-soft)",
         shellClassName
       ]
         .filter(Boolean)
@@ -568,6 +659,7 @@ export function PackageManagerInstallCard({
         copyAriaLabelCopied={copyAriaLabelCopied}
         codeBlockClassName={codeBlockClassName}
         codeScrollClassName={codeScrollClassName}
+        codeCollapsedMaxHeightClassName={codeCollapsedMaxHeightClassName}
         highlightLang={highlightLang}
         showCodeLineNumbers={showCodeLineNumbers}
       />

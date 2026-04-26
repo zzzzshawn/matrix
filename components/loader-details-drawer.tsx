@@ -26,10 +26,8 @@ import {
 const CLI_MANUAL_DOT_ROW_H = 6;
 const CLI_MANUAL_DOT_GAP_PX = 9;
 
-/** Shiki / install command blocks in this dialog: cap height so the panel can scroll. */
-const DIALOG_CODE_SCROLL_CLASS = ["min-h-0 max-h-[60dvh] overflow-y-auto overflow-x-auto", HIDE_CODE_SCROLLBARS].join(
-  " "
-);
+/** Shiki / install command blocks: scrollbar hiding + min height; collapse / expand and max heights are handled in the install toolbar code shell. */
+const DIALOG_CODE_SCROLL_CLASS = ["min-h-0", HIDE_CODE_SCROLLBARS].join(" ");
 
 /** Flat index (row-major 5×5): chase order along main diag then anti-diag (center once). */
 const CLOSE_CROSS_CHASE_ORDER: Record<number, number> = {
@@ -56,16 +54,16 @@ function FloatingCloseCrossDots() {
         const col = index % 5;
         const isCross = row === col || row + col === 4;
         if (!isCross) {
-          return <span key={index} className="h-[3px] w-[3px] rounded-full bg-white/5" />;
+          return <span key={index} className="h-[3px] w-[3px] rounded-full bg-(--color-dot-faint)" />;
         }
         if (reducedMotion) {
-          return <span key={index} className="h-[3px] w-[3px] rounded-full bg-white" />;
+          return <span key={index} className="h-[3px] w-[3px] rounded-full bg-(--color-dot-on)" />;
         }
         const order = CLOSE_CROSS_CHASE_ORDER[index] ?? 0;
         return (
           <motion.span
             key={index}
-            className="h-[3px] w-[3px] rounded-full bg-white"
+            className="h-[3px] w-[3px] rounded-full bg-(--color-dot-on)"
             initial={false}
             animate={{ opacity: [0.2, 1, 0.2] }}
             transition={{
@@ -138,7 +136,7 @@ function MeasuredCliManualDotRail({
           ref={cliRef}
           type="button"
           onClick={() => onTabChange("cli")}
-          className={`rounded-lg pr-2 pl-1.5 text-xs font-medium transition ${activeTab === "cli" ? "text-zinc-100" : "text-zinc-400 hover:text-zinc-200"
+          className={`rounded-lg pr-2 pl-1.5 text-xs font-medium transition ${activeTab === "cli" ? "theme-text-strong" : "theme-text-muted hover:text-(--color-fg)"
             }`}
         >
           CLI
@@ -147,7 +145,7 @@ function MeasuredCliManualDotRail({
           ref={manualRef}
           type="button"
           onClick={() => onTabChange("manual")}
-          className={`rounded-lg pl-2 pr-1.5 text-xs font-medium transition ${activeTab === "manual" ? "text-zinc-100" : "text-zinc-400 hover:text-zinc-200"
+          className={`rounded-lg pl-2 pr-1.5 text-xs font-medium transition ${activeTab === "manual" ? "theme-text-strong" : "theme-text-muted hover:text-(--color-fg)"
             }`}
         >
           Manual
@@ -168,7 +166,7 @@ function MeasuredCliManualDotRail({
             return (
               <span
                 key={i}
-                className={`absolute top-1/2 size-[2px] -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors duration-200 ease-out ${lit ? "bg-zinc-100" : "bg-zinc-600"
+                className={`absolute top-1/2 size-[2px] -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors duration-200 ease-out ${lit ? "bg-(--color-dot-on)" : "bg-(--color-dot-off)"
                   }`}
                 style={{ left: `${t * 100}%` }}
               />
@@ -306,7 +304,7 @@ export function PatternAndLook() {
   return (
     <${C}
       pattern="cross"
-      color="hsl(220 90% 60%)"
+      color="var(--color-dotmatrix)"
       speed={0.8}
       muted
       animated
@@ -318,7 +316,7 @@ export function PatternAndLook() {
 export function ColorAndLook() {
   return (
     <${C}
-      color="hsl(220 90% 60%)"
+      color="var(--color-dotmatrix)"
       muted
     />
   );
@@ -351,14 +349,14 @@ export function ColorAndLook() {
   const exampleUsageDotRail = (
     <div className="flex items-center gap-1 overflow-hidden">
       {Array.from({ length: 150 }).map((_, i) => (
-        <div key={i} className="size-0.5 shrink-0 rounded-full bg-white/10" />
+        <div key={i} className="size-0.5 shrink-0 rounded-full bg-(--color-dot-faint)" />
       ))}
     </div>
   );
 
   const exampleUsageCardList = (
     <div className="grid gap-3">
-      <p className="text-base font-semibold tracking-tight text-white">Example usage</p>
+      <p className="theme-text-strong text-base font-semibold tracking-tight">Example usage</p>
       {propExampleCards.map((card) => {
         const active = activeExamplePreviewId === card.id;
         return (
@@ -370,9 +368,11 @@ export function ColorAndLook() {
                 type="button"
                 onClick={() => onExamplePreview(card.id)}
                 className={[
-                  "shrink-0 rounded-md px-2 py-0.5 text-[11px] font-medium tabular-nums text-zinc-200 transition",
-                  "focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-white/30",
-                  active ? "border-white/5 border bg-white/5" : " border border-transparent bg-[#101010]  hover:text-white"
+                  "theme-text shrink-0 rounded-md border px-2 py-0.5 text-[11px] font-medium tabular-nums transition",
+                  "focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-(--focus-ring)",
+                  active
+                    ? "border-(--color-border) bg-(--color-shell-overlay)"
+                    : "border-transparent bg-(--color-code-bg) hover:text-(--color-link-hover)"
                 ].join(" ")}
                 aria-pressed={active}
               >
@@ -386,7 +386,7 @@ export function ColorAndLook() {
             copyAriaLabel={`Copy ${card.title} example`}
             codeBlockClassName={HIDE_CODE_SCROLLBARS}
             codeScrollClassName={DIALOG_CODE_SCROLL_CLASS}
-            titleClassName="min-w-0 text-left text-xs font-medium normal-case tracking-normal text-zinc-200"
+            titleClassName="theme-text min-w-0 text-left text-xs font-medium normal-case tracking-normal"
             showCodeLineNumbers={false}
           />
         );
@@ -397,10 +397,10 @@ export function ColorAndLook() {
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/70 backdrop-blur-[2px] transition-opacity duration-175 ease-[cubic-bezier(.215, .61, .355, 1)] data-starting-style:opacity-0 data-ending-style:opacity-0" />
+        <Dialog.Backdrop className="fixed inset-0 z-50 bg-(--color-backdrop) backdrop-blur-[2px] transition-opacity duration-175 ease-[cubic-bezier(.215, .61, .355, 1)] data-starting-style:opacity-0 data-ending-style:opacity-0" />
         <Dialog.Viewport className="fixed inset-0 z-50">
           <Dialog.Popup
-            className={`${GeistSans.className} absolute left-2 inset-y-2 flex h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] w-[calc(50%-0.75rem)] flex-col overflow-y-auto overflow-x-hidden overscroll-y-contain rounded-lg bg-[#0c0c0c] transition-transform duration-175 ease-[cubic-bezier(.215, .61, .355, 1)] data-starting-style:-translate-x-full data-ending-style:-translate-x-full`}
+            className={`${GeistSans.className} absolute left-2 inset-y-2 flex h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] w-[calc(50%-0.75rem)] flex-col overflow-y-auto overflow-x-hidden overscroll-y-contain rounded-lg bg-(--color-surface) transition-transform duration-175 ease-[cubic-bezier(.215, .61, .355, 1)] data-starting-style:-translate-x-full data-ending-style:-translate-x-full`}
           >
             {selected ? (
               <section className="grid h-full place-items-center rounded-lg">
@@ -409,10 +409,29 @@ export function ColorAndLook() {
             ) : null}
           </Dialog.Popup>
           <Dialog.Popup
-            className={`${GeistSans.className} absolute right-2 inset-y-2 flex h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] min-h-0 w-[calc(50%-0.75rem)] flex-col overflow-hidden rounded-lg bg-[#0c0c0c] transition-transform duration-175 ease-[cubic-bezier(.215, .61, .355, 1)] data-starting-style:translate-x-full data-ending-style:translate-x-full`}
+            className={`${GeistSans.className} absolute right-2 inset-y-2 flex h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] min-h-0 w-[calc(50%-0.75rem)] flex-col overflow-hidden rounded-lg bg-(--color-surface) transition-transform duration-175 ease-[cubic-bezier(.215, .61, .355, 1)] data-starting-style:translate-x-full data-ending-style:translate-x-full`}
           >
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-50 h-16 backdrop-blur-[2px]"
+              style={{
+                backgroundImage: "var(--drawer-fade)",
+                WebkitMaskImage: "linear-gradient(to top, var(--color-fg-strong) 0%, var(--color-fg-strong) 40%, transparent 100%)",
+                maskImage: "linear-gradient(to top, var(--color-fg-strong) 0%, var(--color-fg-strong) 40%, transparent 100%)"
+              }}
+            />
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-50 h-30 backdrop-blur-[3px]"
+              style={{
+                backgroundImage: "var(--drawer-fade)",
+                WebkitMaskImage: "linear-gradient(to top, var(--color-fg-strong) 0%, var(--color-fg-strong) 40%, transparent 100%)",
+                maskImage: "linear-gradient(to top, var(--color-fg-strong) 0%, var(--color-fg-strong) 40%, transparent 100%)"
+              }}
+            />
+
+
+
             {selected ? (
-              <div className="flex h-full min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden px-1.5">
+              <div className="flex h-full min-h-0 w-full min-w-0 flex-1 flex-col gap-2 overflow-hidden px-1.5">
                 <div className="shrink-0 px-4 pt-4">
                   <MeasuredCliManualDotRail activeTab={activeTab} onTabChange={setActiveTab} />
                 </div>
@@ -441,19 +460,19 @@ export function ColorAndLook() {
 
                       {exampleUsageDotRail}
                       {exampleUsageCardList}
-                      <LoaderPropsReference slug={selected.slug} />
+                      <LoaderPropsReference slug={selected.slug} sourceCode={selected.sourceCode} />
                     </div>
                   ) : (
                     <div className="flex min-h-0 flex-col gap-4">
                       <div className="grid shrink-0 gap-1">
-                        <h3 className="text-lg text-zinc-200">
+                        <h3 className="theme-text text-lg">
                           Manual Usage
                         </h3>
-                        <p className="text-sm leading-relaxed text-zinc-300">
+                        <p className="theme-text text-sm leading-relaxed">
                           You need to manually create the shared runtime files before using individual loaders. Follow the{" "}
                           <Link
                             href="/getting-started/manual"
-                            className="underline underline-offset-4 text-zinc-100 hover:text-white"
+                            className="theme-link underline underline-offset-4"
                           >
                             Getting Started Manually
                           </Link>{" "}
@@ -462,7 +481,7 @@ export function ColorAndLook() {
                       </div>
                       <TitledCodeCopyCard
                         title={`components/ui/${selected.slug}.tsx`}
-                        titleClassName="truncate text-left font-mono text-xs font-medium normal-case tracking-normal text-zinc-500"
+                        titleClassName="theme-text-dim truncate text-left font-mono text-xs font-medium normal-case tracking-normal"
                         code={selected.sourceCode}
                         highlightLang="tsx"
                         shellClassName="flex min-h-0 flex-col"
@@ -474,7 +493,7 @@ export function ColorAndLook() {
                         copyAriaLabel="Copy loader source"
                       />
                       {exampleUsageCardList}
-                      <LoaderPropsReference slug={selected.slug} />
+                      <LoaderPropsReference slug={selected.slug} sourceCode={selected.sourceCode} />
                     </div>
                   )}
                 </section>
@@ -493,7 +512,7 @@ export function ColorAndLook() {
               >
                 <Dialog.Close
                   aria-label="Close dialog"
-                  className="pointer-events-auto inline-grid p-2.5  border-white/5 place-items-center rounded-lg text-white bg-black"
+                  className="pointer-events-auto inline-grid place-items-center rounded-lg border border-(--color-border-soft) bg-(--color-bg) p-2.5 theme-text-strong"
                 >
                   <FloatingCloseCrossDots />
                 </Dialog.Close>

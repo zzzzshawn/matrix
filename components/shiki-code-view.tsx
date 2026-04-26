@@ -3,7 +3,20 @@
 import type { BundledLanguage } from "shiki/bundle/web";
 import { useEffect, useMemo, useState } from "react";
 
-const SHIKI_THEME = "vesper" as const;
+const SHIKI_THEME_DARK = "vesper" as const;
+const SHIKI_THEME_LIGHT = "github-light" as const;
+type ThemeMode = "light" | "dark";
+
+function resolveThemeMode(): ThemeMode {
+  if (typeof window === "undefined") {
+    return "dark";
+  }
+  const explicit = document.documentElement.dataset.theme;
+  if (explicit === "light" || explicit === "dark") {
+    return explicit;
+  }
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
 
 export function ShikiCodeView({
   code,
@@ -18,7 +31,36 @@ export function ShikiCodeView({
   lineNumbers?: boolean;
 }) {
   const [html, setHtml] = useState<string | null>(null);
+  const [themeMode, setThemeMode] = useState<ThemeMode>("dark");
   const lines = useMemo(() => code.split("\n"), [code]);
+  const shikiTheme = themeMode === "light" ? SHIKI_THEME_LIGHT : SHIKI_THEME_DARK;
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const updateThemeMode = () => {
+      setThemeMode(resolveThemeMode());
+    };
+
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const onMediaChange = () => updateThemeMode();
+    media.addEventListener("change", onMediaChange);
+
+    const observer = new MutationObserver(updateThemeMode);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"]
+    });
+
+    updateThemeMode();
+
+    return () => {
+      media.removeEventListener("change", onMediaChange);
+      observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -27,7 +69,7 @@ export function ShikiCodeView({
       const { codeToHtml } = await import("shiki/bundle/web");
       const next = await codeToHtml(code, {
         lang,
-        theme: SHIKI_THEME
+        theme: shikiTheme
       });
       if (!cancelled) {
         setHtml(next);
@@ -37,7 +79,7 @@ export function ShikiCodeView({
     return () => {
       cancelled = true;
     };
-  }, [code, lang]);
+  }, [code, lang, shikiTheme]);
 
   return (
     <div
@@ -53,7 +95,7 @@ export function ShikiCodeView({
     >
       {lineNumbers ? (
         <div
-          className="select-none py-0 pr-2.5 font-mono text-[12px] text-zinc-600 tabular-nums"
+          className="theme-text-dim select-none py-0 pr-2.5 font-mono text-[12px] tabular-nums"
           aria-hidden
         >
           {lines.map((_, i) => (
@@ -75,7 +117,7 @@ export function ShikiCodeView({
             dangerouslySetInnerHTML={{ __html: html }}
           />
         ) : (
-          <pre className="m-0 bg-transparent p-0 font-mono text-[12px] leading-relaxed text-zinc-500 whitespace-pre">
+          <pre className="theme-text-dim m-0 whitespace-pre bg-transparent p-0 font-mono text-[12px] leading-relaxed">
             {code}
           </pre>
         )}

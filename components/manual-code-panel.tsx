@@ -8,18 +8,18 @@ import { useCallback, useState } from "react";
 import type { BundledLanguage } from "shiki/bundle/web";
 
 const pathTitleClass =
-  "truncate text-left font-mono text-xs font-medium normal-case tracking-normal text-zinc-500";
+  "theme-text-dim truncate text-left font-mono text-xs font-medium normal-case tracking-normal";
 
 export function ManualCodePanel({
   title,
   code,
   lang,
-  scrollClassName = "max-h-[60dvh] overflow-x-auto overflow-y-auto"
+  scrollClassName
 }: {
   title: string;
   code: string;
   lang: BundledLanguage;
-  /** Scroll / max-height on the inner code shell (Tailwind classes). */
+  /** Extra classes merged onto the code shell (scrollbar hiding is always applied). */
   scrollClassName?: string;
 }) {
   const [copied, setCopied] = useState(false);
