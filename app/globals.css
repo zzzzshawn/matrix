@@ -54,6 +54,19 @@
     cubic-bezier(0.22, 1, 0.36, 1) forwards;
   --animate-dot-ripple: dot-ripple calc(1000ms * var(--dmx-speed, 1)) ease-in-out infinite;
   --animate-scanline: scanline calc(1800ms * var(--dmx-speed, 1)) linear infinite;
+  /* Close-button cross dots: CSS-driven so it survives parent compositing (e.g. Framer filter/blur wrappers). */
+  --animate-close-cross-dot: close-cross-dot 630ms ease-in-out infinite;
+
+  @keyframes close-cross-dot {
+    0%,
+    100% {
+      opacity: 0.2;
+    }
+
+    45% {
+      opacity: 1;
+    }
+  }
 
   @keyframes dot-pulse {
     0%,

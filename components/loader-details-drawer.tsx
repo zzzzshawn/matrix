@@ -46,7 +46,6 @@ const CLOSE_CROSS_CHASE_ORDER: Record<number, number> = {
 function FloatingCloseCrossDots() {
   const reducedMotion = usePrefersReducedMotion();
   const stepMs = 70;
-  const cycleMs = stepMs * 9;
 
   return (
     <span className="grid grid-cols-5 gap-px" aria-hidden>
@@ -62,18 +61,10 @@ function FloatingCloseCrossDots() {
         }
         const order = CLOSE_CROSS_CHASE_ORDER[index] ?? 0;
         return (
-          <motion.span
+          <span
             key={index}
-            className="h-[3px] w-[3px] rounded-full bg-dot-on"
-            initial={false}
-            animate={{ opacity: [0.2, 1, 0.2] }}
-            transition={{
-              duration: cycleMs / 1000,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: (order * stepMs) / 1000,
-              times: [0, 0.45, 1]
-            }}
+            className="h-[3px] w-[3px] rounded-full bg-dot-on motion-safe:animate-close-cross-dot"
+            style={{ animationDelay: `${(order * stepMs) / 1000}s` }}
           />
         );
       })}
@@ -512,9 +503,9 @@ export function ColorAndLook() {
             {open ? (
               <motion.div
                 key="floating-close"
-                initial={{ opacity: 0, filter: "blur(5px)", scale: 0.9 }}
-                animate={{ opacity: 1, filter: "blur(0px)", scale: 1, transition: { delay: 0.08 } }}
-                exit={{ opacity: 0, filter: "blur(5px)", scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1, transition: { delay: 0.08 } }}
+                exit={{ opacity: 0, scale: 0.92 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
                 className="pointer-events-none absolute inset-x-0 bottom-1 z-50 flex justify-center"
               >

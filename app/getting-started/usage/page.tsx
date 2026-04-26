@@ -47,10 +47,10 @@ export default function UsagePage() {
       <section className="theme-page-shell grid gap-6 rounded-2xl py-6 sm:p-6">
         <header className="grid gap-3">
           <p className="theme-text-muted text-xs">Usage</p>
-          <h1 className="theme-text-strong text-2xl tracking-tight sm:text-3xl">Install from the Dotmatrix registry</h1>
+          <h1 className="theme-text-strong text-2xl tracking-tight sm:text-3xl">Install Realm from the registry</h1>
           <p className="theme-text max-w-[72ch] text-sm leading-relaxed">
-            Dotmatrix loaders are distributed through a custom shadcn registry so the install flow stays
-            familiar: configure once, pull the items you need, then adapt each loader to your product.
+            Realm loaders ship through a custom shadcn registry (scoped as <code className="font-mono text-[0.9em]">@dotmatrix</code>
+            {" "}in the CLI) so the install flow stays familiar: configure once, pull the items you need, then adapt each loader to your product.
           </p>
         </header>
 
@@ -71,8 +71,10 @@ export default function UsagePage() {
         <section className="grid gap-3">
           <h2 className="theme-text-strong text-lg tracking-tight">Configure the registry</h2>
           <p className="theme-text max-w-[72ch] text-sm leading-relaxed">
-            Add the `@dotmatrix` entry in the `registries` field of `components.json` so the CLI can
-            resolve items like `@dotmatrix/dotm-square-3`.
+            Add the <code className="font-mono text-[0.9em]">@dotmatrix</code> entry in the{" "}
+            <code className="font-mono text-[0.9em]">registries</code> field of{" "}
+            <code className="font-mono text-[0.9em]">components.json</code> so the CLI can resolve items like{" "}
+            <code className="font-mono text-[0.9em]">@dotmatrix/dotm-square-3</code>.
           </p>
           <ManualCodePanel
             title="components.json"
@@ -136,7 +138,7 @@ export default function UsagePage() {
             >
               introduction
             </Link>{" "}
-            for project goals and constraints.
+            for what Realm is aiming for and its constraints.
           </p>
         </section>
       </section>

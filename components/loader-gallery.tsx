@@ -320,9 +320,7 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
               <div className="flex  justify-between w-full sm:gap-4">
 
                 <h1 className="theme-text-strong text-balance text-3xl tracking-tight sm:text-8xl">
-                  Dot matrix{" "}
-                  {" "}
-                  loaders for React
+                  <span className="block">Dot matrix loaders for React</span>
                 </h1>
                 <div className="flex w-max shrink-0 flex-col items-end gap-1 sm:gap-2 text-xs sm:text-2xl pt-1">
                   <Link href="/getting-started/introduction" className={heroNavLinkClassName}>
@@ -337,8 +335,8 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
                 </div>
               </div>
               <p className=" max-w-[65ch] text-pretty tracking-tight text-sm leading-relaxed  sm:text-2xl">
-                This site is a gallery of dotmatrix-style loading components. Open a card for the shadcn add
-                command and source files.
+                Realm is a component library of dot matrix loaders. Browse the gallery, then open a card for
+                the shadcn add command and source files.
               </p>
             </div>
             <div className="flex items-center gap-2">

@@ -1,4 +1,13 @@
 import type { Metadata } from "next";
+
+const siteUrl =
+  typeof process.env.NEXT_PUBLIC_SITE_URL === "string" &&
+  process.env.NEXT_PUBLIC_SITE_URL.length > 0
+    ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
+    : undefined;
+
+const realmDescription =
+  "Realm is a React component library of dot matrix loaders—expressive loading primitives you install via the shadcn registry and own as local code.";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import {
@@ -44,8 +53,34 @@ const themeInitScript = `(() => {
 })();`;
 
 export const metadata: Metadata = {
-  title: "Dotmatrix Loader Library",
-  description: "Dotmatrix-style loading animations with shadcn registry support."
+  ...(siteUrl ? { metadataBase: siteUrl } : {}),
+  applicationName: "Realm",
+  title: {
+    default: "Realm",
+    template: "%s · Realm"
+  },
+  description: realmDescription,
+  keywords: [
+    "Realm",
+    "React",
+    "component library",
+    "dot matrix",
+    "loaders",
+    "loading",
+    "shadcn",
+    "Tailwind CSS"
+  ],
+  openGraph: {
+    type: "website",
+    siteName: "Realm",
+    title: "Realm",
+    description: realmDescription
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Realm",
+    description: realmDescription
+  }
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
