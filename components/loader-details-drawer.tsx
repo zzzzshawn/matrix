@@ -8,205 +8,27 @@ import {
   shadcnRegistryAddCommand,
   type ShadcnPackageManager
 } from "@/components/package-manager-install-toolbar";
+import {
+  DIALOG_CODE_SCROLL_CLASS
+} from "@/components/loader-details-drawer.constants";
+import { DrawerPreviewPane } from "@/components/loader-details-drawer/drawer-preview-pane";
+import { ExampleUsageDotRail } from "@/components/loader-details-drawer/example-usage-dot-rail";
+import { FloatingCloseCrossDots } from "@/components/loader-details-drawer/floating-close-cross-dots";
+import { MeasuredCliManualDotRail } from "@/components/loader-details-drawer/measured-cli-manual-dot-rail";
 import { HIDE_CODE_SCROLLBARS } from "@/lib/hide-code-scrollbar-class";
 import { LoaderPropsReference } from "@/lib/loader-props-reference";
-import { usePrefersReducedMotion } from "@/loaders/hooks/use-prefers-reduced-motion";
-import { GeistPixelCircle } from "geist/font/pixel";
 import { GeistSans } from "geist/font/sans";
 import Link from "next/link";
 import {
   memo,
   useCallback,
   useEffect,
-  useLayoutEffect,
   useMemo,
-  useRef,
   useState,
   type ReactNode
 } from "react";
 
-const CLI_MANUAL_DOT_ROW_H = 6;
-const CLI_MANUAL_DOT_GAP_PX = 9;
-
-/** Shiki / install command blocks: scrollbar hiding + min height; collapse / expand and max heights are handled in the install toolbar code shell. */
-const DIALOG_CODE_SCROLL_CLASS = ["min-h-0", HIDE_CODE_SCROLLBARS].join(" ");
-
-/** Flat index (row-major 5×5): chase order along main diag then anti-diag (center once). */
-const CLOSE_CROSS_CHASE_ORDER: Record<number, number> = {
-  0: 0,
-  6: 1,
-  12: 2,
-  18: 3,
-  24: 4,
-  16: 5,
-  20: 6,
-  8: 7,
-  4: 8
-};
-
 const MemoLoaderPropsReference = memo(LoaderPropsReference);
-
-const ExampleUsageDotRail = memo(function ExampleUsageDotRail() {
-  return (
-    <div className="flex items-center gap-1 overflow-hidden">
-      {Array.from({ length: 150 }).map((_, i) => (
-        <div key={i} className="size-0.5 shrink-0 rounded-full bg-dot-faint" />
-      ))}
-    </div>
-  );
-});
-
-const DrawerPreviewPane = memo(function DrawerPreviewPane({
-  selected,
-  preview
-}: {
-  selected: LoaderCard | null;
-  preview: ReactNode;
-}) {
-  if (!selected) {
-    return null;
-  }
-
-  return (
-    <section className="flex h-full min-h-0 flex-col rounded-lg">
-      <h2
-        className={`${GeistPixelCircle.className} theme-text-strong shrink-0 px-4 pt-4 text-left text-base font-semibold tracking-tight`}
-      >
-        {selected.title}
-      </h2>
-      <div className="flex min-h-0 flex-1 items-center justify-center px-4 pb-4">
-        {preview}
-      </div>
-    </section>
-  );
-});
-
-const FloatingCloseCrossDots = memo(function FloatingCloseCrossDots() {
-  const reducedMotion = usePrefersReducedMotion();
-  const stepMs = 70;
-
-  return (
-    <span className="grid grid-cols-5 gap-px" aria-hidden>
-      {Array.from({ length: 25 }).map((_, index) => {
-        const row = Math.floor(index / 5);
-        const col = index % 5;
-        const isCross = row === col || row + col === 4;
-        if (!isCross) {
-          return <span key={index} className="h-[3px] w-[3px] rounded-full bg-dot-faint" />;
-        }
-        if (reducedMotion) {
-          return <span key={index} className="h-[3px] w-[3px] rounded-full bg-dot-on" />;
-        }
-        const order = CLOSE_CROSS_CHASE_ORDER[index] ?? 0;
-        return (
-          <span
-            key={index}
-            className="h-[3px] w-[3px] rounded-full bg-dot-on motion-safe:animate-close-cross-dot"
-            style={{ animationDelay: `${(order * stepMs) / 1000}s` }}
-          />
-        );
-      })}
-    </span>
-  );
-});
-
-const MeasuredCliManualDotRail = memo(function MeasuredCliManualDotRail({
-  activeTab,
-  onTabChange
-}: {
-  activeTab: "cli" | "manual";
-  onTabChange: (tab: "cli" | "manual") => void;
-}) {
-  const railRef = useRef<HTMLDivElement>(null);
-  const cliRef = useRef<HTMLButtonElement>(null);
-  const manualRef = useRef<HTMLButtonElement>(null);
-  const [{ width, cli, manual }, setGeom] = useState<{
-    width: number;
-    cli: [number, number] | null;
-    manual: [number, number] | null;
-  }>({ width: 0, cli: null, manual: null });
-
-  const measure = useCallback(() => {
-    const rail = railRef.current;
-    const c = cliRef.current;
-    const m = manualRef.current;
-    if (!rail || !c || !m) {
-      return;
-    }
-    const r = rail.getBoundingClientRect();
-    const cr = c.getBoundingClientRect();
-    const mr = m.getBoundingClientRect();
-    setGeom({
-      width: r.width,
-      cli: [cr.left - r.left, cr.right - r.left],
-      manual: [mr.left - r.left, mr.right - r.left]
-    });
-  }, []);
-
-  useLayoutEffect(() => {
-    measure();
-  }, [measure, activeTab]);
-
-  useLayoutEffect(() => {
-    const rail = railRef.current;
-    if (!rail || typeof ResizeObserver === "undefined") {
-      return;
-    }
-    const ro = new ResizeObserver(() => measure());
-    ro.observe(rail);
-    return () => ro.disconnect();
-  }, [measure]);
-
-  const dotCount = width > 0 ? Math.max(25, Math.round(width / CLI_MANUAL_DOT_GAP_PX)) : 0;
-
-  return (
-    <div ref={railRef} className="inline-flex flex-col items-stretch gap-0 w-max">
-      <div className="inline-flex gap-0">
-        <button
-          ref={cliRef}
-          type="button"
-          onClick={() => onTabChange("cli")}
-          className={`rounded-lg focus-visible:outline-none! focus-visible:ring-0! pr-2 pl-1.5 text-xs font-medium transition ${activeTab === "cli" ? "text-fg-strong" : "text-fg-muted hover:text-fg"
-            }`}
-        >
-          CLI
-        </button>
-        <button
-          ref={manualRef}
-          type="button"
-          onClick={() => onTabChange("manual")}
-          className={`rounded-lg focus-visible:outline-none! focus-visible:ring-0! pl-2 pr-1.5 text-xs font-medium transition ${activeTab === "manual" ? "text-fg-strong" : "text-fg-muted hover:text-fg"
-            }`}
-        >
-          Manual
-        </button>
-      </div>
-      <div
-        className="relative shrink-0"
-        style={{ height: CLI_MANUAL_DOT_ROW_H }}
-        aria-hidden
-      >
-        {width > 0 && cli && manual && dotCount > 0
-          ? Array.from({ length: dotCount }, (_, i) => {
-            const t = (i + 0.5) / dotCount;
-            const x = t * width;
-            const inCli = x >= cli[0] && x <= cli[1];
-            const inManual = x >= manual[0] && x <= manual[1];
-            const lit = activeTab === "cli" ? inCli : inManual;
-            return (
-              <span
-                key={i}
-                className={`absolute top-1/2 size-[2px] -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors duration-200 ease-out ${lit ? "bg-dot-on" : "bg-dot-off"
-                  }`}
-                style={{ left: `${t * 100}%` }}
-              />
-            );
-          })
-          : null}
-      </div>
-    </div>
-  );
-});
 
 export interface LoaderCard {
   slug: string;
@@ -427,7 +249,7 @@ export function ColorAndLook() {
           <Dialog.Popup
             className={`${GeistSans.className} absolute inset-y-2 left-2 hidden h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] w-[calc(50%-0.75rem)] flex-col overflow-y-auto overflow-x-hidden overscroll-y-contain rounded-lg bg-surface transition-transform duration-190 ease-[cubic-bezier(.215, .61, .355, 1)] data-starting-style:-translate-x-full data-ending-style:-translate-x-full md:flex`}
           >
-            <DrawerPreviewPane selected={selected} preview={preview} />
+            <DrawerPreviewPane selectedTitle={selected?.title} preview={preview} />
           </Dialog.Popup>
           <Dialog.Popup
             className={`${GeistSans.className} absolute inset-y-2 left-2 right-2 flex h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] min-h-0 w-auto flex-col overflow-hidden rounded-lg bg-surface transition-transform duration-190 ease-[cubic-bezier(.215, .61, .355, 1)] data-starting-style:translate-x-full data-ending-style:translate-x-full md:left-auto md:right-2 md:w-[calc(50%-0.75rem)] `}
