@@ -160,7 +160,7 @@ function loaderKindFromSlug(slug: string): LoaderKind {
 }
 
 const pill = [
-  "inline max-w-full rounded-md bg-[var(--color-surface-muted)] px-2 py-0.5",
+  "inline max-w-full rounded-md bg-surface-soft px-2 py-0.5",
   "font-mono text-[11px] leading-snug theme-text [overflow-wrap:anywhere]"
 ].join(" ");
 
@@ -248,7 +248,7 @@ export function LoaderPropsReference({ slug, sourceCode }: { slug: string; sourc
             const def = resolveDefault(row, kind);
             return (
               <div key={row.name} className="grid gap-2.5">
-                <div className="flex w-max items-center rounded-lg bg-(--color-surface-muted) px-3 py-2">
+                <div className="flex w-max items-center rounded-lg bg-surface-soft px-3 py-2">
                   <span className="theme-text-strong font-mono text-[12px]">{row.name}</span>
                 </div>
                 <p className="theme-text max-w-2xl text-pretty text-[14px]">{inlineCodeDesc(row.description)}</p>

@@ -39,7 +39,7 @@ export function DotmCircular20({
   });
   const animPhase = useCyclePhase({
     active: !reducedMotion && matrixPhase !== "idle",
-    cycleMsBase: 1800,
+    cycleMsBase: 1500,
     speed
   });
 

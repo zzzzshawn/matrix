@@ -52,7 +52,7 @@ export function DotmSquare8({
   });
   const step = useSteppedCycle({
     active: !reducedMotion && matrixPhase !== "idle" && SEQUENCE_LEN > 0,
-    cycleMsBase: 3200,
+    cycleMsBase: 2000,
     steps: SEQUENCE_LEN,
     speed,
   });

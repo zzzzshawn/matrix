@@ -21,6 +21,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 
 import { HomeLink } from "@/components/home-link";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteMarkIcon } from "@/components/site-mark-icon";
 import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
@@ -97,7 +98,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body
-        className={`${GeistPixelCircle.className} ${fontVariables} font-medium antialiased`}
+        className={`${GeistPixelCircle.className} ${fontVariables} flex min-h-dvh flex-col font-medium antialiased`}
         cz-shortcut-listen="true"
       >
         <Link
@@ -111,7 +112,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <HomeLink />
           <ThemeToggle />
         </div>
-        {children}
+        <div className="flex min-h-0 flex-1 flex-col">{children}</div>
+        <SiteFooter />
       </body>
     </html>
   );

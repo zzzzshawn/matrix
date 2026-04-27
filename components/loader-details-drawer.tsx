@@ -166,7 +166,7 @@ const MeasuredCliManualDotRail = memo(function MeasuredCliManualDotRail({
           ref={cliRef}
           type="button"
           onClick={() => onTabChange("cli")}
-          className={`rounded-lg pr-2 pl-1.5 text-xs font-medium transition ${activeTab === "cli" ? "text-fg-strong" : "text-fg-muted hover:text-fg"
+          className={`rounded-lg focus-visible:outline-none! focus-visible:ring-0! pr-2 pl-1.5 text-xs font-medium transition ${activeTab === "cli" ? "text-fg-strong" : "text-fg-muted hover:text-fg"
             }`}
         >
           CLI
@@ -175,7 +175,7 @@ const MeasuredCliManualDotRail = memo(function MeasuredCliManualDotRail({
           ref={manualRef}
           type="button"
           onClick={() => onTabChange("manual")}
-          className={`rounded-lg pl-2 pr-1.5 text-xs font-medium transition ${activeTab === "manual" ? "text-fg-strong" : "text-fg-muted hover:text-fg"
+          className={`rounded-lg focus-visible:outline-none! focus-visible:ring-0! pl-2 pr-1.5 text-xs font-medium transition ${activeTab === "manual" ? "text-fg-strong" : "text-fg-muted hover:text-fg"
             }`}
         >
           Manual

@@ -14,7 +14,8 @@ const BASE_OPACITY = 0.08;
 const STRAND_OPACITY = 1;
 const BRIDGE_OPACITY = 0.58;
 const NEAR_STRAND_OPACITY = 0.24;
-const STEP_COUNT = 20;
+/** Integer full sin periods per matrix cycle so phase 0 ≡ phase 1 (no wrap glitch). */
+const STRAND_LOOPS = 2;
 
 export function DotmSquare15({
   speed = 1,
@@ -31,7 +32,7 @@ export function DotmSquare15({
   });
   const animPhase = useCyclePhase({
     active: !reducedMotion && matrixPhase !== "idle",
-    cycleMsBase: 1700,
+    cycleMsBase: 1600,
     speed
   });
 
@@ -41,8 +42,8 @@ export function DotmSquare15({
         return { className: "dmx-inactive" };
       }
 
-      const t = reducedMotion || phase === "idle" ? 0 : animPhase * STEP_COUNT;
-      const rowPhase = t * 0.52 + row * 1.24;
+      const u = reducedMotion || phase === "idle" ? 0 : animPhase;
+      const rowPhase = u * STRAND_LOOPS * 2 * Math.PI + row * 1.24;
       const left = Math.round(1 + Math.sin(rowPhase));
       const right = 4 - left;
       const bridgeOn = Math.cos(rowPhase * 2) > 0.82;

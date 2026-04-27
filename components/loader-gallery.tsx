@@ -296,27 +296,9 @@ const LoaderGridCard = memo(function LoaderGridCard({
       ref={cardRef}
       type="button"
       onClick={handleSelect}
-      className="aspect-square cursor-pointer relative group"
+      className="aspect-square cursor-pointer bg-surface/80 rounded-3xl relative group"
     >
-      <div
-        style={{
-          maskImage: "var(--loader-mask-a)"
-        }}
-        className="absolute  inset-0 size-full shadow-(--loader-card-frame-shadow) transition-shadow duration-50 ease-out group-hover:shadow-(--loader-card-frame-shadow-hover)"
-      />
-      <div
-        style={{
-          maskImage: "var(--loader-mask-b)"
-        }}
-        className="absolute  inset-0 z-10 size-full shadow-(--loader-card-frame-shadow) transition-shadow duration-50 ease-out group-hover:shadow-(--loader-card-frame-shadow-hover)"
-      />
-      <div
-        style={{
-          maskImage: "var(--loader-mask-c)",
-          boxShadow: "var(--loader-card-inner-shadow)"
-        }}
-        className="absolute  inset-3 z-10 transition-shadow duration-50 ease-out"
-      />
+
 
       <div className="theme-text-strong pointer-events-none absolute inset-x-2 bottom-2 z-20 rounded-md px-2 py-1 text-center text-[11px] font-medium tracking-wide">
         {item.title}
@@ -364,14 +346,14 @@ const HeroInstallCommand = memo(function HeroInstallCommand() {
 
   return (
     <div className="flex items-center gap-2">
-      <div className="w-max rounded-lg bg-surface-soft p-1">
+      <div className="w-max rounded-lg bg-surface p-1">
         <div className="flex min-w-0 max-w-full items-center gap-1 rounded-sm bg-bg py-2 px-3">
           <p className="min-w-0 text-[11px] leading-normal text-fg sm:text-base">
             {HERO_SHADCN_INSTALL_COMMAND}
           </p>
         </div>
       </div>
-      <div className="w-max rounded-lg bg-surface-soft p-1">
+      <div className="w-max rounded-lg bg-surface p-1">
         <div className="flex min-w-0 max-w-full items-center gap-1 rounded-sm bg-bg p-2 sm:p-[10px]">
           <button
             type="button"
@@ -488,7 +470,7 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
                 <h1 className="theme-text-strong text-balance text-3xl tracking-tight sm:text-8xl">
                   <span className="block">
                     Dot{" "}
-                    <span className="hidden sm:inline-block -mx-0.5 sm:-ml-1 sm:-mr-3 rotate-5 p-0.5 sm:p-1 bg-[#dfdfdf] rounded-md sm:rounded-[20px] size-[0.95em] translate-y-1 sm:translate-y-3" aria-hidden="true">
+                    <span className="hidden sm:inline-block -mx-0.5 sm:-ml-1 sm:-mr-3 rotate-5 p-0.5 sm:p-1 bg-[#dfdfdf] rounded-md sm:rounded-[22px] size-[0.95em] translate-y-1 sm:translate-y-3" aria-hidden="true">
                       <Image
                         src="/icon.svg"
                         alt=""
@@ -515,7 +497,7 @@ export function LoaderGallery({ items }: LoaderGalleryProps) {
                 </div>
               </div>
               <p className=" max-w-[65ch] text-pretty tracking-tight text-sm leading-relaxed  sm:text-2xl">
-                40+ free and open-source loaders, built with React, TypeScript, Tailwind CSS, and shadcn.
+                55+ free and open-source loaders, built with React, TypeScript, Tailwind CSS, and shadcn.
                 Install one, copy the code, and make it yours.
               </p>
             </div>

@@ -59,7 +59,7 @@ export function DotmTriangle3({
   });
   const step = useSteppedCycle({
     active: !reducedMotion && matrixPhase !== "idle",
-    cycleMsBase: 1950,
+    cycleMsBase: 1650,
     steps: STEP_COUNT,
     speed,
   });

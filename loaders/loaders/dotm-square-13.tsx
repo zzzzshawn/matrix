@@ -58,7 +58,7 @@ export function DotmSquare13({
   const sequenceLength = FRAME_SEQUENCE.length;
   const step = useSteppedCycle({
     active: !reducedMotion && matrixPhase !== "idle" && sequenceLength > 0,
-    cycleMsBase: 1850,
+    cycleMsBase: 1550,
     steps: sequenceLength,
     speed,
   });

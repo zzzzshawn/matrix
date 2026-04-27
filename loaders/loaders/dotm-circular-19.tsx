@@ -41,7 +41,7 @@ export function DotmCircular19({
   });
   const phase = useCyclePhase({
     active: !reducedMotion && matrixPhase !== "idle",
-    cycleMsBase: 1680,
+    cycleMsBase: 1280,
     speed
   });
 

@@ -32,7 +32,7 @@ export function DotmSquare16({
   });
   const animPhase = useCyclePhase({
     active: !reducedMotion && matrixPhase !== "idle",
-    cycleMsBase: 1600,
+    cycleMsBase: 1400,
     speed
   });
 

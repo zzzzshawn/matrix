@@ -7,6 +7,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  type CSSProperties,
   type ReactNode
 } from "react";
 import type { BundledLanguage } from "shiki/bundle/web";
@@ -44,6 +45,61 @@ for (let y = 2; y <= 22; y += 2) {
 function dotKey(x: number, y: number) {
   return `${x},${y}`;
 }
+
+/** Euclidean ring from grid center (cell 5,5) — matches `DotMatrixIcon` ripple staggering. */
+function heartRippleRing(x: number, y: number): number {
+  const col = (x - 2) / 2;
+  const row = (y - 2) / 2;
+  return Math.round(Math.hypot(row - 5, col - 5));
+}
+
+const HEART_MATRIX_ACTIVE: ReadonlyArray<readonly [number, number]> = [
+  [8, 4],
+  [10, 4],
+  [14, 4],
+  [16, 4],
+  [6, 6],
+  [8, 6],
+  [10, 6],
+  [12, 6],
+  [14, 6],
+  [16, 6],
+  [18, 6],
+  [4, 8],
+  [6, 8],
+  [8, 8],
+  [10, 8],
+  [12, 8],
+  [14, 8],
+  [16, 8],
+  [18, 8],
+  [20, 8],
+  [4, 10],
+  [6, 10],
+  [8, 10],
+  [10, 10],
+  [12, 10],
+  [14, 10],
+  [16, 10],
+  [18, 10],
+  [20, 10],
+  [6, 12],
+  [8, 12],
+  [10, 12],
+  [12, 12],
+  [14, 12],
+  [16, 12],
+  [18, 12],
+  [8, 14],
+  [10, 14],
+  [12, 14],
+  [14, 14],
+  [16, 14],
+  [10, 16],
+  [12, 16],
+  [14, 16],
+  [12, 18]
+];
 
 export type MatrixDotIconProps = {
   className?: string;
@@ -262,6 +318,51 @@ export function HomeMatrixIcon({ className, size = 18 }: MatrixDotIconProps) {
   );
 }
 
+export function HeartMatrixIcon({ className, size = 18 }: MatrixDotIconProps) {
+  const reducedMotion = useReducedMotion();
+  const suppressRipple = reducedMotion === true;
+
+  return (
+    <span className={["dmx-root inline-flex", className].filter(Boolean).join(" ")}>
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        aria-hidden
+        className="block"
+      >
+        <g transform="translate(0, 1)">
+          {ICON_DOT_GRID.map(([x, y]) => (
+            <circle
+              key={`${x}-${y}`}
+              cx={x}
+              cy={y}
+              r="0.7"
+              fill="currentColor"
+              opacity={0}
+            />
+          ))}
+          {HEART_MATRIX_ACTIVE.map(([x, y]) => (
+            <circle
+              key={`active-${x}-${y}`}
+              cx={x}
+              cy={y}
+              r="0.8"
+              fill="currentColor"
+              className={suppressRipple ? undefined : "dmx-ripple"}
+              style={
+                suppressRipple
+                  ? undefined
+                  : ({ "--dmx-ripple-ring": heartRippleRing(x, y) } as CSSProperties)
+              }
+            />
+          ))}
+        </g>
+      </svg>
+    </span>
+  );
+}
+
 function PackageManagerTabIcon({ manager, className }: { manager: ShadcnPackageManager; className?: string }) {
   const c = className ?? "size-3 shrink-0";
   switch (manager) {
@@ -407,7 +508,7 @@ function MeasuredPackageManagerDotRail({
               role="tab"
               aria-selected={active}
               onClick={() => onValueChange(pm)}
-              className={`inline-flex items-center gap-1 rounded-md px-1 text-xs font-medium transition sm:text-[12px] ${active ? "theme-text-strong" : "theme-text-dim hover:text-(--color-fg-muted)"
+              className={`inline-flex items-center gap-1 rounded-md px-1 text-xs font-medium transition sm:text-[12px] ${active ? "theme-text-strong" : "theme-text-dim hover:text-(--color-fg-muted) focus-visible:outline-none! focus-visible:ring-0!"
                 }`}
             >
               <PackageManagerTabIcon manager={pm} />
@@ -596,11 +697,11 @@ function CodeBlockWithCopy({
         codeExpanded
           ? [CODE_EXPAND_MAX_HEIGHT_CLASS, "overflow-y-auto overflow-x-auto"].join(" ")
           : [
-              "!min-h-0",
-              codeCollapsedMaxHeightClassName,
-              // Beat `overflow-y-*` from `codeScrollClassName` (CSS: longhand can win over `overflow` shorthand).
-              "overflow-x-auto !overflow-y-hidden"
-            ].join(" ")
+            "!min-h-0",
+            codeCollapsedMaxHeightClassName,
+            // Beat `overflow-y-*` from `codeScrollClassName` (CSS: longhand can win over `overflow` shorthand).
+            "overflow-x-auto !overflow-y-hidden"
+          ].join(" ")
       ]
         .filter(Boolean)
         .join(" ")}

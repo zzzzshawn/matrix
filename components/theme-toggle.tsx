@@ -97,17 +97,15 @@ export function ThemeToggle() {
   }, [theme]);
 
   return (
-    <div className="w-max rounded-lg bg-surface-soft p-1">
-      <div className="flex min-w-0 items-center justify-center gap-1 rounded-sm bg-bg p-[7px]">
-        <button
-          type="button"
-          aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-          onClick={toggleTheme}
-          className="inline-flex min-w-0 items-center justify-center text-fg-strong transition-[opacity,color] duration-150 ease-out hover:opacity-90"
-        >
-          <ThemeMatrixIcon className="size-4 sm:size-5" />
-        </button>
-      </div>
-    </div>
+    <button
+      type="button"
+      aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+      onClick={toggleTheme}
+      className="inline-flex w-max min-w-0 rounded-xl bg-surface p-1 text-fg-strong transition-[opacity,color] duration-150 ease-out hover:opacity-90 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-(--focus-ring)"
+    >
+      <span className="flex min-w-0 flex-1 items-center justify-center gap-1 rounded-lg bg-bg p-[7px]">
+        <ThemeMatrixIcon className="size-4 sm:size-5" />
+      </span>
+    </button>
   );
 }
