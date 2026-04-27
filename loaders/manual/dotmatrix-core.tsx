@@ -638,7 +638,7 @@ export function DotMatrixBase({
 
     const resolvedAnimationStyle = animationState.style ? { ...animationState.style } : undefined;
     const rawOpacity = resolvedAnimationStyle?.opacity;
-    if (typeof rawOpacity === "number") {
+    if (resolvedAnimationStyle != null && typeof rawOpacity === "number") {
       resolvedAnimationStyle.opacity = remapOpacityToTriplet(rawOpacity, ob, om, op);
     }
 
