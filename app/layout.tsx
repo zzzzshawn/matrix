@@ -8,6 +8,22 @@ const siteUrl =
 
 const siteDescription =
   "Dot Matrix is a React component library of dot matrix loaders—expressive loading primitives you install via the shadcn registry and own as local code.";
+
+const defaultTitle = "Dot Matrix";
+
+const ogImageAlt =
+  "Dot Matrix logo: white rounded square with six black dots on a light gray grid background.";
+
+const ogImage = {
+  url: "/og.png",
+  width: 1024,
+  height: 537,
+  alt: ogImageAlt,
+  type: "image/png" as const
+};
+
+const creatorName = "zzzzshawn";
+const creatorUrl = "https://x.com/zzzzshawn/";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import {
@@ -56,9 +72,9 @@ const themeInitScript = `(() => {
 
 export const metadata: Metadata = {
   ...(siteUrl ? { metadataBase: siteUrl } : {}),
-  applicationName: "Dot Matrix",
+  applicationName: defaultTitle,
   title: {
-    default: "Dot Matrix",
+    default: defaultTitle,
     template: "%s · Dot Matrix"
   },
   description: siteDescription,
@@ -70,18 +86,50 @@ export const metadata: Metadata = {
     "loaders",
     "loading",
     "shadcn",
-    "Tailwind CSS"
+    "shadcn/ui",
+    "registry",
+    "Tailwind CSS",
+    "UI",
+    "npm",
+    "open source"
   ],
+  authors: [{ name: creatorName, url: creatorUrl }],
+  creator: creatorName,
+  publisher: creatorName,
+  category: "technology",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1
+    }
+  },
+  alternates: siteUrl ? { canonical: "/" } : undefined,
   openGraph: {
     type: "website",
-    siteName: "Dot Matrix",
-    title: "Dot Matrix",
-    description: siteDescription
+    locale: "en_US",
+    siteName: defaultTitle,
+    title: defaultTitle,
+    description: siteDescription,
+    ...(siteUrl ? { url: new URL("/", siteUrl).href } : {}),
+    images: [ogImage]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dot Matrix",
-    description: siteDescription
+    site: "@zzzzshawn",
+    creator: "@zzzzshawn",
+    title: defaultTitle,
+    description: siteDescription,
+    images: [{ url: "/og.png", alt: ogImageAlt }]
   }
 };
 
