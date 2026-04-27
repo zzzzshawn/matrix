@@ -21,6 +21,7 @@ import type {
   LoaderPreviewOverrideMap
 } from "@/components/loader-gallery.types";
 import { LoaderGalleryHeroInstallCommand } from "@/components/loader-gallery-hero-install-command";
+import { LoaderShapeFilter, type LoaderShape } from "@/components/loader-shape-filter";
 
 import {
   DotMatrixIcon,
@@ -171,9 +172,28 @@ export function LoaderGallery({
 }: LoaderGalleryProps) {
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [activeExampleId, setActiveExampleId] = useState<ExamplePreviewId | null>(null);
+  const [activeShape, setActiveShape] = useState<LoaderShape>("all");
+
   const handleSelectSlug = useCallback((slug: string) => {
     setSelectedSlug(slug);
   }, []);
+
+  const handleShapeChange = useCallback(
+    (shape: LoaderShape) => {
+      setActiveShape(shape);
+      if (selectedSlug && shape !== "all" && !selectedSlug.startsWith(`dotm-${shape}-`)) {
+        setSelectedSlug(null);
+        setActiveExampleId(null);
+      }
+    },
+    [selectedSlug]
+  );
+
+  const filteredItems = useMemo(() => {
+    if (activeShape === "all") return items;
+    return items.filter((item) => item.slug.startsWith(`dotm-${activeShape}-`));
+  }, [items, activeShape]);
+
   const resolvedHero = {
     title: heroContent?.title ?? LOADER_GALLERY_DEFAULT_HERO_CONTENT.title,
     description: heroContent?.description ?? LOADER_GALLERY_DEFAULT_HERO_CONTENT.description,
@@ -289,11 +309,15 @@ export function LoaderGallery({
         </div>
       </section>
 
+      <div className="mb-4 sm:mb-6">
+        <LoaderShapeFilter active={activeShape} onChange={handleShapeChange} />
+      </div>
+
       <section
         id="loader-grid"
         className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-6 md:grid-cols-4 xl:grid-cols-5"
       >
-        {items.map((item) => (
+        {filteredItems.map((item) => (
           <LoaderGalleryGridCard
             key={item.slug}
             item={item}
