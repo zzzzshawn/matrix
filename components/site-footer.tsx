@@ -16,7 +16,7 @@ export function SiteFooter() {
       role="contentinfo"
       className="max-w-[1350px] w-full h-[85dvh] md:h-[70dvh] mx-auto bg-surface mt-20 md:mt-40 mb-8 rounded-3xl relative"
     >
-      <span className="absolute inline-block [html[data-theme='dark']_&]:hidden -rotate-6 sm:p-3 size-[280px] md:size-[340px] max-md:bottom-28! md:top-1/2 md:-translate-y-1/2 right-1/2 translate-x-1/2 p-1.5 bg-background rounded-[76px] md:rounded-[86px]" aria-hidden="true">
+      <span className="absolute pointer-events-none inline-block [html[data-theme='dark']_&]:hidden -rotate-6 sm:p-3 size-[280px] md:size-[340px] max-md:bottom-28! md:top-1/2 md:-translate-y-1/2 right-1/2 translate-x-1/2 p-1.5 bg-background rounded-[76px] md:rounded-[86px]" aria-hidden="true">
         <Image
           src="/icon.svg"
           alt=""
@@ -27,7 +27,7 @@ export function SiteFooter() {
           priority
         />
       </span>
-      <span className="absolute hidden [html[data-theme='dark']_&]:inline-block -rotate-6 sm:p-3 size-[280px] md:size-[340px]  max-md:bottom-28! md:top-1/2 md:-translate-y-1/2 right-1/2 translate-x-1/2 p-1.5 bg-[#d0d0d0] shadow-[0_3px_4px_0px_rgba(255,255,255,1)_inset] rounded-[76px] md:rounded-[86px]" aria-hidden="true">
+      <span className="absolute pointer-events-none hidden [html[data-theme='dark']_&]:inline-block -rotate-6 sm:p-3 size-[280px] md:size-[340px]  max-md:bottom-28! md:top-1/2 md:-translate-y-1/2 right-1/2 translate-x-1/2 p-1.5 bg-[#d0d0d0] shadow-[0_3px_4px_0px_rgba(255,255,255,1)_inset] rounded-[76px] md:rounded-[86px]" aria-hidden="true">
         <Image
           src="/icon.svg" 
           alt=""
@@ -42,7 +42,7 @@ export function SiteFooter() {
         <HeartMatrixIcon className="shrink-0 " size={40} />
         <a href={CREATOR_URL} target="_blank" className="">by shawn.</a>
       </span>
-      <div className="flex flex-col  gap-2.5 text-xl md:text-3xl italic absolute top-8 left-8">
+      <div className="flex flex-col  gap-2.5 text-xl md:text-3xl italic absolute top-8 left-8 z-10 pointer-events-auto">
         <span className=""><span className="font-semibold text-3xl md:text-5xl">@dotmatrix</span> - v1.0.0</span>
         <nav
           aria-label="Documentation"
