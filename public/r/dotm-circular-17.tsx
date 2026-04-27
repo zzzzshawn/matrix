@@ -18,7 +18,7 @@ const HIGH_OPACITY = 0.95;
 const CHECKER_STEPS = 4;
 
 export function DotmCircular17({
-  speed = 1,
+  speed = 1.55,
   animated = true,
   hoverAnimated = false,
   ...rest
@@ -68,6 +68,8 @@ export function DotmCircular17({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern="full"
       animated={animated}

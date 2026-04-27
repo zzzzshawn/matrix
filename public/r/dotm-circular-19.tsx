@@ -28,7 +28,7 @@ const ORBIT_POINTS: ReadonlyArray<readonly [number, number]> = [
 ];
 
 export function DotmCircular19({
-  speed = 1,
+  speed = 1.6,
   animated = true,
   hoverAnimated = false,
   ...rest
@@ -41,7 +41,7 @@ export function DotmCircular19({
   });
   const phase = useCyclePhase({
     active: !reducedMotion && matrixPhase !== "idle",
-    cycleMsBase: 1680,
+    cycleMsBase: 1280,
     speed
   });
 
@@ -76,6 +76,8 @@ export function DotmCircular19({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern="full"
       animated={animated}

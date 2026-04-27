@@ -16,7 +16,7 @@ const PULSE_CORE = 0.95;
 const PULSE_RING = 0.44;
 
 export function DotmCircular8({
-  speed = 1,
+  speed = 1.95,
   animated = true,
   hoverAnimated = false,
   ...rest
@@ -59,6 +59,8 @@ export function DotmCircular8({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern="full"
       animated={animated}

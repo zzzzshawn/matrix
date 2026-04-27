@@ -26,7 +26,7 @@ const GLYPHS: ReadonlyArray<ReadonlySet<string>> = [
 ];
 
 export function DotmCircular20({
-  speed = 1,
+  speed = 1.5,
   animated = true,
   hoverAnimated = false,
   ...rest
@@ -39,7 +39,7 @@ export function DotmCircular20({
   });
   const animPhase = useCyclePhase({
     active: !reducedMotion && matrixPhase !== "idle",
-    cycleMsBase: 1800,
+    cycleMsBase: 1500,
     speed
   });
 
@@ -73,6 +73,8 @@ export function DotmCircular20({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern="full"
       animated={animated}

@@ -36,7 +36,7 @@ function maskCell(mask: string, row: number, col: number): FrameCell {
 }
 
 export function DotmSquare14({
-  speed = 1,
+  speed = 1.25,
   pattern = "full",
   animated = true,
   hoverAnimated = false,
@@ -51,7 +51,7 @@ export function DotmSquare14({
   const sequenceLength = FRAME_SEQUENCE.length;
   const step = useSteppedCycle({
     active: !reducedMotion && matrixPhase !== "idle" && sequenceLength > 0,
-    cycleMsBase: 1900,
+    cycleMsBase: 1700,
     steps: sequenceLength,
     speed,
   });
@@ -79,6 +79,8 @@ export function DotmSquare14({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern={pattern}
       animated={animated}

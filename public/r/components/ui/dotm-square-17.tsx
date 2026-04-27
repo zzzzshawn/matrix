@@ -17,7 +17,7 @@ const STEP_COUNT = 20;
 const HELIX_LOOP_RADIANS = (Math.PI * 2) / (STEP_COUNT - 1);
 
 export function DotmSquare17({
-  speed = 1,
+  speed = 2.5,
   pattern = "full",
   animated = true,
   hoverAnimated = false,
@@ -62,6 +62,8 @@ export function DotmSquare17({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern={pattern}
       animated={animated}

@@ -65,7 +65,7 @@ function headInfluence(dot: Point, head: Point): number {
 }
 
 export function DotmSquare19({
-  speed = 1,
+  speed = 1.45,
   pattern = "full",
   animated = true,
   hoverAnimated = false,
@@ -124,6 +124,8 @@ export function DotmSquare19({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern={pattern}
       animated={animated}

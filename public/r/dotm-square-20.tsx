@@ -61,7 +61,7 @@ function opacityFromTail(distance: number, tail: readonly number[]): number {
 }
 
 export function DotmSquare20({
-  speed = 1,
+  speed = 1.45,
   pattern = "full",
   animated = true,
   hoverAnimated = false,
@@ -128,6 +128,8 @@ export function DotmSquare20({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern={pattern}
       animated={animated}

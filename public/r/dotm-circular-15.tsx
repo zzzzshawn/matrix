@@ -26,7 +26,7 @@ const BRAILLE_PHASES: ReadonlyArray<ReadonlySet<string>> = [
 ];
 
 export function DotmCircular15({
-  speed = 1,
+  speed = 1.65,
   animated = true,
   hoverAnimated = false,
   ...rest
@@ -84,6 +84,8 @@ export function DotmCircular15({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern="full"
       animated={animated}

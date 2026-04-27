@@ -60,7 +60,7 @@ function resolveBraille(row: number, col: number): { bit: number } | null {
 }
 
 export function DotmSquare9({
-  speed = 1,
+  speed = 1.5,
   pattern = "full",
   animated = true,
   hoverAnimated = false,
@@ -121,6 +121,8 @@ export function DotmSquare9({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern={pattern}
       animated={animated}

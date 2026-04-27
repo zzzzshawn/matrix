@@ -12,7 +12,7 @@ export type DotmSquare6Props = DotMatrixCommonProps;
 const COLUMN_HEIGHT = 5;
 
 export function DotmSquare6({
-  speed = 1,
+  speed = 2.2,
   pattern = "full",
   animated = true,
   hoverAnimated = false,
@@ -48,6 +48,8 @@ export function DotmSquare6({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern={pattern}
       animated={animated}

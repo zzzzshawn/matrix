@@ -18,7 +18,7 @@ const STEP_COUNT = 20;
 const HELIX_LOOP_RADIANS = (Math.PI * 2) / (STEP_COUNT - 1);
 
 export function DotmSquare16({
-  speed = 1,
+  speed = 2.5,
   pattern = "full",
   animated = true,
   hoverAnimated = false,
@@ -32,7 +32,7 @@ export function DotmSquare16({
   });
   const animPhase = useCyclePhase({
     active: !reducedMotion && matrixPhase !== "idle",
-    cycleMsBase: 1600,
+    cycleMsBase: 1400,
     speed
   });
 
@@ -69,6 +69,8 @@ export function DotmSquare16({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern={pattern}
       animated={animated}

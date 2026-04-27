@@ -39,7 +39,7 @@ function maskCell(mask: string, row: number, col: number): FrameCell {
 }
 
 export function DotmSquare7({
-  speed = 1,
+  speed = 1.35,
   pattern = "full",
   animated = true,
   hoverAnimated = false,
@@ -85,6 +85,8 @@ export function DotmSquare7({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern={pattern}
       animated={animated}

@@ -16,7 +16,7 @@ const ORBIT_OPACITY = 0.96;
 const NEAR_ORBIT_OPACITY = 0.34;
 
 export function DotmCircular6({
-  speed = 1,
+  speed = 1.6,
   animated = true,
   hoverAnimated = false,
   ...rest
@@ -70,6 +70,8 @@ export function DotmCircular6({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern="full"
       animated={animated}

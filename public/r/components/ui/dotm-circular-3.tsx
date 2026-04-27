@@ -36,7 +36,7 @@ const CIRCULAR_RING_PATH: readonly number[] = [
 const LOOP_LEN = CIRCULAR_RING_PATH.length;
 
 export function DotmCircular3({
-  speed = 1,
+  speed = 1.6,
   animated = true,
   hoverAnimated = false,
   ...rest
@@ -94,6 +94,8 @@ export function DotmCircular3({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern="full"
       animated={animated}

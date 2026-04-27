@@ -19,7 +19,7 @@ const DECAY = 0.72;
 const COL_WARP = 0.07;
 
 export function DotmSquare10({
-  speed = 1,
+  speed = 2.5,
   pattern = "full",
   animated = true,
   hoverAnimated = false,
@@ -66,6 +66,8 @@ export function DotmSquare10({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern={pattern}
       animated={animated}

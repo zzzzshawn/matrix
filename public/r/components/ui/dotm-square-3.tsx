@@ -32,7 +32,7 @@ const animationResolver: DotAnimationResolver = ({ isActive, index, reducedMotio
 };
 
 export function DotmSquare3({
-  speed = 1,
+  speed = 1.35,
   pattern = "full",
   animated = true,
   hoverAnimated = false,
@@ -48,6 +48,8 @@ export function DotmSquare3({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern={pattern}
       animated={animated}

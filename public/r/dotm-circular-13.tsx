@@ -18,7 +18,7 @@ const NEAR_STRAND_OPACITY = 0.5;
 const BRIDGE_OPACITY = 0.3;
 
 export function DotmCircular13({
-  speed = 1,
+  speed = 1.55,
   animated = true,
   hoverAnimated = false,
   ...rest
@@ -71,6 +71,8 @@ export function DotmCircular13({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern="full"
       animated={animated}

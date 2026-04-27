@@ -18,7 +18,7 @@ const STEP_COUNT = 20;
 const HELIX_LOOP_RADIANS = (Math.PI * 2) / (STEP_COUNT - 1);
 
 export function DotmCircular1({
-  speed = 1,
+  speed = 2.5,
   animated = true,
   hoverAnimated = false,
   ...rest
@@ -63,6 +63,8 @@ export function DotmCircular1({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern="full"
       animated={animated}

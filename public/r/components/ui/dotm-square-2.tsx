@@ -48,7 +48,7 @@ function buildRowCyclePath(): number[] {
 }
 
 export function DotmSquare2({
-  speed = 1,
+  speed = 1.15,
   pattern = "full",
   animated = true,
   hoverAnimated = false,
@@ -106,6 +106,8 @@ export function DotmSquare2({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern={pattern}
       animated={animated}

@@ -17,7 +17,7 @@ const NEAR_SWEEP_OPACITY = 0.36;
 const RING_OPACITY = 0.22;
 
 export function DotmCircular4({
-  speed = 1,
+  speed = 1.55,
   animated = true,
   hoverAnimated = false,
   ...rest
@@ -72,6 +72,8 @@ export function DotmCircular4({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern="full"
       animated={animated}

@@ -764,27 +764,27 @@
 @keyframes dmx-square6-col-snake {
   0%,
   20% {
-    opacity: 0.8;
+    opacity: calc(0.6 * var(--dmx-opacity-peak) + 0.25 * var(--dmx-opacity-mid) + 0.15 * var(--dmx-opacity-base));
   }
 
   20%,
   40% {
-    opacity: 0.6;
+    opacity: calc(0.3 * var(--dmx-opacity-peak) + 0.5 * var(--dmx-opacity-mid) + 0.2 * var(--dmx-opacity-base));
   }
 
   40%,
   60% {
-    opacity: 0.4;
+    opacity: calc(0.6 * var(--dmx-opacity-mid) + 0.4 * var(--dmx-opacity-base));
   }
 
   60%,
   80% {
-    opacity: 0.2;
+    opacity: calc(0.2 * var(--dmx-opacity-mid) + 0.8 * var(--dmx-opacity-base));
   }
 
   80%,
   100% {
-    opacity: 0.1;
+    opacity: calc(0.625 * var(--dmx-opacity-base));
   }
 }
 
@@ -797,62 +797,62 @@
 @keyframes dmx-circular2-ring {
   0%,
   8.333333% {
-    opacity: 1;
+    opacity: var(--dmx-opacity-peak);
   }
 
   8.333333%,
   16.666667% {
-    opacity: 0.74;
+    opacity: calc(0.6 * var(--dmx-opacity-peak) + 0.4 * var(--dmx-opacity-mid));
   }
 
   16.666667%,
   25% {
-    opacity: 0.5;
+    opacity: calc(0.5 * var(--dmx-opacity-mid) + 0.5 * var(--dmx-opacity-base));
   }
 
   25%,
   33.333333% {
-    opacity: 0.3;
+    opacity: calc(0.3 * var(--dmx-opacity-mid) + 0.7 * var(--dmx-opacity-base));
   }
 
   33.333333%,
   41.666667% {
-    opacity: 1;
+    opacity: var(--dmx-opacity-peak);
   }
 
   41.666667%,
   50% {
-    opacity: 0.74;
+    opacity: calc(0.6 * var(--dmx-opacity-peak) + 0.4 * var(--dmx-opacity-mid));
   }
 
   50%,
   58.333333% {
-    opacity: 0.5;
+    opacity: calc(0.5 * var(--dmx-opacity-mid) + 0.5 * var(--dmx-opacity-base));
   }
 
   58.333333%,
   66.666667% {
-    opacity: 0.3;
+    opacity: calc(0.3 * var(--dmx-opacity-mid) + 0.7 * var(--dmx-opacity-base));
   }
 
   66.666667%,
   75% {
-    opacity: 1;
+    opacity: var(--dmx-opacity-peak);
   }
 
   75%,
   83.333333% {
-    opacity: 0.74;
+    opacity: calc(0.6 * var(--dmx-opacity-peak) + 0.4 * var(--dmx-opacity-mid));
   }
 
   83.333333%,
   91.666667% {
-    opacity: 0.5;
+    opacity: calc(0.5 * var(--dmx-opacity-mid) + 0.5 * var(--dmx-opacity-base));
   }
 
   91.666667%,
   100% {
-    opacity: 0.3;
+    opacity: calc(0.3 * var(--dmx-opacity-mid) + 0.7 * var(--dmx-opacity-base));
   }
 }
 

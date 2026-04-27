@@ -18,7 +18,7 @@ const SIDE_OPACITY = 0.56;
 const GHOST_OPACITY = 0.28;
 
 export function DotmCircular14({
-  speed = 1,
+  speed = 1.75,
   animated = true,
   hoverAnimated = false,
   ...rest
@@ -70,6 +70,8 @@ export function DotmCircular14({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern="full"
       animated={animated}

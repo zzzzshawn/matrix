@@ -15,7 +15,7 @@ const BASE_OPACITY = 0.08;
 const GATE_OPACITY = 0.92;
 
 export function DotmCircular7({
-  speed = 1,
+  speed = 1.8,
   animated = true,
   hoverAnimated = false,
   ...rest
@@ -60,6 +60,8 @@ export function DotmCircular7({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern="full"
       animated={animated}

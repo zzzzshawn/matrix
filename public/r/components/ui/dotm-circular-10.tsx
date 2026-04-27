@@ -23,7 +23,7 @@ function moduloDistance(a: number, b: number, mod: number): number {
 }
 
 export function DotmCircular10({
-  speed = 1,
+  speed = 1.75,
   animated = true,
   hoverAnimated = false,
   ...rest
@@ -74,6 +74,8 @@ export function DotmCircular10({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern="full"
       animated={animated}

@@ -16,7 +16,7 @@ const BLADE_OPACITY = 0.94;
 const HALO_OPACITY = 0.34;
 
 export function DotmCircular5({
-  speed = 1,
+  speed = 1.7,
   animated = true,
   hoverAnimated = false,
   ...rest
@@ -66,6 +66,8 @@ export function DotmCircular5({
   return (
     <DotMatrixBase
       {...rest}
+      size={rest.size ?? 36}
+      dotSize={rest.dotSize ?? 5}
       speed={speed}
       pattern="full"
       animated={animated}

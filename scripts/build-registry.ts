@@ -1,6 +1,7 @@
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { LOADER_GALLERY_PREVIEW_PROPS } from "../lib/loader-gallery-preview-props";
 import { loaderRegistry } from "../lib/registry-config";
 
 interface RegistryFile {
@@ -54,6 +55,7 @@ const importRewrites: ReadonlyArray<{ from: string; to: string }> = [
   { from: "../core/cx", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/grid-paths", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/hydration-inline-style", to: "@/components/ui/dotmatrix-core" },
+  { from: "../core/opacity-triplet", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/path-wave-factory", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/patterns", to: "@/components/ui/dotmatrix-core" },
   { from: "../types", to: "@/components/ui/dotmatrix-core" },
@@ -68,6 +70,111 @@ function rewriteRegistrySharedCrossImports(source: string): string {
   return source
     .replaceAll('from "./dotmatrix-core"', 'from "@/components/ui/dotmatrix-core"')
     .replaceAll('from "./dotmatrix-hooks"', 'from "@/components/ui/dotmatrix-hooks"');
+}
+
+function formatDefaultLiteral(value: unknown): string | null {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return String(value);
+  }
+  if (typeof value === "boolean") {
+    return value ? "true" : "false";
+  }
+  if (typeof value === "string") {
+    return JSON.stringify(value);
+  }
+  return null;
+}
+
+function applyParamDefaults(
+  source: string,
+  defaults: Partial<Record<"size" | "dotSize" | "pattern" | "animated" | "speed", unknown>>
+): string {
+  const fnMatch = source.match(
+    /export function \w+\(\{\n([\s\S]*?)\n\}: [\w<>{}\[\]\s|&?,.]+?\) \{/
+  );
+  if (!fnMatch?.[1]) {
+    return source;
+  }
+
+  const paramsBlock = fnMatch[1];
+  const lines = paramsBlock.split("\n");
+  const keys: Array<keyof typeof defaults> = ["size", "dotSize", "pattern", "animated", "speed"];
+
+  let changed = false;
+  const nextLines = lines.map((line) => {
+    const propMatch = line.match(/^(\s*)([A-Za-z_]\w*)(\s*=\s*[^,]+)?(,?)$/);
+    if (!propMatch) {
+      return line;
+    }
+    const [, indent, name, , comma] = propMatch;
+    const key = name as keyof typeof defaults;
+    if (!keys.includes(key)) {
+      return line;
+    }
+    const literal = formatDefaultLiteral(defaults[key]);
+    if (literal == null) {
+      return line;
+    }
+    changed = true;
+    return `${indent}${name} = ${literal}${comma || ","}`;
+  });
+
+  if (!changed) {
+    return source;
+  }
+
+  return source.replace(paramsBlock, nextLines.join("\n"));
+}
+
+function applyDotMatrixBaseRestDefaults(
+  source: string,
+  defaults: Partial<Record<"size" | "dotSize", unknown>>
+): string {
+  const hasRest = /\.\.\.rest/.test(source);
+  const hasDotMatrixBase = /<DotMatrixBase/.test(source);
+  if (!hasRest || !hasDotMatrixBase) {
+    return source;
+  }
+
+  let injected = source;
+  const sizeLiteral = formatDefaultLiteral(defaults.size);
+  const dotSizeLiteral = formatDefaultLiteral(defaults.dotSize);
+
+  if (sizeLiteral != null && !/size=\{rest\.size \?\?/.test(injected)) {
+    injected = injected.replace(
+      /<DotMatrixBase\s*\n\s*\{\.\.\.rest\}/,
+      (match) => `${match}\n      size={rest.size ?? ${sizeLiteral}}`
+    );
+  }
+
+  if (dotSizeLiteral != null && !/dotSize=\{rest\.dotSize \?\?/.test(injected)) {
+    injected = injected.replace(
+      /<DotMatrixBase\s*\n\s*\{\.\.\.rest\}(?:\n\s*size=\{rest\.size \?\? [^\n]+\})?/,
+      (match) => `${match}\n      dotSize={rest.dotSize ?? ${dotSizeLiteral}}`
+    );
+  }
+
+  return injected;
+}
+
+function applyInstallDefaults(source: string, slug: string): string {
+  const defaults = LOADER_GALLERY_PREVIEW_PROPS[slug];
+  if (!defaults) {
+    return source;
+  }
+
+  const withParamDefaults = applyParamDefaults(source, {
+    size: defaults.size,
+    dotSize: defaults.dotSize,
+    pattern: defaults.pattern,
+    animated: defaults.animated,
+    speed: defaults.speed
+  });
+
+  return applyDotMatrixBaseRestDefaults(withParamDefaults, {
+    size: defaults.size,
+    dotSize: defaults.dotSize
+  });
 }
 
 async function build() {
@@ -88,11 +195,14 @@ async function build() {
     loaderRegistry.map(async (loader) => {
       const files: RegistryFile[] = [];
 
-      const componentSource = rewriteRegistrySharedCrossImports(
-        importRewrites.reduce(
-          (current, { from, to }) => current.replaceAll(`"${from}"`, `"${to}"`),
-          await readSource(path.join("loaders", loader.fileName))
-        )
+      const componentSource = applyInstallDefaults(
+        rewriteRegistrySharedCrossImports(
+          importRewrites.reduce(
+            (current, { from, to }) => current.replaceAll(`"${from}"`, `"${to}"`),
+            await readSource(path.join("loaders", loader.fileName))
+          )
+        ),
+        loader.slug
       );
       const componentPath = `components/ui/${loader.fileName}`;
       files.push({

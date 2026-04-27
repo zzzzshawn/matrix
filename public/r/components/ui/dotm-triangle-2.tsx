@@ -5,6 +5,7 @@ import type { CSSProperties } from "react";
 import { cx } from "@/components/ui/dotmatrix-core";
 import { useDotMatrixPhases } from "@/components/ui/dotmatrix-hooks";
 import { styleOpacity, stylePx } from "@/components/ui/dotmatrix-core";
+import { remapOpacityToTriplet } from "@/components/ui/dotmatrix-core";
 import { usePrefersReducedMotion } from "@/components/ui/dotmatrix-hooks";
 import { useSteppedCycle } from "@/components/ui/dotmatrix-hooks";
 import type { DotMatrixCommonProps } from "@/components/ui/dotmatrix-core";
@@ -40,15 +41,19 @@ function isWithinTriangleMask(row: number, col: number): boolean {
 
 export function DotmTriangle2({
   size = 30,
-  dotSize = 4,
+  dotSize = 6.5,
   color = "currentColor",
   ariaLabel = "Loading",
   className,
   muted = false,
   dotClassName,
-  speed = 1,
+  speed = 1.5,
   animated = true,
-  hoverAnimated = false
+  hoverAnimated = false,
+  cellPadding,
+  opacityBase,
+  opacityMid,
+  opacityPeak
 }: DotmTriangle2Props) {
   const reducedMotion = usePrefersReducedMotion();
   const { phase: matrixPhase, onMouseEnter, onMouseLeave } = useDotMatrixPhases({
@@ -58,7 +63,7 @@ export function DotmTriangle2({
   });
   const step = useSteppedCycle({
     active: !reducedMotion && matrixPhase !== "idle",
-    cycleMsBase: 1650,
+    cycleMsBase: 1550,
     steps: STEP_COUNT,
     speed,
   });
@@ -66,10 +71,12 @@ export function DotmTriangle2({
   const frame = reducedMotion || matrixPhase === "idle" ? 0 : step;
   const progress = frame / STEP_COUNT;
 
-  const gap = Math.max(1, Math.floor((size - dotSize * MATRIX_SIZE) / (MATRIX_SIZE - 1)));
+  const gap =
+    cellPadding ?? Math.max(1, Math.floor((size - dotSize * MATRIX_SIZE) / (MATRIX_SIZE - 1)));
+  const matrixSize = dotSize * MATRIX_SIZE + gap * (MATRIX_SIZE - 1);
   const rootStyle = {
-    width: stylePx(size),
-    height: stylePx(size),
+    width: stylePx(cellPadding == null ? size : matrixSize),
+    height: stylePx(cellPadding == null ? size : matrixSize),
     color
   } as CSSProperties;
 
@@ -120,7 +127,7 @@ export function DotmTriangle2({
               style={{
                 width: stylePx(dotSize),
                 height: stylePx(dotSize),
-                opacity: styleOpacity(opacity)
+                opacity: styleOpacity(remapOpacityToTriplet(opacity, opacityBase, opacityMid, opacityPeak))
               }}
             />
           );
