@@ -7,7 +7,7 @@ import { cx } from "@/components/ui/dotmatrix-core";
 import { useDotMatrixPhases } from "@/components/ui/dotmatrix-hooks";
 import { styleOpacity, stylePx } from "@/components/ui/dotmatrix-core";
 import { remapOpacityToTriplet } from "@/components/ui/dotmatrix-core";
-import { dmxBloomHaloSpreadClass, dmxBloomRootActive, dmxDotBloomParts } from "../core/dmx-dot-bloom";
+import { dmxBloomHaloSpreadClass, dmxBloomRootActive, dmxDotBloomParts } from "@/components/ui/dotmatrix-core";
 import { usePrefersReducedMotion } from "@/components/ui/dotmatrix-hooks";
 import type { DotMatrixCommonProps } from "@/components/ui/dotmatrix-core";
 

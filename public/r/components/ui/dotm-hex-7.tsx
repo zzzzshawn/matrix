@@ -5,7 +5,7 @@ import type { CSSProperties } from "react";
 import { cx } from "@/components/ui/dotmatrix-core";
 import { styleOpacity, stylePx } from "@/components/ui/dotmatrix-core";
 import { remapOpacityToTriplet } from "@/components/ui/dotmatrix-core";
-import { dmxBloomRootActive, dmxDotBloomParts } from "../core/dmx-dot-bloom";
+import { dmxBloomRootActive, dmxDotBloomParts } from "@/components/ui/dotmatrix-core";
 import { getPatternIndexes } from "@/components/ui/dotmatrix-core";
 import { useDotMatrixPhases } from "@/components/ui/dotmatrix-hooks";
 import { usePrefersReducedMotion } from "@/components/ui/dotmatrix-hooks";
