@@ -355,11 +355,11 @@ export function ColorAndLook() {
                 animate={{ opacity: 1, scale: 1, transition: { delay: 0.08 } }}
                 exit={{ opacity: 0, scale: 0.92 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
-                className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 z-50 flex justify-center"
+                className="pointer-events-none absolute inset-x-0 max-sm:bottom-1 sm:top-1/2 sm:-translate-y-1/2 z-50 flex justify-center"
               >
                 <Dialog.Close
                   aria-label="Close dialog"
-                  className="pointer-events-auto inline-grid place-items-center rounded-lg bg-bg p-2 text-fg-strong"
+                  className="pointer-events-auto inline-grid place-items-center rounded-lg bg-bg p-2 h-max text-fg-strong"
                 >
                   <FloatingCloseCrossDots />
                 </Dialog.Close>
