@@ -37,9 +37,11 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 
 import { HomeLink } from "@/components/home-link";
-import { SiteFooter } from "@/components/site-footer";
+import { RouteAwareSiteFooter } from "@/components/route-aware-site-footer";
 import { SiteMarkIcon } from "@/components/site-mark-icon";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { DialKitRouteRoot } from "@/components/dialkit-route-root";
+import "dialkit/styles.css";
 import "./globals.css";
 
 const fontVariables = [
@@ -168,7 +170,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <ThemeToggle />
         </div>
         <div className="flex min-h-0 flex-1 flex-col">{children}</div>
-        <SiteFooter />
+        <DialKitRouteRoot />
+        <RouteAwareSiteFooter />
       </body>
     </html>
   );

@@ -1,8 +1,14 @@
 import type { ExamplePreviewId } from "@/components/loader-details-drawer";
 import type { DotMatrixCommonProps } from "@/loaders";
 
-/** Default gallery preview; must stay aligned with "Example usage" snippets in the drawer. */
+/** Default gallery preview; must stay aligned with "Example usage" snippets in the drawer (incl. bloom). */
 export const LOADER_GALLERY_EXAMPLE_SNIPPET_PROPS: Record<ExamplePreviewId, Partial<DotMatrixCommonProps>> = {
+  "ex-bloom": {
+    bloom: true,
+    size: 32,
+    dotSize: 4,
+    speed: 1.2
+  },
   "ex-opacity": {
     size: 32,
     dotSize: 4,

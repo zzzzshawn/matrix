@@ -66,3 +66,22 @@ export function remapOpacityToTriplet(
   const progress = normalizeProgress(safeOpacity, SOURCE_PEAK_OPACITY, 1);
   return clamp01(lerp(targetPeak, 1, progress));
 }
+
+/** Remapped opacity where bloom begins (weakest glow); scales linearly to full bloom at 1. */
+export const DMX_BLOOM_OPACITY_MIN = 0.6;
+
+export function opacityToBloomLevel(remappedOpacity: number): number {
+  return Math.max(0, Math.min(1, (remappedOpacity - DMX_BLOOM_OPACITY_MIN) / (1 - DMX_BLOOM_OPACITY_MIN)));
+}
+
+export function remappedOpacityQualifiesForBloom(remappedOpacity: number): boolean {
+  return remappedOpacity >= DMX_BLOOM_OPACITY_MIN;
+}
+
+/** Clamp `halo` to 0…1 for uniform per-dot bloom strength. */
+export function clampHalo(value: number | undefined): number {
+  if (value == null || !Number.isFinite(value)) {
+    return 0;
+  }
+  return Math.min(1, Math.max(0, value));
+}

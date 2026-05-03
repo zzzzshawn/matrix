@@ -6,6 +6,7 @@ import { cx } from "../core/cx";
 import { useDotMatrixPhases } from "../core/phases";
 import { styleOpacity, stylePx } from "../core/hydration-inline-style";
 import { remapOpacityToTriplet } from "../core/opacity-triplet";
+import { dmxBloomRootActive, dmxDotBloomParts } from "../core/dmx-dot-bloom";
 import { useCyclePhase } from "../hooks/use-cycle-phase";
 import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
 import type { DotMatrixCommonProps } from "../types";
@@ -76,6 +77,8 @@ export function DotmTriangle12({
   ariaLabel = "Loading",
   className,
   muted = false,
+  bloom = false,
+  halo = 0,
   dotClassName,
   speed = 1,
   animated = true,
@@ -104,6 +107,7 @@ export function DotmTriangle12({
   const rootStyle = {
     width: stylePx(cellPadding == null ? size : matrixSize),
     height: stylePx(cellPadding == null ? size : matrixSize),
+    ["--dmx-dot-size" as const]: `${dotSize}px`,
     color
   } as CSSProperties;
 
@@ -112,7 +116,7 @@ export function DotmTriangle12({
       role="status"
       aria-live="polite"
       aria-label={ariaLabel}
-      className={cx("dmx-root", muted && "dmx-muted", className)}
+      className={cx("dmx-root", muted && "dmx-muted", dmxBloomRootActive(bloom, halo) && "dmx-bloom", className)}
       style={rootStyle}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -133,16 +137,19 @@ export function DotmTriangle12({
           const phase = reducedMotion || matrixPhase === "idle" ? 0.2 : cyclePhase;
           const opacity = isActive ? opacityForCell(row, col, phase) : 0;
 
+                    const dmxBloom = dmxDotBloomParts(isActive, opacity, bloom, halo, opacityBase, opacityMid, opacityPeak);
+
           return (
             <span
               key={index}
               aria-hidden="true"
-              className={cx("dmx-dot", !isActive && "dmx-inactive", dotClassName)}
+              className={cx("dmx-dot", !isActive && "dmx-inactive", dmxBloom.bloomDot && "dmx-bloom-dot", dotClassName)}
               style={{
                 width: stylePx(dotSize),
                 height: stylePx(dotSize),
-                opacity: styleOpacity(remapOpacityToTriplet(opacity, opacityBase, opacityMid, opacityPeak))
-              }}
+                opacity: styleOpacity(remapOpacityToTriplet(opacity, opacityBase, opacityMid, opacityPeak)),
+                ["--dmx-bloom-level" as const]: dmxBloom.level
+              } as CSSProperties}
             />
           );
         })}

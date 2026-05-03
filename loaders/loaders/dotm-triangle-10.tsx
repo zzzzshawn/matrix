@@ -6,6 +6,7 @@ import { cx } from "../core/cx";
 import { useDotMatrixPhases } from "../core/phases";
 import { styleOpacity, stylePx } from "../core/hydration-inline-style";
 import { remapOpacityToTriplet } from "../core/opacity-triplet";
+import { dmxBloomHaloSpreadClass, dmxBloomRootActive, dmxDotBloomParts } from "../core/dmx-dot-bloom";
 import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
 import { useSteppedCycle } from "../hooks/use-stepped-cycle";
 import type { DotMatrixCommonProps } from "../types";
@@ -59,6 +60,8 @@ export function DotmTriangle10({
   ariaLabel = "Loading",
   className,
   muted = false,
+  bloom = false,
+  halo = 0,
   dotClassName,
   speed = 1,
   animated = true,
@@ -87,6 +90,7 @@ export function DotmTriangle10({
   const rootStyle = {
     width: stylePx(cellPadding == null ? size : matrixSize),
     height: stylePx(cellPadding == null ? size : matrixSize),
+    ["--dmx-dot-size" as const]: `${dotSize}px`,
     color
   } as CSSProperties;
 
@@ -99,7 +103,7 @@ export function DotmTriangle10({
       role="status"
       aria-live="polite"
       aria-label={ariaLabel}
-      className={cx("dmx-root", muted && "dmx-muted", className)}
+      className={cx("dmx-root", muted && "dmx-muted", dmxBloomRootActive(bloom, halo) && "dmx-bloom", dmxBloomHaloSpreadClass(halo), className)}
       style={rootStyle}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -131,16 +135,19 @@ export function DotmTriangle10({
             }
           }
 
+          const dmxBloom = dmxDotBloomParts(isActive, opacity, bloom, halo, opacityBase, opacityMid, opacityPeak);
+
           return (
             <span
               key={index}
               aria-hidden="true"
-              className={cx("dmx-dot", !isActive && "dmx-inactive", dotClassName)}
+              className={cx("dmx-dot", !isActive && "dmx-inactive", dmxBloom.bloomDot && "dmx-bloom-dot", dotClassName)}
               style={{
                 width: stylePx(dotSize),
                 height: stylePx(dotSize),
-                opacity: styleOpacity(remapOpacityToTriplet(opacity, opacityBase, opacityMid, opacityPeak))
-              }}
+                opacity: styleOpacity(remapOpacityToTriplet(opacity, opacityBase, opacityMid, opacityPeak)),
+                ["--dmx-bloom-level" as const]: dmxBloom.level
+              } as CSSProperties}
             />
           );
         })}

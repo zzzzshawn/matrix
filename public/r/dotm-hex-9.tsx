@@ -5,6 +5,7 @@ import type { CSSProperties } from "react";
 import { cx } from "@/components/ui/dotmatrix-core";
 import { styleOpacity, stylePx } from "@/components/ui/dotmatrix-core";
 import { remapOpacityToTriplet } from "@/components/ui/dotmatrix-core";
+import { dmxBloomHaloSpreadClass, dmxBloomRootActive, dmxDotBloomParts } from "../core/dmx-dot-bloom";
 import { getPatternIndexes } from "@/components/ui/dotmatrix-core";
 import { useDotMatrixPhases } from "@/components/ui/dotmatrix-hooks";
 import { useCyclePhase } from "@/components/ui/dotmatrix-hooks";
@@ -72,6 +73,8 @@ export function DotmHex9({
   ariaLabel = "Loading",
   className,
   muted = false,
+  bloom = false,
+  halo = 0,
   dotClassName,
   speed = 1.8,
   animated = true,
@@ -114,20 +117,21 @@ export function DotmHex9({
     width: stylePx(matrixWidth),
     height: stylePx(matrixHeight),
     color,
+    ["--dmx-dot-size" as const]: `${dotSize}px`,
     ...(ob !== undefined && { ["--dmx-opacity-base" as const]: ob }),
     ...(om !== undefined && { ["--dmx-opacity-mid" as const]: om }),
     ...(op !== undefined && { ["--dmx-opacity-peak" as const]: op }),
     ...(useWrapper
       ? { transform: `scale(${scale})`, transformOrigin: "center center" as const }
       : { minWidth: minSize, minHeight: minSize })
-  } as CSSProperties;
+  } as unknown as CSSProperties;
 
   const matrix = (
     <div
       role={useWrapper ? undefined : "status"}
       aria-live={useWrapper ? undefined : "polite"}
       aria-label={useWrapper ? undefined : ariaLabel}
-      className={cx("dmx-root", muted && "dmx-muted", !useWrapper && className)}
+      className={cx("dmx-root", muted && "dmx-muted", dmxBloomRootActive(bloom, halo) && "dmx-bloom", dmxBloomHaloSpreadClass(halo), !useWrapper && className)}
       style={matrixStyle}
       onMouseEnter={useWrapper ? undefined : onMouseEnter}
       onMouseLeave={useWrapper ? undefined : onMouseLeave}
@@ -138,7 +142,9 @@ export function DotmHex9({
             {Array.from({ length: count }).map((_, col) => {
               const isActive = activePatternIndexes.includes(hexPatternIndex(row, count, col));
               const opacity = isActive ? opacityForCell(row, col, phase) : 0;
-              return <span key={`${row},${col}`} aria-hidden="true" className={cx("dmx-dot", !isActive && "dmx-inactive", dotClassName)} style={{ width: stylePx(dotSize), height: stylePx(dotSize), opacity: styleOpacity(remapOpacityToTriplet(opacity, ob, om, op)) }} />;
+              const dmxBloom = dmxDotBloomParts(isActive, opacity, bloom, halo, ob, om, op);
+              return <span key={`${row},${col}`} aria-hidden="true" className={cx("dmx-dot", !isActive && "dmx-inactive", dmxBloom.bloomDot && "dmx-bloom-dot", dotClassName)} style={{ width: stylePx(dotSize), height: stylePx(dotSize), opacity: styleOpacity(remapOpacityToTriplet(opacity, ob, om, op)),
+                    ["--dmx-bloom-level" as const]: dmxBloom.level } as CSSProperties} />;
             })}
           </div>
         ))}

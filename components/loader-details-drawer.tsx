@@ -48,7 +48,7 @@ export interface ManualSetupSources {
   cssSource: string;
 }
 
-export type ExamplePreviewId = "ex-opacity" | "ex-layout" | "ex-look";
+export type ExamplePreviewId = "ex-bloom" | "ex-opacity" | "ex-layout" | "ex-look";
 
 interface LoaderDetailsDrawerProps {
   open: boolean;
@@ -88,6 +88,23 @@ export function Example() {
     const C = selected.componentName;
     const from = selected.slug;
     const isSquareMatrix = from.startsWith("dotm-square-");
+    const bloomItem = {
+      id: "ex-bloom" as const,
+      title: "Bloom glow",
+      copyToken: "example-usage-bloom" as const,
+      code: `import { ${C} } from "@/components/ui/${from}";
+
+export function BloomGlow() {
+  return (
+    <${C}
+      size={32}
+      dotSize={4}
+      speed={1.2}
+      bloom
+    />
+  );
+}`
+    };
     const opacityItem = {
       id: "ex-opacity" as const,
       title: "Opacity & speed",
@@ -125,6 +142,7 @@ export function LayoutSlot() {
 }`
     };
     return [
+      bloomItem,
       opacityItem,
       layoutItem,
       {
@@ -231,7 +249,11 @@ export function ColorAndLook() {
           <Dialog.Popup
             className={`${GeistSans.className} absolute inset-y-2 left-2 hidden h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] w-[calc(50%-0.75rem)] flex-col overflow-y-auto overflow-x-hidden overscroll-y-contain rounded-lg bg-surface transition-transform duration-190 ease-[cubic-bezier(.215, .61, .355, 1)] data-starting-style:-translate-x-full data-ending-style:-translate-x-full md:flex`}
           >
-            <DrawerPreviewPane selectedTitle={selected?.title} preview={preview} />
+            <DrawerPreviewPane
+              selectedSlug={selected?.slug}
+              selectedTitle={selected?.title}
+              preview={preview}
+            />
           </Dialog.Popup>
           <Dialog.Popup
             className={`${GeistSans.className} absolute inset-y-2 left-2 right-2 flex h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] min-h-0 w-auto flex-col overflow-hidden rounded-lg bg-surface transition-transform duration-190 ease-[cubic-bezier(.215, .61, .355, 1)] data-starting-style:translate-x-full data-ending-style:translate-x-full md:left-auto md:right-2 md:w-[calc(50%-0.75rem)] `}
@@ -333,11 +355,11 @@ export function ColorAndLook() {
                 animate={{ opacity: 1, scale: 1, transition: { delay: 0.08 } }}
                 exit={{ opacity: 0, scale: 0.92 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
-                className="pointer-events-none absolute inset-x-0 bottom-1 z-50 flex justify-center"
+                className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 z-50 flex justify-center"
               >
                 <Dialog.Close
                   aria-label="Close dialog"
-                  className="pointer-events-auto inline-grid place-items-center rounded-lg bg-bg p-2.5 text-fg-strong"
+                  className="pointer-events-auto inline-grid place-items-center rounded-lg bg-bg p-2 text-fg-strong"
                 >
                   <FloatingCloseCrossDots />
                 </Dialog.Close>

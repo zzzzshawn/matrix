@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 
 import "@/components/dotmatrix-loader.css";
+import { dmxBloomHaloSpreadClass, dmxBloomRootActive, dmxDotBloomParts } from "../core/dmx-dot-bloom";
 import { useDotMatrixPhases, usePrefersReducedMotion } from "@/components/ui/dotmatrix-hooks";
 
 export type MatrixPattern = "diamond" | "full" | "outline" | "rose" | "cross" | "rings";
@@ -17,6 +18,12 @@ export interface DotMatrixCommonProps {
   className?: string;
   pattern?: MatrixPattern;
   muted?: boolean;
+  /**
+   * Adds a glow on dots from opacity 0.6 (weakest) through 1 (strongest), after remapping.
+   */
+  bloom?: boolean;
+  /** Uniform glow on every active dot (0…1); slightly wider falloff than selective `bloom`. */
+  halo?: number;
   animated?: boolean;
   hoverAnimated?: boolean;
   dotClassName?: string;
@@ -513,6 +520,17 @@ export function remapOpacityToTriplet(
   return Math.min(1, Math.max(0, lerpDmx(targetPeak, 1, progress)));
 }
 
+/** Remapped opacity where bloom begins (weakest glow); scales linearly to full bloom at 1. */
+export const DMX_BLOOM_OPACITY_MIN = 0.6;
+
+export function opacityToBloomLevel(remappedOpacity: number): number {
+  return Math.max(0, Math.min(1, (remappedOpacity - DMX_BLOOM_OPACITY_MIN) / (1 - DMX_BLOOM_OPACITY_MIN)));
+}
+
+export function remappedOpacityQualifiesForBloom(remappedOpacity: number): boolean {
+  return remappedOpacity >= DMX_BLOOM_OPACITY_MIN;
+}
+
 function getMatrix5Layout(
   size: number,
   dotSize: number,
@@ -570,6 +588,8 @@ export function DotMatrixBase({
   className,
   pattern = "diamond",
   muted = false,
+  bloom = false,
+  halo = 0,
   dotClassName,
   phase,
   reducedMotion = false,
@@ -599,15 +619,16 @@ export function DotMatrixBase({
     width: matrixSpan,
     height: matrixSpan,
     "--dmx-speed": speedScale,
+    ["--dmx-dot-size" as const]: `${dotSize}px`,
     color,
     ...(ob !== undefined && { ["--dmx-opacity-base" as const]: ob }),
     ...(om !== undefined && { ["--dmx-opacity-mid" as const]: om }),
     ...(op !== undefined && { ["--dmx-opacity-peak" as const]: op }),
     ...(useWrapper
       ? {
-          transform: `scale(${scale})`,
-          transformOrigin: "center center" as const
-        }
+        transform: `scale(${scale})`,
+        transformOrigin: "center center" as const
+      }
       : { minWidth: minSize, minHeight: minSize })
   } as unknown as CSSProperties;
 
@@ -623,23 +644,41 @@ export function DotMatrixBase({
 
     const animationState = animationResolver
       ? animationResolver({
-          index,
-          row,
-          col,
-          distanceFromCenter: distance,
-          angleFromCenter: angle,
-          radiusNormalized: radiusNormalizedValue,
-          manhattanDistance: manhattan,
-          phase,
-          isActive,
-          reducedMotion
-        })
+        index,
+        row,
+        col,
+        distanceFromCenter: distance,
+        angleFromCenter: angle,
+        radiusNormalized: radiusNormalizedValue,
+        manhattanDistance: manhattan,
+        phase,
+        isActive,
+        reducedMotion
+      })
       : {};
 
     const resolvedAnimationStyle = animationState.style ? { ...animationState.style } : undefined;
-    const rawOpacity = resolvedAnimationStyle?.opacity;
-    if (resolvedAnimationStyle != null && typeof rawOpacity === "number") {
-      resolvedAnimationStyle.opacity = remapOpacityToTriplet(rawOpacity, ob, om, op);
+    let isBloomDot = false;
+    let stylePatch: CSSProperties | undefined = resolvedAnimationStyle;
+
+    if (isActive) {
+      const rawOpacity = stylePatch?.opacity;
+      if (stylePatch != null && typeof rawOpacity === "number") {
+        const remappedOpacity = remapOpacityToTriplet(rawOpacity, ob, om, op);
+        stylePatch = { ...stylePatch, opacity: remappedOpacity };
+        const parts = dmxDotBloomParts(true, rawOpacity, bloom, halo, ob, om, op);
+        (stylePatch as CSSProperties & { "--dmx-bloom-level"?: number })["--dmx-bloom-level"] = parts.level;
+        isBloomDot = parts.bloomDot;
+      } else {
+        const parts = dmxDotBloomParts(true, 0, bloom, halo, ob, om, op);
+        if (parts.level > 0) {
+          stylePatch = {
+            ...(stylePatch ?? {}),
+            ["--dmx-bloom-level" as const]: parts.level
+          } as CSSProperties & { "--dmx-bloom-level"?: number };
+        }
+        isBloomDot = parts.bloomDot;
+      }
     }
 
     const dotStyle = {
@@ -653,14 +692,14 @@ export function DotMatrixBase({
       "--dmx-angle": angle,
       "--dmx-radius": radiusNormalizedValue,
       "--dmx-manhattan": manhattan,
-      ...resolvedAnimationStyle,
+      ...stylePatch,
       ...(!isActive
         ? {
-            opacity: 0,
-            visibility: "hidden" as const,
-            pointerEvents: "none" as const,
-            animation: "none"
-          }
+          opacity: 0,
+          visibility: "hidden" as const,
+          pointerEvents: "none" as const,
+          animation: "none"
+        }
         : {})
     } as CSSProperties;
 
@@ -668,14 +707,29 @@ export function DotMatrixBase({
       <span
         key={index}
         aria-hidden="true"
-        className={cx("dmx-dot", !isActive && "dmx-inactive", dotClassName, animationState.className)}
+        className={cx(
+          "dmx-dot",
+          !isActive && "dmx-inactive",
+          isBloomDot && "dmx-bloom-dot",
+          dotClassName,
+          animationState.className
+        )}
         style={dotStyle}
       />
     );
   });
 
   const matrix = (
-    <div className={cx("dmx-root", muted && "dmx-muted", !useWrapper && className)} style={dmxVarStyle}>
+    <div
+      className={cx(
+        "dmx-root",
+        muted && "dmx-muted",
+        dmxBloomRootActive(bloom, halo) && "dmx-bloom",
+        dmxBloomHaloSpreadClass(halo),
+        !useWrapper && className
+      )}
+      style={dmxVarStyle}
+    >
       <div className="dmx-grid" style={{ gap }}>{dots}</div>
     </div>
   );
@@ -710,7 +764,13 @@ export function DotMatrixBase({
       role="status"
       aria-live="polite"
       aria-label={ariaLabel}
-      className={cx("dmx-root", muted && "dmx-muted", className)}
+      className={cx(
+        "dmx-root",
+        muted && "dmx-muted",
+        dmxBloomRootActive(bloom, halo) && "dmx-bloom",
+        dmxBloomHaloSpreadClass(halo),
+        className
+      )}
       style={dmxVarStyle}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

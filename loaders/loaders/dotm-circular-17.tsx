@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useMemo } from "react";
 
 import { DotMatrixBase } from "../base/dot-matrix-base";
 import { useDotMatrixPhases } from "../core/phases";
@@ -35,9 +35,6 @@ export function DotmCircular17({
     speed
   });
 
-  const animPhaseRef = useRef(animPhase);
-  animPhaseRef.current = animPhase;
-
   const resolver = useMemo<DotAnimationResolver>(() => {
     return ({ row, col, phase: dmxPhase }) => {
       if (!isWithinCircularMask(row, col)) {
@@ -47,7 +44,7 @@ export function DotmCircular17({
       const holdStill = reducedMotion || dmxPhase === "idle";
       const t = holdStill
         ? 0
-        : Math.floor(animPhaseRef.current * CHECKER_STEPS) % CHECKER_STEPS;
+        : Math.floor(animPhase * CHECKER_STEPS) % CHECKER_STEPS;
       const parity = (row + col + t) % 2;
       const brailleBias = col === 1 || col === 3;
       const centerBias = row === 2 || col === 2;
@@ -63,7 +60,7 @@ export function DotmCircular17({
 
       return { style: { opacity } };
     };
-  }, [reducedMotion]);
+  }, [reducedMotion, animPhase]);
 
   return (
     <DotMatrixBase

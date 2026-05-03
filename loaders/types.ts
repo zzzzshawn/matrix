@@ -13,6 +13,15 @@ export interface DotMatrixCommonProps {
   className?: string;
   pattern?: MatrixPattern;
   muted?: boolean;
+  /**
+   * Adds a glow on dots from remapped opacity 0.6 (weakest) through 1 (strongest).
+   */
+  bloom?: boolean;
+  /**
+   * Uniform glow on every active dot, 0 (off) through 1 (strongest). Independent of the selective
+   * `bloom` curve; when both are set, the stronger per-dot level wins. Slightly wider drop-shadow falloff than `bloom` alone.
+   */
+  halo?: number;
   animated?: boolean;
   hoverAnimated?: boolean;
   dotClassName?: string;

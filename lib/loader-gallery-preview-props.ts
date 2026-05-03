@@ -1,7 +1,5 @@
 import type { DotMatrixCommonProps } from "@/loaders";
 
-const previewSpeed = 1.35;
-
 export const LOADER_GALLERY_PREVIEW_PROPS: Record<string, DotMatrixCommonProps> = {
   "dotm-square-1": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 1.1 },
   "dotm-square-2": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 1.15 },
@@ -23,10 +21,10 @@ export const LOADER_GALLERY_PREVIEW_PROPS: Record<string, DotMatrixCommonProps> 
   "dotm-square-18": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 1.35 },
   "dotm-square-19": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 1.45 },
   "dotm-square-20": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 1.45 },
-  "dotm-circular-1": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 2.5, },
-  "dotm-circular-2": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 1.8,  },
-  "dotm-circular-3": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 1.6,  },
-  "dotm-circular-4": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 1.55,  },
+  "dotm-circular-1": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 2.5 },
+  "dotm-circular-2": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 1.8, },
+  "dotm-circular-3": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 1.6, },
+  "dotm-circular-4": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 1.55, },
   "dotm-circular-5": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 1.7 },
   "dotm-circular-6": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 1.6 },
   "dotm-circular-7": { size: 36, dotSize: 5, pattern: "full", animated: true, speed: 1.8 },
@@ -62,7 +60,7 @@ export const LOADER_GALLERY_PREVIEW_PROPS: Record<string, DotMatrixCommonProps> 
   "dotm-triangle-17": { size: 30, dotSize: 6.5, pattern: "full", animated: true, speed: 1.8 },
   "dotm-triangle-18": { size: 30, dotSize: 6.5, pattern: "full", animated: true, speed: 1.6 },
   "dotm-triangle-19": { size: 30, dotSize: 6.5, pattern: "full", animated: true, speed: 1.5 },
-  "dotm-triangle-20": { size: 30, dotSize: 6.5, pattern: "full", animated: true, speed: 1.7  },
+  "dotm-triangle-20": { size: 30, dotSize: 6.5, pattern: "full", animated: true, speed: 1.7 },
   "dotm-hex-1": { size: 34, dotSize: 5, pattern: "full", animated: true, speed: 1.6 },
   "dotm-hex-2": { size: 34, dotSize: 5, pattern: "full", animated: true, speed: 1.7 },
   "dotm-hex-3": { size: 34, dotSize: 5, pattern: "full", animated: true, speed: 1.45 },

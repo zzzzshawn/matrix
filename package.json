@@ -20,8 +20,10 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
+    "dialkit": "^1.2.0",
     "framer-motion": "^12.38.0",
     "geist": "^1.7.0",
+    "motion": "^12.38.0",
     "next": "^16.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

@@ -71,6 +71,22 @@ const PROP_ROWS: readonly PropRow[] = [
     kinds: ["square", "circular", "triangle", "hex"]
   },
   {
+    name: "bloom",
+    type: "boolean",
+    description:
+      "Adds a glow treatment: after remapping, dots from opacity 0.6 (weakest glow) up to 1 (strongest) get a graded bloom.",
+    default: "false",
+    kinds: ["square", "circular", "triangle", "hex"]
+  },
+  {
+    name: "halo",
+    type: "number (0…1)",
+    description:
+      "Uniform glow on every active dot: 0 is off, 1 is strongest. Same `--dmx-bloom-level` as `bloom`, with a slightly wider drop-shadow falloff than selective bloom only.",
+    default: "0",
+    kinds: ["square", "circular", "triangle", "hex"]
+  },
+  {
     name: "animated",
     type: "boolean",
     description:

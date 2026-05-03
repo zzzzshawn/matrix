@@ -33,8 +33,8 @@ const DEFAULT_HERO_TITLE = (
 const DEFAULT_HERO_DESCRIPTION =
   "55+ free and open-source loaders, built with React, TypeScript, Tailwind CSS, and shadcn. Install one, copy the code, and make it yours.";
 
-export const LOADER_GALLERY_DEFAULT_DETAIL_PREVIEW_SCALE = 2.1;
-export const LOADER_GALLERY_DEFAULT_DETAIL_DOT_BOOST = 5;
+export const LOADER_GALLERY_DEFAULT_DETAIL_PREVIEW_SCALE = 3;
+export const LOADER_GALLERY_DEFAULT_DETAIL_DOT_BOOST = 11;
 
 export const LOADER_GALLERY_DEFAULT_HERO_CONTENT: LoaderGalleryHeroContent = {
   title: DEFAULT_HERO_TITLE,
