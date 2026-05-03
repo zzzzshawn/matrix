@@ -319,7 +319,9 @@ body[data-playground-route="true"]
   padding-bottom: 12px !important;
 }
 
-.dialkit-root {
+
+.dialkit-root,
+.dialkit-root[data-theme="system"] {
   color: var(--foreground);
   --dial-glass-bg: var(--background);
   --dial-dropdown-bg: var(--background);

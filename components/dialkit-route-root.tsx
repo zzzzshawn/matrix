@@ -2,11 +2,33 @@
 
 import { DialRoot } from "dialkit";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+function useDocumentTheme(): "light" | "dark" {
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
+
+  useEffect(() => {
+    const read = () => {
+      const t = document.documentElement.dataset.theme;
+      setTheme(t === "light" ? "light" : "dark");
+    };
+
+    read();
+    const observer = new MutationObserver(read);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"]
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  return theme;
+}
 
 export function DialKitRouteRoot() {
   const pathname = usePathname();
   const isPlayground = pathname === "/playground";
+  const dialTheme = useDocumentTheme();
 
   useEffect(() => {
     if (!isPlayground) {
@@ -29,7 +51,7 @@ export function DialKitRouteRoot() {
     <DialRoot
       position="top-right"
       defaultOpen
-      theme="system"
+      theme={dialTheme}
       productionEnabled
     />
   );
