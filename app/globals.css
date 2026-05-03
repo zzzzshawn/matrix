@@ -320,19 +320,20 @@ body[data-playground-route="true"]
 }
 
 .dialkit-root {
+  color: var(--foreground);
   --dial-glass-bg: var(--background);
   --dial-dropdown-bg: var(--background);
   --dial-surface: var(--color-surface);
   --dial-surface-hover: var(--color-surface-soft);
   --dial-surface-active: var(--color-surface-soft);
   --dial-surface-subtle: var(--color-surface);
-  --dial-text-root: var(--color-fg-strong);
-  --dial-text-section: var(--color-fg-muted);
-  --dial-text-label: var(--color-fg-muted);
-  --dial-text-focus: var(--color-fg-strong);
-  --dial-text-primary: var(--color-fg-strong);
-  --dial-text-secondary: var(--color-fg);
-  --dial-text-tertiary: var(--color-fg-dim);
+  --dial-text-root: var(--foreground);
+  --dial-text-section: var(--muted-foreground);
+  --dial-text-label: var(--muted-foreground);
+  --dial-text-focus: var(--foreground);
+  --dial-text-primary: var(--foreground);
+  --dial-text-secondary: var(--foreground);
+  --dial-text-tertiary: var(--muted-foreground);
   --dial-border: transparent;
   --dial-border-hover: var(--color-surface-raised);
   --dial-backdrop-blur: 0px;
@@ -359,7 +360,7 @@ body[data-playground-route="true"]
 }
 
 .dialkit-panel-inner:not([data-collapsed="true"]) .dialkit-folder-title-root {
-  color: var(--color-fg-strong);
+  color: var(--foreground);
 }
 
 .dialkit-panel-inner:not([data-collapsed="true"]) .dialkit-folder,
@@ -409,6 +410,15 @@ body[data-playground-route="true"]
   border: 0 !important;
   background: var(--background) !important;
   box-shadow: none !important;
+  /* Portaled outside .dialkit-root: re-apply text tokens so options use theme foreground. */
+  color: var(--foreground);
+  --dial-text-root: var(--foreground);
+  --dial-text-section: var(--muted-foreground);
+  --dial-text-label: var(--muted-foreground);
+  --dial-text-focus: var(--foreground);
+  --dial-text-primary: var(--foreground);
+  --dial-text-secondary: var(--foreground);
+  --dial-text-tertiary: var(--muted-foreground);
 }
 
 .dialkit-select-dropdown {
@@ -438,7 +448,7 @@ body[data-playground-route="true"]
   background: var(--color-bg) !important;
   padding: 0 !important;
   box-shadow: none !important;
-  color: var(--color-fg-strong) !important;
+  color: var(--foreground) !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   transition:
