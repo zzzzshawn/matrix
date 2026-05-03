@@ -43,7 +43,7 @@ export function SiteFooter() {
         <a href={CREATOR_URL} target="_blank" className="">by shawn.</a>
       </span>
       <div className="flex flex-col  gap-2.5 text-xl md:text-3xl italic absolute top-8 left-8 z-10 pointer-events-auto">
-        <span className=""><span className="font-semibold text-3xl md:text-5xl">@dotmatrix</span> - v1.0.0</span>
+        <span className=""><span className="font-semibold text-3xl md:text-5xl">@dotmatrix</span> - v1.5.0</span>
         <nav
           aria-label="Documentation"
           className="flex flex-col  gap-2 pt-10 text-lg md:text-xl not-italic font-normal tracking-normal"
