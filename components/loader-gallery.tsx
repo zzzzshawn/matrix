@@ -23,6 +23,7 @@ import type {
 } from "@/components/loader-gallery.types";
 import { LoaderGalleryHeroInstallCommand } from "@/components/loader-gallery-hero-install-command";
 import { loaderComponentMap } from "@/lib/loader-component-map";
+import { ReducedMotionOverrideProvider } from "@/loaders/hooks/use-prefers-reduced-motion";
 import { DotMatrixIcon, type DotMatrixColorPreset, type DotMatrixCommonProps } from "@/loaders";
 import { LOADER_GALLERY_PREVIEW_PROPS } from "@/lib/loader-gallery-preview-props";
 
@@ -124,7 +125,11 @@ export function LoaderGallery({
 
   const selectedPreview = useMemo(() => {
     if (!selected) {
-      return <DotMatrixIcon />;
+      return (
+        <ReducedMotionOverrideProvider reducedMotion={false}>
+          <DotMatrixIcon />
+        </ReducedMotionOverrideProvider>
+      );
     }
 
     const SelectedComponent = loaderComponentMap[selected.slug] ?? DotMatrixIcon;
@@ -145,12 +150,14 @@ export function LoaderGallery({
       // uses a 7×7 hand-built grid, so the layout example is not shown in the UI.
       if (activeExampleId === "ex-layout" && isTriangleMatrix) {
         return (
-          <SelectedComponent
-            key={previewKey}
-            {...base}
-            size={largeSize}
-            dotSize={largeDotSize}
-          />
+          <ReducedMotionOverrideProvider reducedMotion={false}>
+            <SelectedComponent
+              key={previewKey}
+              {...base}
+              size={largeSize}
+              dotSize={largeDotSize}
+            />
+          </ReducedMotionOverrideProvider>
         );
       }
       const snippet: Partial<DotMatrixCommonProps> =
@@ -173,20 +180,24 @@ export function LoaderGallery({
         merged.pattern = base.pattern;
       }
       return (
-        <SelectedComponent
-          key={previewKey}
-          {...merged}
-        />
+        <ReducedMotionOverrideProvider reducedMotion={false}>
+          <SelectedComponent
+            key={previewKey}
+            {...merged}
+          />
+        </ReducedMotionOverrideProvider>
       );
     }
 
     return (
-      <SelectedComponent
-        key={previewKey}
-        {...base}
-        size={largeSize}
-        dotSize={largeDotSize}
-      />
+      <ReducedMotionOverrideProvider reducedMotion={false}>
+        <SelectedComponent
+          key={previewKey}
+          {...base}
+          size={largeSize}
+          dotSize={largeDotSize}
+        />
+      </ReducedMotionOverrideProvider>
     );
   }, [selected, activeExampleId, previewPropsOverrides, detailPreviewScale, detailPreviewDotBoost, activeColorPreset.id]);
 
@@ -284,6 +295,7 @@ export function LoaderGallery({
               ...resolvePreviewProps(item.slug, previewPropsOverrides),
               colorPreset: activeColorPreset.id as DotMatrixColorPreset
             }}
+            ignoreReducedMotion
           />
         ))}
       </section>

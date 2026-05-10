@@ -1,8 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { createContext, createElement, useContext, useEffect, useState, type ReactNode } from "react";
+
+const ReducedMotionOverrideContext = createContext<boolean | null>(null);
+
+interface ReducedMotionOverrideProviderProps {
+  reducedMotion: boolean;
+  children: ReactNode;
+}
+
+export function ReducedMotionOverrideProvider({
+  reducedMotion,
+  children
+}: ReducedMotionOverrideProviderProps) {
+  return createElement(
+    ReducedMotionOverrideContext.Provider,
+    { value: reducedMotion },
+    children
+  );
+}
 
 export function usePrefersReducedMotion(): boolean {
+  const reducedMotionOverride = useContext(ReducedMotionOverrideContext);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -19,6 +38,10 @@ export function usePrefersReducedMotion(): boolean {
       query.removeEventListener("change", update);
     };
   }, []);
+
+  if (reducedMotionOverride !== null) {
+    return reducedMotionOverride;
+  }
 
   return prefersReducedMotion;
 }

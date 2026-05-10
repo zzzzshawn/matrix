@@ -2,6 +2,7 @@
 
 import { memo, useCallback, useEffect, useRef, useState, type ComponentType, type CSSProperties } from "react";
 import type { LoaderCard } from "@/components/loader-details-drawer";
+import { ReducedMotionOverrideProvider } from "@/loaders/hooks/use-prefers-reduced-motion";
 import type { DotMatrixCommonProps } from "@/loaders";
 
 interface LoaderGalleryGridCardProps {
@@ -11,6 +12,7 @@ interface LoaderGalleryGridCardProps {
   PreviewComponent: ComponentType<DotMatrixCommonProps>;
   previewProps: DotMatrixCommonProps;
   previewStyle?: CSSProperties;
+  ignoreReducedMotion?: boolean;
 }
 
 export const LoaderGalleryGridCard = memo(function LoaderGalleryGridCard({
@@ -19,7 +21,8 @@ export const LoaderGalleryGridCard = memo(function LoaderGalleryGridCard({
   isAnimationEnabled,
   PreviewComponent,
   previewProps,
-  previewStyle
+  previewStyle,
+  ignoreReducedMotion = false
 }: LoaderGalleryGridCardProps) {
   const cardRef = useRef<HTMLButtonElement | null>(null);
   const [isNearViewport, setIsNearViewport] = useState(false);
@@ -29,6 +32,7 @@ export const LoaderGalleryGridCard = memo(function LoaderGalleryGridCard({
   }, [onSelect, item.slug]);
 
   const shouldAnimate = Boolean(isAnimationEnabled && isNearViewport && (previewProps.animated ?? true));
+  const previewNode = <PreviewComponent {...previewProps} animated={shouldAnimate} />;
 
   useEffect(() => {
     const node = cardRef.current;
@@ -71,7 +75,11 @@ export const LoaderGalleryGridCard = memo(function LoaderGalleryGridCard({
 
       <div className="relative flex h-full flex-col">
         <div className="flex flex-1 items-center justify-center " style={previewStyle}>
-          <PreviewComponent {...previewProps} animated={shouldAnimate} />
+          {ignoreReducedMotion ? (
+            <ReducedMotionOverrideProvider reducedMotion={false}>
+              {previewNode}
+            </ReducedMotionOverrideProvider>
+          ) : previewNode}
         </div>
       </div>
     </button>
