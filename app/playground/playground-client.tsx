@@ -42,7 +42,8 @@ const patternOptions: { value: MatrixPattern; label: string }[] = [
 const dotShapeOptions: { value: DotShape; label: string }[] = [
   { value: "circle", label: "Circle" },
   { value: "square", label: "Square" },
-  { value: "diamond", label: "Diamond" }
+  { value: "diamond", label: "Diamond" },
+  { value: "hearts", label: "Hearts" }
 ];
 
 const DEFAULT_THEME_COLOR = "#f4f4f5";

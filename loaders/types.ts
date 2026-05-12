@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import type { DotMatrixColorPreset } from "./core/color-presets";
 
 export type MatrixPattern = "diamond" | "full" | "outline" | "rose" | "cross" | "rings";
-export type DotShape = "circle" | "square" | "diamond";
+export type DotShape = "circle" | "square" | "diamond" | "hearts";
 
 export type DotMatrixPhase = "idle" | "collapse" | "hoverRipple" | "loadingRipple";
 

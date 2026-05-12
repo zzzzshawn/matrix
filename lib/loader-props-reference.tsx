@@ -120,7 +120,7 @@ const PROP_ROWS: readonly PropRow[] = [
   },
   {
     name: "dotShape",
-    type: `"circle" | "square" | "diamond"`,
+    type: `"circle" | "square" | "diamond" | "hearts"`,
     description: "Dot geometry for each active cell.",
     default: '"circle"',
     kinds: ["square", "circular", "triangle", "hex"]
