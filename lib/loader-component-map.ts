@@ -70,6 +70,7 @@ import {
   DotmTriangle7,
   DotmTriangle8,
   DotmTriangle9,
+  DotmPong,
   type DotMatrixCommonProps
 } from "@/loaders";
 import type { ComponentType } from "react";
@@ -146,7 +147,8 @@ export const loaderComponentMap: Record<string, LoaderPreviewComponent> = {
   "dotm-hex-7": DotmHex7,
   "dotm-hex-8": DotmHex8,
   "dotm-hex-9": DotmHex9,
-  "dotm-hex-10": DotmHex10
+  "dotm-hex-10": DotmHex10,
+  "dotm-pong": DotmPong as any
 };
 
 export function getLoaderPreviewComponent(slug: string): LoaderPreviewComponent {

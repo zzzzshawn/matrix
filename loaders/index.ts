@@ -154,6 +154,9 @@ export type { DotmHex9Props } from "./loaders/dotm-hex-9";
 export { DotmHex10 } from "./loaders/dotm-hex-10";
 export type { DotmHex10Props } from "./loaders/dotm-hex-10";
 
+export { DotmPong } from "./loaders/dotm-pong";
+export type { DotmPongProps } from "./loaders/dotm-pong";
+
 export {
   CROSS_INDEXES,
   DIAMOND_INDEXES,

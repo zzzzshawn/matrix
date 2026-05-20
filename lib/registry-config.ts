@@ -694,6 +694,15 @@ export const loaderRegistry: LoaderRegistryEntry[] = [
     fileName: "dotm-hex-10.tsx",
     dependencies: [],
     motionOptional: false
+  },
+  {
+    slug: "dotm-pong",
+    title: "Pong Loader",
+    description: "A classic Pong game animation loader.",
+    componentName: "DotmPong",
+    fileName: "dotm-pong.tsx",
+    dependencies: [],
+    motionOptional: false
   }
 ];
 
