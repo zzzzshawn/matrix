@@ -37,6 +37,11 @@ import {
   Dotm3x3_13,
   Dotm3x3_14,
   Dotm3x3_15,
+  Dotm3x3_16,
+  Dotm3x3_18,
+  Dotm3x3_19,
+  Dotm3x3_20,
+  Dotm3x3_21,
   DotmHex2,
   DotmHex3,
   DotmHex4,
@@ -176,7 +181,12 @@ export const loaderComponentMap: Record<string, LoaderPreviewComponent> = {
   "dotm-3x3-12": Dotm3x3_12,
   "dotm-3x3-13": Dotm3x3_13,
   "dotm-3x3-14": Dotm3x3_14,
-  "dotm-3x3-15": Dotm3x3_15
+  "dotm-3x3-15": Dotm3x3_15,
+  "dotm-3x3-16": Dotm3x3_16,
+  "dotm-3x3-18": Dotm3x3_18,
+  "dotm-3x3-19": Dotm3x3_19,
+  "dotm-3x3-20": Dotm3x3_20,
+  "dotm-3x3-21": Dotm3x3_21
 };
 
 export function getLoaderPreviewComponent(slug: string): LoaderPreviewComponent {

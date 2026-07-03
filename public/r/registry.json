@@ -769,6 +769,51 @@
       "url": "/r/dotm-3x3-15.json"
     },
     {
+      "name": "dotm-3x3-16",
+      "type": "registry:ui",
+      "title": "Smiley Spin",
+      "description": "A pixel smiley face rotates continuously in the 3×3 grid.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-16.json"
+    },
+    {
+      "name": "dotm-3x3-18",
+      "type": "registry:ui",
+      "title": "Check Spin",
+      "description": "A pixel checkmark rotates continuously in the 3×3 grid.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-18.json"
+    },
+    {
+      "name": "dotm-3x3-19",
+      "type": "registry:ui",
+      "title": "Arrow Spin",
+      "description": "A pixel right arrow rotates continuously in the 3×3 grid.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-19.json"
+    },
+    {
+      "name": "dotm-3x3-20",
+      "type": "registry:ui",
+      "title": "Corner Spin",
+      "description": "An L-shaped pixel corner rotates continuously in the 3×3 grid.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-20.json"
+    },
+    {
+      "name": "dotm-3x3-21",
+      "type": "registry:ui",
+      "title": "Play Spin",
+      "description": "A pixel play triangle rotates continuously in the 3×3 grid.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-21.json"
+    },
+    {
       "name": "all",
       "type": "registry:ui",
       "title": "All Dot Matrix Loaders",

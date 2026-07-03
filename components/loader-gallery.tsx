@@ -227,6 +227,9 @@ export function LoaderGallery({
                   >
                     Playground
                   </Link>
+                  <Link href="/showcase" className={heroNavLinkClassName}>
+                    Showcase
+                  </Link>
                 </div>
               </div>
               <p className=" max-w-[65ch] text-pretty tracking-tight text-sm leading-relaxed  sm:text-2xl">

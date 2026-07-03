@@ -844,6 +844,51 @@ export const loaderRegistry: LoaderRegistryEntry[] = [
     fileName: "dotm-3x3-15.tsx",
     dependencies: [],
     motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-16",
+    title: "Smiley Spin",
+    description: "A pixel smiley face rotates continuously in the 3×3 grid.",
+    componentName: "Dotm3x3_16",
+    fileName: "dotm-3x3-16.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-18",
+    title: "Check Spin",
+    description: "A pixel checkmark rotates continuously in the 3×3 grid.",
+    componentName: "Dotm3x3_18",
+    fileName: "dotm-3x3-18.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-19",
+    title: "Arrow Spin",
+    description: "A pixel right arrow rotates continuously in the 3×3 grid.",
+    componentName: "Dotm3x3_19",
+    fileName: "dotm-3x3-19.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-20",
+    title: "Corner Spin",
+    description: "An L-shaped pixel corner rotates continuously in the 3×3 grid.",
+    componentName: "Dotm3x3_20",
+    fileName: "dotm-3x3-20.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-21",
+    title: "Play Spin",
+    description: "A pixel play triangle rotates continuously in the 3×3 grid.",
+    componentName: "Dotm3x3_21",
+    fileName: "dotm-3x3-21.tsx",
+    dependencies: [],
+    motionOptional: false
   }
 ];
 

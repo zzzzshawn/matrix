@@ -85,6 +85,11 @@ export const LOADER_GALLERY_PREVIEW_PROPS: Record<string, DotMatrixCommonProps> 
   "dotm-3x3-12": { size: 24, dotSize: 6, cellPadding: 1, opacityBase: 0.06, opacityMid: 0.38, pattern: "full", animated: true, speed: 1.75 },
   "dotm-3x3-13": { size: 24, dotSize: 6, cellPadding: 1, opacityBase: 0.06, opacityMid: 0.38, pattern: "full", animated: true, speed: 1.75 },
   "dotm-3x3-14": { size: 24, dotSize: 6, cellPadding: 1, opacityBase: 0.06, opacityMid: 0.38, pattern: "full", animated: true, speed: 1.6 },
-  "dotm-3x3-15": { size: 24, dotSize: 6, cellPadding: 1, opacityBase: 0.06, opacityMid: 0.38, pattern: "full", animated: true, speed: 1.75 }
+  "dotm-3x3-15": { size: 24, dotSize: 6, cellPadding: 1, opacityBase: 0.06, opacityMid: 0.38, pattern: "full", animated: true, speed: 1.75 },
+  "dotm-3x3-16": { size: 24, dotSize: 6, cellPadding: 1, opacityBase: 0.09, opacityMid: 0.38, pattern: "full", animated: true, speed: 1 },
+  "dotm-3x3-18": { size: 24, dotSize: 6, cellPadding: 1, opacityBase: 0.09, opacityMid: 0.38, pattern: "full", animated: true, speed: 1 },
+  "dotm-3x3-19": { size: 24, dotSize: 6, cellPadding: 1, opacityBase: 0.09, opacityMid: 0.38, pattern: "full", animated: true, speed: 1 },
+  "dotm-3x3-20": { size: 24, dotSize: 6, cellPadding: 1, opacityBase: 0.09, opacityMid: 0.38, pattern: "full", animated: true, speed: 1 },
+  "dotm-3x3-21": { size: 24, dotSize: 6, cellPadding: 1, opacityBase: 0.09, opacityMid: 0.38, pattern: "full", animated: true, speed: 1 }
 };
 

@@ -55,6 +55,7 @@ const importRewrites: ReadonlyArray<{ from: string; to: string }> = [
   { from: "../base/dot-matrix-3-base", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/circle-mask", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/cx", to: "@/components/ui/dotmatrix-core" },
+  { from: "../core/glyph-spin-3-factory", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/dotm-3x3-component-factory", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/diagonal-wave-3-factory", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/grid-paths", to: "@/components/ui/dotmatrix-core" },
