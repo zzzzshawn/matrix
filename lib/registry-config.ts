@@ -694,6 +694,201 @@ export const loaderRegistry: LoaderRegistryEntry[] = [
     fileName: "dotm-hex-10.tsx",
     dependencies: [],
     motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-1",
+    title: "Square Spiral",
+    description:
+      "A compact 3×3 grid with a four-dot tail spiraling clockwise from the outer border toward the center.",
+    componentName: "Dotm3x3_1",
+    fileName: "dotm-3x3-1.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-2",
+    title: "Drift TR",
+    description:
+      "Diagonal bands pulse in sequence across the 3×3 grid from the top-right corner toward the bottom-left.",
+    componentName: "Dotm3x3_2",
+    fileName: "dotm-3x3-2.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-3",
+    title: "Drift TL",
+    description:
+      "Diagonal bands pulse in sequence across the 3×3 grid from the top-left corner toward the bottom-right.",
+    componentName: "Dotm3x3_3",
+    fileName: "dotm-3x3-3.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-4",
+    title: "Drift BR",
+    description:
+      "Diagonal bands pulse in sequence across the 3×3 grid from the bottom-right corner toward the top-left.",
+    componentName: "Dotm3x3_4",
+    fileName: "dotm-3x3-4.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-5",
+    title: "Drift BL",
+    description:
+      "Diagonal bands pulse in sequence across the 3×3 grid from the bottom-left corner toward the top-right.",
+    componentName: "Dotm3x3_5",
+    fileName: "dotm-3x3-5.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-6",
+    title: "Core Echo",
+    description:
+      "Manhattan rings ripple outward from the center cell, expanding through the 3×3 grid in even steps.",
+    componentName: "Dotm3x3_6",
+    fileName: "dotm-3x3-6.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-7",
+    title: "Column Flux",
+    description:
+      "Vertical bands pulse in sequence from the left column through the right, lighting all three rows in each column together.",
+    componentName: "Dotm3x3_7",
+    fileName: "dotm-3x3-7.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-8",
+    title: "Row Sweep",
+    description:
+      "Horizontal bands pulse in sequence from the top row down through the bottom of the 3×3 matrix.",
+    componentName: "Dotm3x3_8",
+    fileName: "dotm-3x3-8.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-9",
+    title: "Serpent",
+    description:
+      "A narrow pulse travels the full serpentine path across all nine cells, row by row.",
+    componentName: "Dotm3x3_9",
+    fileName: "dotm-3x3-9.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-10",
+    title: "Frame Chase",
+    description:
+      "A highlight runs clockwise around the outer frame while the center cell holds a steady pulse.",
+    componentName: "Dotm3x3_10",
+    fileName: "dotm-3x3-10.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-11",
+    title: "Glyph Pulse",
+    description:
+      "Bold symbol motifs flash in sequence — corners, cross, full grid, center, ring, X, and side rails — like a tiny pixel display.",
+    componentName: "Dotm3x3_11",
+    fileName: "dotm-3x3-11.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-12",
+    title: "Drop Ripple",
+    description:
+      "Concentric ripples expand from the center of the 3×3 grid, like a stone dropped in still water.",
+    componentName: "Dotm3x3_12",
+    fileName: "dotm-3x3-12.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-13",
+    title: "Right Surge",
+    description:
+      "A vertical wave pulse sweeps from the right column toward the left, illuminating every row in each band together.",
+    componentName: "Dotm3x3_13",
+    fileName: "dotm-3x3-13.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-14",
+    title: "Comet Trail",
+    description:
+      "A bright comet with a two-dot tail races clockwise around the outer frame while the center cell softly breathes.",
+    componentName: "Dotm3x3_14",
+    fileName: "dotm-3x3-14.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-15",
+    title: "Echo Rings",
+    description:
+      "Soft square ripples echo outward from the center through Manhattan rings, with a gentle alternating shimmer.",
+    componentName: "Dotm3x3_15",
+    fileName: "dotm-3x3-15.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-16",
+    title: "Smiley Spin",
+    description: "A pixel smiley face rotates continuously in the 3×3 grid.",
+    componentName: "Dotm3x3_16",
+    fileName: "dotm-3x3-16.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-18",
+    title: "Check Spin",
+    description: "A pixel checkmark rotates continuously in the 3×3 grid.",
+    componentName: "Dotm3x3_18",
+    fileName: "dotm-3x3-18.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-19",
+    title: "Arrow Spin",
+    description: "A pixel right arrow rotates continuously in the 3×3 grid.",
+    componentName: "Dotm3x3_19",
+    fileName: "dotm-3x3-19.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-20",
+    title: "Corner Spin",
+    description: "An L-shaped pixel corner rotates continuously in the 3×3 grid.",
+    componentName: "Dotm3x3_20",
+    fileName: "dotm-3x3-20.tsx",
+    dependencies: [],
+    motionOptional: false
+  },
+  {
+    slug: "dotm-3x3-21",
+    title: "Play Spin",
+    description: "A pixel play triangle rotates continuously in the 3×3 grid.",
+    componentName: "Dotm3x3_21",
+    fileName: "dotm-3x3-21.tsx",
+    dependencies: [],
+    motionOptional: false
   }
 ];
 

@@ -634,6 +634,186 @@
       "url": "/r/dotm-hex-10.json"
     },
     {
+      "name": "dotm-3x3-1",
+      "type": "registry:ui",
+      "title": "Square Spiral",
+      "description": "A compact 3×3 grid with a four-dot tail spiraling clockwise from the outer border toward the center.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-1.json"
+    },
+    {
+      "name": "dotm-3x3-2",
+      "type": "registry:ui",
+      "title": "Drift TR",
+      "description": "Diagonal bands pulse in sequence across the 3×3 grid from the top-right corner toward the bottom-left.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-2.json"
+    },
+    {
+      "name": "dotm-3x3-3",
+      "type": "registry:ui",
+      "title": "Drift TL",
+      "description": "Diagonal bands pulse in sequence across the 3×3 grid from the top-left corner toward the bottom-right.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-3.json"
+    },
+    {
+      "name": "dotm-3x3-4",
+      "type": "registry:ui",
+      "title": "Drift BR",
+      "description": "Diagonal bands pulse in sequence across the 3×3 grid from the bottom-right corner toward the top-left.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-4.json"
+    },
+    {
+      "name": "dotm-3x3-5",
+      "type": "registry:ui",
+      "title": "Drift BL",
+      "description": "Diagonal bands pulse in sequence across the 3×3 grid from the bottom-left corner toward the top-right.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-5.json"
+    },
+    {
+      "name": "dotm-3x3-6",
+      "type": "registry:ui",
+      "title": "Core Echo",
+      "description": "Manhattan rings ripple outward from the center cell, expanding through the 3×3 grid in even steps.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-6.json"
+    },
+    {
+      "name": "dotm-3x3-7",
+      "type": "registry:ui",
+      "title": "Column Flux",
+      "description": "Vertical bands pulse in sequence from the left column through the right, lighting all three rows in each column together.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-7.json"
+    },
+    {
+      "name": "dotm-3x3-8",
+      "type": "registry:ui",
+      "title": "Row Sweep",
+      "description": "Horizontal bands pulse in sequence from the top row down through the bottom of the 3×3 matrix.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-8.json"
+    },
+    {
+      "name": "dotm-3x3-9",
+      "type": "registry:ui",
+      "title": "Serpent",
+      "description": "A narrow pulse travels the full serpentine path across all nine cells, row by row.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-9.json"
+    },
+    {
+      "name": "dotm-3x3-10",
+      "type": "registry:ui",
+      "title": "Frame Chase",
+      "description": "A highlight runs clockwise around the outer frame while the center cell holds a steady pulse.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-10.json"
+    },
+    {
+      "name": "dotm-3x3-11",
+      "type": "registry:ui",
+      "title": "Glyph Pulse",
+      "description": "Bold symbol motifs flash in sequence — corners, cross, full grid, center, ring, X, and side rails — like a tiny pixel display.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-11.json"
+    },
+    {
+      "name": "dotm-3x3-12",
+      "type": "registry:ui",
+      "title": "Drop Ripple",
+      "description": "Concentric ripples expand from the center of the 3×3 grid, like a stone dropped in still water.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-12.json"
+    },
+    {
+      "name": "dotm-3x3-13",
+      "type": "registry:ui",
+      "title": "Right Surge",
+      "description": "A vertical wave pulse sweeps from the right column toward the left, illuminating every row in each band together.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-13.json"
+    },
+    {
+      "name": "dotm-3x3-14",
+      "type": "registry:ui",
+      "title": "Comet Trail",
+      "description": "A bright comet with a two-dot tail races clockwise around the outer frame while the center cell softly breathes.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-14.json"
+    },
+    {
+      "name": "dotm-3x3-15",
+      "type": "registry:ui",
+      "title": "Echo Rings",
+      "description": "Soft square ripples echo outward from the center through Manhattan rings, with a gentle alternating shimmer.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-15.json"
+    },
+    {
+      "name": "dotm-3x3-16",
+      "type": "registry:ui",
+      "title": "Smiley Spin",
+      "description": "A pixel smiley face rotates continuously in the 3×3 grid.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-16.json"
+    },
+    {
+      "name": "dotm-3x3-18",
+      "type": "registry:ui",
+      "title": "Check Spin",
+      "description": "A pixel checkmark rotates continuously in the 3×3 grid.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-18.json"
+    },
+    {
+      "name": "dotm-3x3-19",
+      "type": "registry:ui",
+      "title": "Arrow Spin",
+      "description": "A pixel right arrow rotates continuously in the 3×3 grid.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-19.json"
+    },
+    {
+      "name": "dotm-3x3-20",
+      "type": "registry:ui",
+      "title": "Corner Spin",
+      "description": "An L-shaped pixel corner rotates continuously in the 3×3 grid.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-20.json"
+    },
+    {
+      "name": "dotm-3x3-21",
+      "type": "registry:ui",
+      "title": "Play Spin",
+      "description": "A pixel play triangle rotates continuously in the 3×3 grid.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "url": "/r/dotm-3x3-21.json"
+    },
+    {
       "name": "all",
       "type": "registry:ui",
       "title": "All Dot Matrix Loaders",

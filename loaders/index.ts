@@ -1,4 +1,9 @@
-export type { DotMatrixCommonProps, DotMatrixPhase, DotShape, MatrixPattern } from "./types";
+export type {
+  DotMatrixCommonProps,
+  DotMatrixPhase,
+  DotShape,
+  MatrixPattern
+} from "./types";
 export type { DotMatrixColorPreset } from "./core/color-presets";
 
 export { DotMatrixIcon } from "./loaders/dot-matrix-icon";
@@ -153,6 +158,47 @@ export { DotmHex9 } from "./loaders/dotm-hex-9";
 export type { DotmHex9Props } from "./loaders/dotm-hex-9";
 export { DotmHex10 } from "./loaders/dotm-hex-10";
 export type { DotmHex10Props } from "./loaders/dotm-hex-10";
+
+export { Dotm3x3_1 } from "./loaders/dotm-3x3-1";
+export type { Dotm3x3_1Props } from "./loaders/dotm-3x3-1";
+export { Dotm3x3_2 } from "./loaders/dotm-3x3-2";
+export type { Dotm3x3_2Props } from "./loaders/dotm-3x3-2";
+export { Dotm3x3_3 } from "./loaders/dotm-3x3-3";
+export type { Dotm3x3_3Props } from "./loaders/dotm-3x3-3";
+export { Dotm3x3_4 } from "./loaders/dotm-3x3-4";
+export type { Dotm3x3_4Props } from "./loaders/dotm-3x3-4";
+export { Dotm3x3_5 } from "./loaders/dotm-3x3-5";
+export type { Dotm3x3_5Props } from "./loaders/dotm-3x3-5";
+export { Dotm3x3_6 } from "./loaders/dotm-3x3-6";
+export type { Dotm3x3_6Props } from "./loaders/dotm-3x3-6";
+export { Dotm3x3_7 } from "./loaders/dotm-3x3-7";
+export type { Dotm3x3_7Props } from "./loaders/dotm-3x3-7";
+export { Dotm3x3_8 } from "./loaders/dotm-3x3-8";
+export type { Dotm3x3_8Props } from "./loaders/dotm-3x3-8";
+export { Dotm3x3_9 } from "./loaders/dotm-3x3-9";
+export type { Dotm3x3_9Props } from "./loaders/dotm-3x3-9";
+export { Dotm3x3_10 } from "./loaders/dotm-3x3-10";
+export type { Dotm3x3_10Props } from "./loaders/dotm-3x3-10";
+export { Dotm3x3_11 } from "./loaders/dotm-3x3-11";
+export type { Dotm3x3_11Props } from "./loaders/dotm-3x3-11";
+export { Dotm3x3_12 } from "./loaders/dotm-3x3-12";
+export type { Dotm3x3_12Props } from "./loaders/dotm-3x3-12";
+export { Dotm3x3_13 } from "./loaders/dotm-3x3-13";
+export type { Dotm3x3_13Props } from "./loaders/dotm-3x3-13";
+export { Dotm3x3_14 } from "./loaders/dotm-3x3-14";
+export type { Dotm3x3_14Props } from "./loaders/dotm-3x3-14";
+export { Dotm3x3_15 } from "./loaders/dotm-3x3-15";
+export type { Dotm3x3_15Props } from "./loaders/dotm-3x3-15";
+export { Dotm3x3_16 } from "./loaders/dotm-3x3-16";
+export type { Dotm3x3_16Props } from "./loaders/dotm-3x3-16";
+export { Dotm3x3_18 } from "./loaders/dotm-3x3-18";
+export type { Dotm3x3_18Props } from "./loaders/dotm-3x3-18";
+export { Dotm3x3_19 } from "./loaders/dotm-3x3-19";
+export type { Dotm3x3_19Props } from "./loaders/dotm-3x3-19";
+export { Dotm3x3_20 } from "./loaders/dotm-3x3-20";
+export type { Dotm3x3_20Props } from "./loaders/dotm-3x3-20";
+export { Dotm3x3_21 } from "./loaders/dotm-3x3-21";
+export type { Dotm3x3_21Props } from "./loaders/dotm-3x3-21";
 
 export {
   CROSS_INDEXES,

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-type LoaderKind = "square" | "circular" | "triangle" | "hex";
+type LoaderKind = "square" | "circular" | "triangle" | "hex" | "3x3";
 
 const PATTERN_TYPE = `"diamond" | "full" | "outline" | "rose" | "cross" | "rings"`;
 const COLOR_PRESET_TYPE =
@@ -27,16 +27,20 @@ const PROP_ROWS: readonly PropRow[] = [
     name: "size",
     type: "number",
     description:
-      "Overall scale of the matrix. With the default 5×5 layout, the outer box is derived from the grid track span (and ignored when you use a fixed `cellPadding` / box layout on square & circular).",
-    default: d((k) => (k === "triangle" ? "30" : k === "hex" ? "42" : "24")),
-    kinds: ["square", "circular", "triangle", "hex"]
+      "Overall scale of the loader. Matrix loaders derive the outer box from the grid track span (and ignore this when you use a fixed `cellPadding` / box layout on square & circular).",
+    default: d((k) =>
+      k === "triangle" ? "30" : k === "hex" ? "42" : k === "3x3" ? "24" : "24"
+    ),
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "dotSize",
     type: "number",
     description: "Width and height of each dot in pixels.",
-    default: d((k) => (k === "triangle" ? "4" : k === "hex" ? "5" : "3")),
-    kinds: ["square", "circular", "triangle", "hex"]
+    default: d((k) =>
+      k === "triangle" ? "4" : k === "hex" ? "5" : k === "3x3" ? "6" : "3"
+    ),
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "color",
@@ -44,41 +48,41 @@ const PROP_ROWS: readonly PropRow[] = [
     description:
       "Dot color override (typically `currentColor` or any CSS color string). Ignored when `colorPreset` is set.",
     default: "currentColor",
-    kinds: ["square", "circular", "triangle", "hex"]
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "colorPreset",
     type: COLOR_PRESET_TYPE,
     description:
       "Applies a built-in solid/gradient look across dots. Sets both glow tint and dot fill using the preset palette.",
-    kinds: ["square", "circular", "triangle", "hex"]
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "speed",
     type: "number",
     description: "Animation speed multiplier. Higher values run the cycle faster; values ≤ 0 are treated as 1 for timing.",
     default: "1",
-    kinds: ["square", "circular", "triangle", "hex"]
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "ariaLabel",
     type: "string",
     description: "Accessible name for the loading indicator (`aria-label` on the status element).",
     default: "Loading",
-    kinds: ["square", "circular", "triangle", "hex"]
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "className",
     type: "string",
     description: "Optional class on the root / wrapper (and on the matrix root when not using the slot wrapper).",
-    kinds: ["square", "circular", "triangle", "hex"]
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "muted",
     type: "boolean",
     description: "Enables the muted dmx look (softer visual treatment on the root).",
     default: "false",
-    kinds: ["square", "circular", "triangle", "hex"]
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "bloom",
@@ -86,7 +90,7 @@ const PROP_ROWS: readonly PropRow[] = [
     description:
       "Adds a glow treatment: after remapping, dots from opacity 0.6 (weakest glow) up to 1 (strongest) get a graded bloom.",
     default: "false",
-    kinds: ["square", "circular", "triangle", "hex"]
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "halo",
@@ -94,7 +98,7 @@ const PROP_ROWS: readonly PropRow[] = [
     description:
       "Uniform glow on every active dot: 0 is off, 1 is strongest. Same `--dmx-bloom-level` as `bloom`, with a slightly wider drop-shadow falloff than selective bloom only.",
     default: "0",
-    kinds: ["square", "circular", "triangle", "hex"]
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "animated",
@@ -102,7 +106,7 @@ const PROP_ROWS: readonly PropRow[] = [
     description:
       "When true, enables the loader's motion. Continuous auto-loop runs only if `hoverAnimated` is false; if both are true, motion is hover-only (reduced motion still respected).",
     default: "true",
-    kinds: ["square", "circular", "triangle", "hex"]
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "hoverAnimated",
@@ -110,65 +114,67 @@ const PROP_ROWS: readonly PropRow[] = [
     description:
       "When true, disables automatic looping — animation runs on pointer hover instead. With `animated={false}`, the loader stays static until hover (reduced motion still respected).",
     default: "false",
-    kinds: ["square", "circular", "triangle", "hex"]
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "dotClassName",
     type: "string",
     description: "Extra `className` applied to every dot `span` for one-off styling.",
-    kinds: ["square", "circular", "triangle", "hex"]
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "dotShape",
     type: `"circle" | "square" | "diamond" | "hearts"`,
     description: "Dot geometry for each active cell.",
     default: '"circle"',
-    kinds: ["square", "circular", "triangle", "hex"]
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "pattern",
     type: PATTERN_TYPE,
-    description: `Active cells on the 5×5 matrix projection. One of: ${PATTERN_LIST.join(", ")}.`,
+    description: `Active cells on the matrix projection. One of: ${PATTERN_LIST.join(", ")}.`,
     default: '"full"',
-    kinds: ["square", "hex"]
+    kinds: ["square", "hex", "3x3"]
   },
   {
     name: "opacityBase",
     type: "number (0…1)",
     description: "Controls the dimmest baseline opacity (0–1) used by the loader's opacity curve.",
-    kinds: ["square", "circular", "triangle", "hex"]
+    default: d((k) => (k === "3x3" ? "0.06" : undefined)),
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "opacityMid",
     type: "number (0…1)",
     description: "Controls the middle brightness stop (0–1) in the loader's opacity curve.",
-    kinds: ["square", "circular", "triangle", "hex"]
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "opacityPeak",
     type: "number (0…1)",
     description: "Controls the brightest stop (0–1) in the loader's opacity curve.",
-    kinds: ["square", "circular", "triangle", "hex"]
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "cellPadding",
     type: "number",
     description:
       "Fixed gap in pixels between grid tracks. When set, layout uses `dotSize * N + cellPadding * (N - 1)` (N is the matrix dimension) and ignores `size` for track spacing.",
-    kinds: ["square", "circular", "triangle", "hex"]
+    default: d((k) => (k === "3x3" ? "1" : undefined)),
+    kinds: ["square", "circular", "triangle", "hex", "3x3"]
   },
   {
     name: "boxSize",
     type: "number",
     description:
-      "Target outer width/height in px; the matrix is scaled uniformly to fit (combined with `minSize`). Not used by triangle.",
-    kinds: ["square", "circular", "hex"]
+      "Target outer width/height in px; the loader is scaled uniformly to fit (combined with `minSize`). Not used by triangle.",
+    kinds: ["square", "circular", "hex", "3x3"]
   },
   {
     name: "minSize",
     type: "number",
     description: "Minimum width and height in px of the root slot before any `boxSize` scaling. Not used by triangle.",
-    kinds: ["square", "circular", "hex"]
+    kinds: ["square", "circular", "hex", "3x3"]
   }
 ] as const;
 
@@ -183,6 +189,9 @@ function resolveDefault(row: PropRow, kind: LoaderKind): string | undefined {
 }
 
 function loaderKindFromSlug(slug: string): LoaderKind {
+  if (slug.startsWith("dotm-3x3-")) {
+    return "3x3";
+  }
   if (slug.startsWith("dotm-triangle-")) {
     return "triangle";
   }
