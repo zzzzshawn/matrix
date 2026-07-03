@@ -143,6 +143,7 @@ export function LoaderGallery({
     const largeDotSize = detailDotSize + detailPreviewDotBoost;
     const previewKey = `${selected.slug}-${activeExampleId ?? "default"}`;
     const isSquareMatrix = selected.slug.startsWith("dotm-square-");
+    const is3x3Matrix = selected.slug.startsWith("dotm-3x3-");
     const isTriangleMatrix = selected.slug.startsWith("dotm-triangle-");
 
     if (activeExampleId) {
@@ -174,7 +175,7 @@ export function LoaderGallery({
       merged.speed = base.speed;
       merged.animated = base.animated;
       // `pattern` only applies to 5×5 square loaders; circular & triangle use fixed silhouttes.
-      if (activeExampleId === "ex-look" && isSquareMatrix) {
+      if (activeExampleId === "ex-look" && (isSquareMatrix || is3x3Matrix)) {
         merged.pattern = "cross";
       } else {
         merged.pattern = base.pattern;

@@ -52,15 +52,20 @@ async function writeRegistrySource(pathInRegistry: string, content: string): Pro
 
 const importRewrites: ReadonlyArray<{ from: string; to: string }> = [
   { from: "../base/dot-matrix-base", to: "@/components/ui/dotmatrix-core" },
+  { from: "../base/dot-matrix-3-base", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/circle-mask", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/cx", to: "@/components/ui/dotmatrix-core" },
+  { from: "../core/dotm-3x3-component-factory", to: "@/components/ui/dotmatrix-core" },
+  { from: "../core/diagonal-wave-3-factory", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/grid-paths", to: "@/components/ui/dotmatrix-core" },
+  { from: "../core/grid-paths-3", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/hydration-inline-style", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/opacity-triplet", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/dmx-dot-bloom", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/color-presets", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/path-wave-factory", to: "@/components/ui/dotmatrix-core" },
   { from: "../core/patterns", to: "@/components/ui/dotmatrix-core" },
+  { from: "../core/patterns-3", to: "@/components/ui/dotmatrix-core" },
   { from: "../types", to: "@/components/ui/dotmatrix-core" },
   { from: "../hooks/use-cycle-phase", to: "@/components/ui/dotmatrix-hooks" },
   { from: "../hooks/use-stepped-cycle", to: "@/components/ui/dotmatrix-hooks" },
@@ -134,7 +139,7 @@ function applyDotMatrixBaseRestDefaults(
   defaults: Partial<Record<"size" | "dotSize", unknown>>
 ): string {
   const hasRest = /\.\.\.rest/.test(source);
-  const hasDotMatrixBase = /<DotMatrixBase/.test(source);
+  const hasDotMatrixBase = /<DotMatrixBase/.test(source) || /<DotMatrix3Base/.test(source);
   if (!hasRest || !hasDotMatrixBase) {
     return source;
   }
@@ -145,14 +150,14 @@ function applyDotMatrixBaseRestDefaults(
 
   if (sizeLiteral != null && !/size=\{rest\.size \?\?/.test(injected)) {
     injected = injected.replace(
-      /<DotMatrixBase\s*\n\s*\{\.\.\.rest\}/,
+      /<DotMatrix(?:3)?Base\s*\n\s*\{\.\.\.rest\}/,
       (match) => `${match}\n      size={rest.size ?? ${sizeLiteral}}`
     );
   }
 
   if (dotSizeLiteral != null && !/dotSize=\{rest\.dotSize \?\?/.test(injected)) {
     injected = injected.replace(
-      /<DotMatrixBase\s*\n\s*\{\.\.\.rest\}(?:\n\s*size=\{rest\.size \?\? [^\n]+\})?/,
+      /<DotMatrix(?:3)?Base\s*\n\s*\{\.\.\.rest\}(?:\n\s*size=\{rest\.size \?\? [^\n]+\})?/,
       (match) => `${match}\n      dotSize={rest.dotSize ?? ${dotSizeLiteral}}`
     );
   }
