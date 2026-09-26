@@ -41,6 +41,8 @@
   ],
   "exclude": [
     "node_modules",
-    "public/r"
+    "public/r",
+    ".open-next",
+    ".wrangler"
   ]
 }

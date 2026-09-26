@@ -22,6 +22,8 @@ const ogImage = {
   type: "image/png" as const
 };
 
+const cfBeaconToken = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
+
 const creatorName = "zzzzshawn";
 const creatorUrl = "https://x.com/zzzzshawn/";
 import { GeistSans } from "geist/font/sans";
@@ -172,6 +174,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <div className="flex min-h-0 flex-1 flex-col">{children}</div>
         <DialKitRouteRoot />
         <RouteAwareSiteFooter />
+        {cfBeaconToken ? (
+          <script
+            type="module"
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: cfBeaconToken })}
+          />
+        ) : null}
       </body>
     </html>
   );
