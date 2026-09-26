@@ -177,6 +177,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {cfBeaconToken ? (
           <script
             type="module"
+            async
             src="https://static.cloudflareinsights.com/beacon.min.js"
             data-cf-beacon={JSON.stringify({ token: cfBeaconToken })}
           />
